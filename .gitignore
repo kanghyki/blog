@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 
 tags
+.DS_Store

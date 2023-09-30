@@ -1,5 +1,10 @@
-import styles from './page.module.css';
-
 export default function Home() {
-  return <main className={styles.main}>{process.env.NEXT_PUBLIC_HI}</main>;
+  return (
+    <main>
+      <article>
+        <h2>{`I'm HYKI`}</h2>
+        <p>Thank you for visiting my blog</p>
+      </article>
+    </main>
+  );
 }

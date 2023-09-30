@@ -1,0 +1,11 @@
+.footer {
+  margin-top: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.footer_item {
+  margin-right: 10px;
+}
