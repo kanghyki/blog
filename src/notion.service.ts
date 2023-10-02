@@ -1,35 +1,42 @@
-import { Client } from '@notionhq/client';
+import { Client, LogLevel, isFullBlock, isFullPage, isNotionClientError, iteratePaginatedAPI } from '@notionhq/client';
+import { NotionBlockFactory } from './notion-blocks';
+import { BlogPost, BlogPostStatus } from './BlogPost';
 
-export interface Post {
-  id: string;
-  slug: string;
-  title: string;
-  name: string;
-  createAt: Date;
-  content: string;
-  status: PostStatus;
-}
+export class NotionAPI {
+  private static instance: NotionAPI;
+  private notionClient: Client;
 
-export enum PostStatus {
-  EDITING = 'Editing',
-  SHOW = 'Show',
-  NOT_SHOWN = 'Not shown',
-}
-
-export async function getReadablePosts(): Promise<Post[]> {
-  const posts: Post[] = [];
-
-  try {
-    const notionAPI = new Client({
+  private constructor() {
+    this.notionClient = new Client({
       auth: process.env.NOTION_SECRET_KEY,
+      logLevel: LogLevel.WARN,
     });
+  }
 
-    const queryData = await notionAPI.databases.query({
+  static getInstance(): NotionAPI {
+    if (NotionAPI.instance === undefined) {
+      NotionAPI.instance = new NotionAPI();
+    }
+
+    return NotionAPI.instance;
+  }
+
+  public getClient(): Client {
+    return this.notionClient;
+  }
+}
+
+export async function getReadableBlogPosts(): Promise<BlogPost[]> {
+  const blogPosts: Array<BlogPost> = Array<BlogPost>();
+  try {
+    const notionAPI = NotionAPI.getInstance().getClient();
+
+    const dbPageOnlyShow = await notionAPI.databases.query({
       database_id: `${process.env.NOTION_DB_ID}`,
       filter: {
         property: 'Status',
         status: {
-          equals: PostStatus.SHOW,
+          equals: BlogPostStatus.SHOW,
         },
       },
       sorts: [
@@ -40,26 +47,51 @@ export async function getReadablePosts(): Promise<Post[]> {
       ],
     });
 
-    queryData.results.forEach((e: any) => {
-      let content = '';
+    for (const page of dbPageOnlyShow.results) {
+      if (page.object !== 'page' || !isFullPage(page)) continue;
+      const blogPost = new BlogPost(page.id);
 
-      e.properties.content.rich_text.forEach((e: any) => {
-        content += e.plain_text;
-      });
+      if (page.properties['title'].type === 'title') {
+        page.properties['title'].title.forEach(e => {
+          blogPost.title += e.plain_text;
+        });
+      }
+      if (page.properties['Date'].type === 'date' && page.properties['Date'].date)
+        blogPost.createdAt = new Date(page.properties['Date'].date.start);
+      if (page.properties['author'].type === 'select' && page.properties['author'].select?.name)
+        blogPost.author = page.properties['author'].select?.name;
 
-      posts.push({
-        id: e.id,
-        title: e.properties.title.title[0].plain_text,
-        createAt: new Date(e.properties.Date.date.start),
-        name: e.properties.author.select.name,
-        content: content,
-        slug: e.properties.slug.rich_text[0].plain_text,
-        status: e.properties.Status.status.name,
-      });
-    });
-  } catch (e: any) {
-    console.error('Notion error,', e);
+      // blogPost.content = await getBlocks(notionAPI, page.id);
+
+      blogPosts.push(blogPost);
+    }
+  } catch (error) {
+    if (isNotionClientError(error)) console.error('Notion error');
+    else console.error('My error');
+    console.error(error);
   }
 
-  return posts;
+  return blogPosts;
+}
+
+export async function getBlocks(
+  notionAPI: Client,
+  pageId: string | undefined,
+  maxDepth: number = 1,
+  depth: number = 0,
+): Promise<string> {
+  if (pageId === undefined || depth > maxDepth) return '';
+  let content: string = '';
+
+  for await (const block of iteratePaginatedAPI(notionAPI.blocks.children.list, {
+    block_id: pageId,
+  })) {
+    if (!isFullBlock(block)) continue;
+    const converter = new NotionBlockFactory().getConverter(block);
+    content += converter.toString();
+
+    if (block.has_children) content += await getBlocks(notionAPI, block.id, maxDepth, depth + 1);
+  }
+
+  return content;
 }

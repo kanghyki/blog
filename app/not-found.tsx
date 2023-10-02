@@ -7,11 +7,6 @@ export default function NotFound() {
           <a href="/post">
             <b>{`Read other posts >`}</b>
           </a>
-          <br />
-          <br />
-          <a href={`mailto:${process.env.EMAIL}`}>
-            <b>{`Contact me >`}</b>
-          </a>
         </i>
       </article>
     </main>
