@@ -81,4 +81,15 @@ code {
 
 blockquote {
   background-color: var(--accent-low);
+  border-left: 3px solid var(--accent-high);
+  padding: 1em;
+}
+
+img {
+  max-width: 70%;
+  max-height: 70%;
+}
+
+.task-list-item {
+  list-style: none;
 }
