@@ -11,6 +11,7 @@ export default async function Post({ params }: { params: PostParamsProps }) {
   const taskLists = require('markdown-it-task-lists');
   const md = new MarkdownIt({
     html: true,
+    breaks: true,
   }).use(taskLists);
 
   const { title } = params;
