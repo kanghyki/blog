@@ -1,10 +1,10 @@
-import { getReadableBlogPosts } from '@/src/notion.service';
+import { getReadableBlogPosts, getSingleBlogPost } from '@/src/notion.service';
 import { DateStringType, dateToString } from '@/src/util';
-import { BlogPost, NullBlogPost } from '@/src/BlogPost';
+import { BlogPost } from '@/src/BlogPost';
 import MarkdownIt from 'markdown-it';
 
 type PostParamsProps = {
-  title: string;
+  id: string;
 };
 
 export default async function Post({ params }: { params: PostParamsProps }) {
@@ -13,16 +13,13 @@ export default async function Post({ params }: { params: PostParamsProps }) {
     html: true,
     breaks: true,
   }).use(taskLists);
-
-  const { title } = params;
-  const decodedURI = decodeURI(title);
-
-  const post: BlogPost = await getPost(decodedURI);
+  const { id } = params;
+  const post: BlogPost = await getSingleBlogPost(id);
   await post.readPostBlocks();
 
   return (
     <>
-      <title>{`${decodedURI} - ${process.env.TITLE}`}</title>
+      <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <header>
         <h1>{post.title}</h1>
         <h4>
@@ -43,13 +40,6 @@ export async function generateStaticParams(): Promise<PostParamsProps[]> {
   const posts: BlogPost[] = await getReadableBlogPosts();
 
   return posts.map((post: BlogPost) => ({
-    title: post.title,
+    id: post.id,
   }));
-}
-
-async function getPost(title: string): Promise<BlogPost> {
-  const posts: BlogPost[] = await getReadableBlogPosts();
-  const post: BlogPost | undefined = posts.find((e: BlogPost) => e.title === decodeURI(title));
-
-  return post ? post : new NullBlogPost();
 }

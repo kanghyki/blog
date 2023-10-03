@@ -9,7 +9,7 @@ export default async function Posts() {
     <main>
       <ul>
         {posts.map((e: BlogPost) => (
-          <a key={e.id} href={`/post/${e.title}`}>
+          <a key={e.id} href={`/post/${e.id}`}>
             <li>
               <time>{`${dateToString(e.createdAt, {
                 type: DateStringType.MONTH_DATE_YEAR,
