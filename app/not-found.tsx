@@ -1,12 +1,14 @@
+import Link from 'next/link';
+
 export default function NotFound() {
   return (
     <main>
       <article>
         <h2>404 Not found.</h2>
         <i>
-          <a href="/post">
+          <Link href="/post">
             <b>{`Read other posts >`}</b>
-          </a>
+          </Link>
         </i>
       </article>
     </main>

@@ -1,9 +1,9 @@
 'use client';
 import styles from './PostList.module.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PostListItem from './PostListItem';
 import TagButton from './TagButton';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export type PostProp = {
   id: string;
@@ -22,7 +22,8 @@ type Props = {
 export default function PostList(props: Props) {
   const AllTag: string = '전체';
   const searchParams = useSearchParams();
-  const [tag, setTag] = useState<string>(AllTag);
+  const querytag = searchParams.get('tag');
+  const [tag, setTag] = useState<string>(querytag ? querytag : AllTag);
   const [foundPosts, setFoundPosts] = useState<PostProp[]>(props.posts);
 
   const changeQueryShallow = (key: string, value: string) => {
@@ -34,26 +35,21 @@ export default function PostList(props: Props) {
   };
 
   useEffect(() => {
-    const queryTag = searchParams.get('tag');
-    if (queryTag) setTag(queryTag);
-  }, []);
-
-  useEffect(() => {
     changeQueryShallow('tag', tag);
-    loadPost();
   }, [tag]);
 
-  const loadPost = () => {
-    if (tag === AllTag) setFoundPosts(props.posts);
-    else setFoundPosts(props.posts.filter((post: PostProp) => post.tags.includes(tag)));
+  const changeTag = (vtag: string) => {
+    setTag(vtag);
+    if (vtag === AllTag) setFoundPosts(props.posts);
+    else setFoundPosts(props.posts.filter((post: PostProp) => post.tags.includes(vtag)));
   };
 
   return (
     <>
       <div className={styles.tag_button_container}>
-        <TagButton tag={AllTag} onClick={() => setTag(AllTag)} />
+        <TagButton tag={AllTag} onClick={() => changeTag(AllTag)} />
         {props.tags.map((e: string) => (
-          <TagButton tag={e} key={e} onClick={() => setTag(e)} />
+          <TagButton tag={e} key={e} onClick={() => changeTag(e)} />
         ))}
       </div>
       <p>
