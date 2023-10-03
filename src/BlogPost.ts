@@ -10,14 +10,14 @@ export enum BlogPostStatus {
 export class BlogPost {
   private _id: string;
   private _title: string;
-  private _author: UserObjectResponse[];
+  private _authors: string[];
   private _createdAt: Date;
   private _content: string;
 
   constructor(_id: string) {
     this._id = _id;
     this._title = '';
-    this._author = [];
+    this._authors = [];
     this._createdAt = new Date(0);
     this._content = '';
   }
@@ -38,18 +38,12 @@ export class BlogPost {
     this._title = _title;
   }
 
-  get authorNameList(): string[] {
-    const userNames: string[] = [];
-
-    for (const userObj of this._author) {
-      if (userObj.name) userNames.push(userObj.name);
-    }
-
-    return userNames;
+  get authors(): string[] {
+    return this._authors;
   }
 
-  set author(_author: UserObjectResponse[]) {
-    this._author = _author;
+  public addAuthor(author: string): void {
+    this._authors.push(author);
   }
 
   get createdAt(): Date {

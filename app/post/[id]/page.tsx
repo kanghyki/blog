@@ -27,7 +27,7 @@ export default async function Post({ params }: { params: PostParamsProps }) {
             type: DateStringType.MONTH_DATE_YEAR,
             time: false,
           })}`}</time>
-          {` by ${post.authorNameList.join(', ')}`}
+          {` by ${post.authors.join(', ')}`}
         </h4>
         <hr />
       </header>

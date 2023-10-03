@@ -67,8 +67,12 @@ async function setBlogPostProperties(blogPost: BlogPost, page: PageObjectRespons
   }
   if (page.properties['Date'].type === 'date' && page.properties['Date'].date)
     blogPost.createdAt = new Date(page.properties['Date'].date.start);
-  if (page.properties['author'].type === 'people')
-    blogPost.author = await getUserObjects(page.properties['author'].people);
+  if (page.properties['author'].type === 'people') {
+    const userObjects = await getUserObjects(page.properties['author'].people);
+    userObjects.forEach((uo: UserObjectResponse) => {
+      if (uo.name) blogPost.addAuthor(uo.name);
+    });
+  }
 
   // blogPost.content = await getBlocks(notionAPI, page.id);
 }
