@@ -53,7 +53,11 @@ export class NotionBlockFactory {
 export abstract class NotionBlockConverter {
   constructor() {}
 
-  abstract toString(): string;
+  public toString(): string {
+    return `${this.concatRichText()}\n`;
+  }
+
+  protected abstract concatRichText(): string;
 
   protected richTextToMarkdown(richText: RichTextItemResponse): string {
     let annotationText = richText.plain_text;
@@ -78,11 +82,11 @@ class Heading1Block extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.heading_1.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `# ${ret}\n`;
+    return `# ${ret}`;
   }
 }
 
@@ -94,11 +98,11 @@ class Heading2Block extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.heading_2.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `## ${ret}\n`;
+    return `## ${ret}`;
   }
 }
 
@@ -110,11 +114,11 @@ class Heading3Block extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.heading_3.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `## ${ret}\n`;
+    return `### ${ret}`;
   }
 }
 
@@ -126,11 +130,11 @@ class ParagraphBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.paragraph.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return ret === '' ? '<br>\n\n' : `${ret}\n\n`;
+    return ret;
   }
 }
 
@@ -142,11 +146,11 @@ class NumberedListItemBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.numbered_list_item.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `1. ${ret}\n`;
+    return `1. ${ret}`;
   }
 }
 
@@ -158,11 +162,11 @@ class BulletedListItemBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.bulleted_list_item.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `- ${ret}\n`;
+    return `- ${ret}`;
   }
 }
 
@@ -174,12 +178,12 @@ class ToDoBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     const prefix = this.block.to_do.checked ? '- [x]' : '- [ ]';
     for (const rich_text of this.block.to_do.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `${prefix} ${ret}\n`;
+    return `${prefix} ${ret}`;
   }
 }
 
@@ -191,11 +195,11 @@ class QuoteBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     for (const rich_text of this.block.quote.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `> ${ret}\n`;
+    return `> ${ret}`;
   }
 }
 
@@ -207,12 +211,12 @@ class CodeBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let ret = '';
     const language = this.block.code.language ? this.block.code.language : '';
     for (const rich_text of this.block.code.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `\`\`\`${language}\n${ret}\n\`\`\`\n`;
+    return `\`\`\`${language}\n${ret}\n\`\`\``;
   }
 }
 
@@ -224,11 +228,11 @@ class EmbedBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let embedStr = '';
     for (const caption of this.block.embed.caption) embedStr += this.richTextToMarkdown(caption);
 
-    return `[${embedStr ? embedStr : 'Link'}](${this.block.embed.url})\n\n`;
+    return `[${embedStr ? embedStr : 'Link'}](${this.block.embed.url})`;
   }
 }
 
@@ -240,11 +244,11 @@ class BookmarkBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
+  concatRichText(): string {
     let bookmarkStr = '';
     for (const caption of this.block.bookmark.caption) bookmarkStr += this.richTextToMarkdown(caption);
 
-    return `[${bookmarkStr ? bookmarkStr : 'Link'}](${this.block.bookmark.url})\n\n`;
+    return `[${bookmarkStr ? bookmarkStr : 'Link'}](${this.block.bookmark.url})`;
   }
 }
 
@@ -256,8 +260,8 @@ class ImageBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  toString(): string {
-    if (this.block.image.type === 'file') return `\n![block.image.caption](${this.block.image.file.url})\n`;
+  concatRichText(): string {
+    if (this.block.image.type === 'file') return `![block.image.caption](${this.block.image.file.url})`;
 
     return '';
   }
@@ -268,7 +272,7 @@ class NullBlock extends NotionBlockConverter {
     super();
   }
 
-  toString(): string {
+  concatRichText(): string {
     return '';
   }
 }
