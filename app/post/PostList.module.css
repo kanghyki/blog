@@ -1,6 +1,8 @@
-.tag_button_container {
-  overflow: auto;
-  white-space: nowrap;
+@media screen and (max-width: 768px) {
+  .tag_button_container {
+    overflow: auto;
+    white-space: nowrap;
+  }
 }
 
 .tag_button_container::-webkit-scrollbar {

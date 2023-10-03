@@ -1,6 +1,5 @@
 'use client';
 import styles from './TagButton.module.css';
-import { useRouter } from 'next/navigation';
 
 type Props = {
   tag: string;
@@ -9,11 +8,9 @@ type Props = {
 };
 
 export default function TagButton(props: Props) {
-  const router = useRouter();
-
   const onClick = () => {
     if (props.onClick) props.onClick();
-    if (props.link) router.push(`/post?tag=${props.tag}`);
+    if (props.link) window.location.href = `/post?tag=${props.tag}`;
   };
 
   return (

@@ -1,6 +1,8 @@
 .tag_button {
   padding: 0.5em 0.7em;
-  margin-right: 8px;
+  margin-right: 0.7em;
+  margin-bottom: 0.8em;
+  margin-top: 0.8em;
   border-radius: 8px;
   border: none;
   background-color: var(--dark-accent-low);
