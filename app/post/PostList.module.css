@@ -1,0 +1,12 @@
+.tag_button_container {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.tag_button_container::-webkit-scrollbar {
+  display: none;
+}
+
+.strong {
+  color: var(--dark-highlight);
+}

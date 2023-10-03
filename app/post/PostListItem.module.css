@@ -1,0 +1,29 @@
+.post_list_item {
+  list-style: none;
+  padding: 1.1em 0;
+  border-bottom: 0.5px solid var(--dark-accent-low);
+}
+
+.post_list_item:first-child {
+  padding-top: 0;
+}
+
+.post_list_item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.small_tag {
+  font-size: 0.7em;
+  margin-right: 4px;
+  color: var(--dark-highlight);
+  opacity: 0.6;
+}
+
+.small_tag:last-child {
+  margin-right: 0;
+}
+
+.time_style {
+  font-style: italic;
+}

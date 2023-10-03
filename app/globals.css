@@ -1,10 +1,10 @@
 :root {
-  --background: #65451f;
-  --accent-low: #765827;
-  --accent-medium: #c8ae7d;
-  --accent-high: #eac696;
+  --dark-background: #222831;
+  --dark-accent-low: #393e46;
+  --dark-highlight: #00adb5;
+  --dark-font-color: #eeeeee;
 
-  --width: 720px;
+  --width: 768px;
 
   --font-family: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono',
     'Ubuntu Monospace', 'Source Code Pro', 'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
@@ -13,12 +13,13 @@
 * {
   padding: 0;
   margin: 0;
+  font-size: 1em;
 }
 
 html {
   max-width: 100vw;
-  background-color: var(--background);
-  color: var(--accent-medium);
+  background-color: var(--dark-background);
+  color: var(--dark-font-color);
 }
 
 body {
@@ -35,12 +36,24 @@ h3,
 h4,
 h5 {
   margin: 0.67em 0;
-  color: var(--accent-high);
+  color: var(--dark-font-color);
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.6em;
+}
+
+h3 {
+  font-size: 1.2em;
 }
 
 hr {
   margin: 1em 0;
-  border: 1px solid var(--accent-low);
+  border: 1px solid var(--dark-accent-low);
 }
 
 p {
@@ -56,7 +69,7 @@ p:first-child {
 }
 
 a {
-  color: var(--accent-medium);
+  color: var(--dark-highlight);
   text-decoration: none;
 }
 
@@ -73,12 +86,12 @@ li {
 }
 
 code {
-  background-color: var(--accent-low);
+  background-color: var(--dark-accent-low);
 }
 
 blockquote {
-  background-color: var(--accent-low);
-  border-left: 3px solid var(--accent-high);
+  background-color: var(--dark-accent-low);
+  border-left: 3px solid var(--dark-highlight);
   padding: 1em;
 }
 

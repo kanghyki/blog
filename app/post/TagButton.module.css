@@ -1,0 +1,19 @@
+.tag_button {
+  padding: 0.5em 0.7em;
+  margin-right: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--dark-accent-low);
+  color: var(--dark-font-color);
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.tag_button:last-child {
+  margin-right: 0;
+}
+
+.tag_button:hover {
+  opacity: 0.7;
+  transition: 0.2s;
+}

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import styles from './nav.module.css';
 
 export default function Nav() {
@@ -8,9 +9,7 @@ export default function Nav() {
           <h2>{`${process.env.LOGO}`}</h2>
         </a>
         <ul className={styles.nav}>
-          <a href="/post">
-            <li>Post</li>
-          </a>
+          <Link href="/post">Post</Link>
         </ul>
       </div>
     </nav>

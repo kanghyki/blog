@@ -1,25 +1,24 @@
 import { BlogPost } from '@/src/BlogPost';
-import { getReadableBlogPosts } from '@/src/notion.service';
-import { DateStringType, dateToString } from '@/src/util';
+import { getReadableBlogPosts, getTags } from '@/src/notion.service';
+import PostList from './PostList';
 
 export default async function Posts() {
   const posts: BlogPost[] = await getReadableBlogPosts();
+  const tags: string[] = await getTags();
 
   return (
     <main>
-      <ul>
-        {posts.map((e: BlogPost) => (
-          <a key={e.id} href={`/post/${e.id}`}>
-            <li>
-              <time>{`${dateToString(e.createdAt, {
-                type: DateStringType.MONTH_DATE_YEAR,
-                time: false,
-              })}\t`}</time>
-              {`${e.title}`}
-            </li>
-          </a>
-        ))}
-      </ul>
+      <PostList
+        posts={posts.map((e: BlogPost) => ({
+          id: e.id,
+          title: e.title,
+          createdAt: e.createdAt,
+          content: e.content,
+          authors: e.authors,
+          tags: e.tags,
+        }))}
+        tags={tags}
+      />
     </main>
   );
 }

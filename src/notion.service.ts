@@ -1,7 +1,9 @@
+import 'server-only';
 import {
   Client,
   LogLevel,
   isFullBlock,
+  isFullDatabase,
   isFullPage,
   isFullUser,
   isNotionClientError,
@@ -73,6 +75,12 @@ async function setBlogPostProperties(blogPost: BlogPost, page: PageObjectRespons
       if (uo.name) blogPost.addAuthor(uo.name);
     });
   }
+  if (page.properties['tag'].type === 'multi_select') {
+    const tags = page.properties['tag'].multi_select;
+    for (const tag of tags) {
+      if (tag.name) blogPost.addTag(tag.name);
+    }
+  }
 
   // blogPost.content = await getBlocks(notionAPI, page.id);
 }
@@ -99,6 +107,28 @@ export async function getSingleBlogPost(id: string): Promise<BlogPost> {
   }
 
   return new NullBlogPost();
+}
+
+export async function getTags(): Promise<string[]> {
+  let tags: string[] = [];
+  try {
+    const notionAPI = NotionAPI.getInstance().getClient();
+    const database = await notionAPI.databases.retrieve({
+      database_id: `${process.env.NOTION_DB_ID}`,
+    });
+    if (!isFullDatabase(database)) return tags;
+    if (database.properties['tag'].type === 'multi_select') {
+      database.properties['tag'].multi_select.options.forEach(e => {
+        tags.push(e.name);
+      });
+    }
+  } catch (error) {
+    if (isNotionClientError(error)) console.error('Notion error');
+    else console.error('My error');
+    console.error(error);
+  }
+
+  return tags;
 }
 
 export async function getReadableBlogPosts(): Promise<BlogPost[]> {

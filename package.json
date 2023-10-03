@@ -12,7 +12,8 @@
   "dependencies": {
     "next": "^13.3.4",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@notionhq/client": "^2.2.13",
