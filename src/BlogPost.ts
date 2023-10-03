@@ -1,3 +1,4 @@
+import { UserObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionAPI, getBlocks } from './notion.service';
 
 export enum BlogPostStatus {
@@ -9,14 +10,14 @@ export enum BlogPostStatus {
 export class BlogPost {
   private _id: string;
   private _title: string;
-  private _author: string;
+  private _author: UserObjectResponse[];
   private _createdAt: Date;
   private _content: string;
 
   constructor(_id: string) {
     this._id = _id;
     this._title = '';
-    this._author = '';
+    this._author = [];
     this._createdAt = new Date(0);
     this._content = '';
   }
@@ -37,11 +38,17 @@ export class BlogPost {
     this._title = _title;
   }
 
-  get author(): string {
-    return this._author;
+  get authorNameList(): string[] {
+    const userNames: string[] = [];
+
+    for (const userObj of this._author) {
+      if (userObj.name) userNames.push(userObj.name);
+    }
+
+    return userNames;
   }
 
-  set author(_author: string) {
+  set author(_author: UserObjectResponse[]) {
     this._author = _author;
   }
 
