@@ -83,14 +83,20 @@ export async function getBlocks(
   if (pageId === undefined || depth > maxDepth) return '';
   let content: string = '';
 
-  for await (const block of iteratePaginatedAPI(notionAPI.blocks.children.list, {
-    block_id: pageId,
-  })) {
-    if (!isFullBlock(block)) continue;
-    const converter = new NotionBlockFactory().getConverter(block);
-    content += converter.toString();
+  try {
+    for await (const block of iteratePaginatedAPI(notionAPI.blocks.children.list, {
+      block_id: pageId,
+    })) {
+      if (!isFullBlock(block)) continue;
+      const converter = new NotionBlockFactory().getConverter(block);
+      content += converter.toString();
 
-    if (block.has_children) content += await getBlocks(notionAPI, block.id, maxDepth, depth + 1);
+      if (block.has_children) content += await getBlocks(notionAPI, block.id, maxDepth, depth + 1);
+    }
+  } catch (error) {
+    if (isNotionClientError(error)) console.error('Notion error');
+    else console.error('My error');
+    console.error(error);
   }
 
   return content;
