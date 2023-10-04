@@ -44,7 +44,7 @@ export default function Nav() {
           <button className={styles.theme_toggle} onClick={toggleTheme}>
             {theme}
           </button>
-          <Link href="/post">Post</Link>
+          <a href="/post">Post</a>
         </ul>
       </div>
     </nav>

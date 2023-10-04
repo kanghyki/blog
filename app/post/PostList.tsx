@@ -20,46 +20,44 @@ type Props = {
 };
 
 export default function PostList(props: Props) {
-  const AllTag: string = '전체';
   const searchParams = useSearchParams();
-  const querytag = searchParams.get('tag');
-  const [tag, setTag] = useState<string>(querytag ? querytag : AllTag);
-  const [foundPosts, setFoundPosts] = useState<PostProp[]>(props.posts);
+  const [tag, setTag] = useState<string | undefined>(searchParams.get('tag') || undefined);
 
-  const changeQueryShallow = (key: string, value: string) => {
+  const changeQueryShallow = (key: string, value?: string | null) => {
     if (!window.history.pushState) return;
     const host = window.location.protocol + '//' + window.location.host + window.location.pathname;
-    const query = `?${key}=${value}`;
-    const newurl = host + query;
+    const newurl = value ? host + `?${key}=${value}` : host;
     window.history.pushState({ path: newurl }, '', newurl);
+  };
+
+  const getTag = () => {
+    return tag ? tag : '전체';
+  };
+
+  const getPostIncludedTag = () => {
+    return tag ? props.posts.filter((post: PostProp) => post.tags.includes(tag)) : props.posts;
   };
 
   useEffect(() => {
     changeQueryShallow('tag', tag);
   }, [tag]);
 
-  const changeTag = (vtag: string) => {
-    setTag(vtag);
-    if (vtag === AllTag) setFoundPosts(props.posts);
-    else setFoundPosts(props.posts.filter((post: PostProp) => post.tags.includes(vtag)));
-  };
-
   return (
     <>
       <div className={styles.tag_button_container}>
-        <TagButton tag={AllTag} onClick={() => changeTag(AllTag)} />
+        <TagButton tag={'전체'} onClick={() => setTag(undefined)} />
         {props.tags.map((e: string) => (
-          <TagButton tag={e} key={e} onClick={() => changeTag(e)} />
+          <TagButton tag={e} key={e} onClick={() => setTag(e)} />
         ))}
       </div>
       <p>
-        <strong className={styles.strong}>#{tag}</strong>
+        <strong className={styles.strong}>#{getTag()}</strong>
         {` >  총 `}
-        <strong className={styles.strong}>{foundPosts.length}</strong>
+        <strong className={styles.strong}>{getPostIncludedTag().length}</strong>
         {`개의 포스트`}
       </p>
       <ul>
-        {foundPosts.map((e: PostProp) => (
+        {getPostIncludedTag().map((e: PostProp) => (
           <PostListItem post={e} key={e.id} />
         ))}
       </ul>
