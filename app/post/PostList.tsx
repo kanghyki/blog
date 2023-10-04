@@ -53,10 +53,10 @@ export default function PostList(props: Props) {
         ))}
       </div>
       <p>
-        <strong className={styles.strong}>{tag}</strong>
-        {` 검색 결과: `}
+        <strong className={styles.strong}>#{tag}</strong>
+        {` >  총 `}
         <strong className={styles.strong}>{foundPosts.length}</strong>
-        {` 건의 포스팅을 찾았습니다.`}
+        {`개의 포스트`}
       </p>
       <ul>
         {foundPosts.map((e: PostProp) => (
