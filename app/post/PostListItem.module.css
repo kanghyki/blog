@@ -1,7 +1,7 @@
 .post_list_item {
   list-style: none;
   padding: 1.1em 0;
-  border-bottom: 0.5px solid var(--dark-accent-low);
+  border-bottom: 0.5px solid var(--accent-low);
 }
 
 .post_list_item:first-child {
@@ -16,7 +16,7 @@
 .small_tag {
   font-size: 0.7em;
   margin-right: 4px;
-  color: var(--dark-highlight);
+  color: var(--highlight);
   opacity: 0.6;
 }
 

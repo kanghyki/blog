@@ -3,10 +3,11 @@
   margin-right: 0.7em;
   margin-bottom: 0.8em;
   margin-top: 0.8em;
-  border-radius: 8px;
   border: none;
-  background-color: var(--dark-accent-low);
-  color: var(--dark-font-color);
+  border-radius: 8px;
+
+  background-color: var(--accent-low);
+  color: var(--font-color-on-background);
   cursor: pointer;
   font-size: 0.8em;
 }
