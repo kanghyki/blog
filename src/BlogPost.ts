@@ -1,9 +1,9 @@
 import { NotionAPI, getBlocks } from './notion.service';
 
 export enum BlogPostStatus {
-  EDITING = 'Editing',
-  SHOW = 'Show',
-  NOT_SHOWN = 'Not shown',
+  Idea = 'Idea',
+  Draft = 'Draft',
+  Published = 'Published',
 }
 
 export class BlogPost {

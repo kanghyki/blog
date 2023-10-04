@@ -92,7 +92,7 @@ export async function getSingleBlogPost(id: string): Promise<BlogPost> {
     if (
       !isFullPage(page) ||
       page.properties['Status'].type !== 'status' ||
-      page.properties['Status'].status?.name !== BlogPostStatus.SHOW
+      page.properties['Status'].status?.name !== BlogPostStatus.Published
     )
       return new NullBlogPost();
 
@@ -141,7 +141,7 @@ export async function getReadableBlogPosts(): Promise<BlogPost[]> {
       filter: {
         property: 'Status',
         status: {
-          equals: BlogPostStatus.SHOW,
+          equals: BlogPostStatus.Published,
         },
       },
       sorts: [
