@@ -11,7 +11,12 @@ enum Theme {
 export default function Nav() {
   const LocalStorageThemeKey = 'theme';
   const CssTheme = 'data-theme';
-  const [theme, setTheme] = useState<string>(localStorage.getItem(LocalStorageThemeKey) ?? Theme.dark);
+  const [theme, setTheme] = useState<string>(Theme.dark);
+
+  useEffect(() => {
+    const theme = window.localStorage.getItem(LocalStorageThemeKey);
+    if (theme) setTheme(theme);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(LocalStorageThemeKey, theme);
