@@ -12,10 +12,10 @@
 }
 
 [data-theme='Light'] {
-  --background: #F1EFEF;
-  --background2: #EBE4D1;
+  --background: #f1efef;
+  --background2: #ebe4d1;
   --accent-low: #00adb5;
-  --highlight: #7D7C7C;
+  --highlight: #7d7c7c;
   --font-color: #191717;
 }
 
