@@ -5,7 +5,7 @@ export default function Footer() {
     <footer>
       <hr />
       <ul className={styles.footer}>
-        <a href={`${process.env.GITHUB}`}>
+        <a href={process.env.GITHUB_URL}>
           <li className={styles.footer_item}>GitHub</li>
         </a>
         <a href={`mailto:${process.env.EMAIL}`}>

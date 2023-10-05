@@ -47,7 +47,7 @@ export default function Nav() {
     <nav>
       <div className={styles.nav_container}>
         <Link href="/">
-          <h2>{`${process.env.NEXT_PUBLIC_LOGO}`}</h2>
+          <h2>{process.env.NEXT_PUBLIC_LOGO}</h2>
         </Link>
         <ul className={styles.nav}>
           <button className={styles.theme_toggle} onClick={toggleTheme}>

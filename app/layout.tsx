@@ -13,6 +13,13 @@ const roboto = Roboto_Mono({
 export const metadata: Metadata = {
   title: `${process.env.TITLE}`,
   description: `${process.env.DESCRIPTION}`,
+  openGraph: {
+    type: 'website',
+    url: `${process.env.OG_URL}`,
+    description: `${process.env.DESCRIPTION}`,
+    siteName: `${process.env.OG_SITE_NAME}`,
+    locale: `${process.env.OG_LOCALE}`,
+  },
   themeColor: '#222831', // default dark
 };
 
