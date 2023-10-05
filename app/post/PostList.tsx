@@ -1,9 +1,9 @@
 'use client';
-import styles from './PostList.module.css';
 import { useEffect, useState } from 'react';
-import PostListItem from './PostListItem';
-import TagButton from './TagButton';
 import { useSearchParams } from 'next/navigation';
+import styles from './PostList.module.css';
+import PostListItem from './PostListItem';
+import TagButton from '../component/TagButton';
 
 export type PostProp = {
   id: string;

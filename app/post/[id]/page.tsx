@@ -2,7 +2,7 @@ import { getReadableBlogPosts, getSingleBlogPost } from '@/src/notion.service';
 import { DateStringType, dateToString } from '@/src/util';
 import { BlogPost } from '@/src/BlogPost';
 import MarkdownIt from 'markdown-it';
-import TagButton from '../TagButton';
+import TagButton from '@/app/component/TagButton';
 
 type PostParamsProps = {
   id: string;
