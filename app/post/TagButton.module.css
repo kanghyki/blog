@@ -6,8 +6,8 @@
   border: none;
   border-radius: 8px;
 
-  background-color: var(--accent-low);
-  color: var(--font-color-on-background);
+  background-color: var(--background2);
+  color: var(--font-color);
   cursor: pointer;
   font-size: 0.8em;
 }

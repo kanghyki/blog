@@ -1,10 +1,9 @@
 :root {
   --background: #222831;
+  --background2: #393e46;
   --accent-low: #393e46;
   --highlight: #00adb5;
   --font-color: #eeeeee;
-
-  --font-color-on-background: #eeeeee;
 
   --width: 768px;
 
@@ -13,10 +12,11 @@
 }
 
 [data-theme='Light'] {
-  --background: #eeeeee;
+  --background: #F1EFEF;
+  --background2: #EBE4D1;
   --accent-low: #00adb5;
-  --highlight: #393e46;
-  --font-color: #222831;
+  --highlight: #7D7C7C;
+  --font-color: #191717;
 }
 
 * {
@@ -91,20 +91,35 @@ li {
 }
 
 code {
-  background-color: var(--accent-low);
-  color: var(--font-color-on-background);
+  background-color: var(--background2);
+  border-radius: 2px;
+  padding: 2px 4px;
+}
+
+pre {
+  overflow: auto;
+  background-color: var(--background2);
+  padding: 1em;
+  border-radius: 8px;
+  margin: 1em 0;
+}
+
+pre code {
+  background-color: inherit;
+  padding: 0;
+  border-radius: 0;
 }
 
 blockquote {
-  background-color: var(--accent-low);
-  border-left: 3px solid var(--highlight);
-  color: var(--font-color-on-background);
-  padding: 1em;
+  background-color: var(--background2);
+  border-left: 4px solid var(--highlight);
+  padding: 1em 1em 1em 2em;
+  margin: 1em 0;
 }
 
 img {
-  max-width: 70%;
-  max-height: 70%;
+  max-width: 100%;
+  margin: 1em 0;
 }
 
 .task-list-item {
