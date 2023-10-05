@@ -9,13 +9,13 @@ export function dateToString(date: Date, options: { type: DateStringType; time: 
 
   switch (options.type) {
     case DateStringType.YEAR_MONTH_DATE:
-      ret = `${date.getFullYear()}.${date.getMonth()}.${date.getDate()}`;
+      ret = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
       break;
     case DateStringType.MONTH_DATE_YEAR:
-      ret = `${date.getMonth()}.${date.getDate()}.${date.getFullYear()}`;
+      ret = `${date.getMonth() + 1}.${date.getDate()}.${date.getFullYear()}`;
       break;
     default:
-      ret = `${date.getMonth()}.${date.getDate()}`;
+      ret = `${date.getMonth() + 1}.${date.getDate()}`;
   }
 
   if (options.time)
