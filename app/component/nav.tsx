@@ -8,10 +8,17 @@ enum Theme {
   light = 'Light',
 }
 
+const LocalStorageThemeKey = 'theme';
+const CssTheme = 'data-theme';
+
 export default function Nav() {
-  const LocalStorageThemeKey = 'theme';
-  const CssTheme = 'data-theme';
   const [theme, setTheme] = useState<string>(Theme.dark);
+
+  /* Depends on layout.tsx metadata */
+  const changeMetaThemeColor = (hexColor: string) => {
+    const meta = document.querySelector("meta[name='theme-color']");
+    if (meta) meta.setAttribute('content', hexColor);
+  };
 
   useEffect(() => {
     const theme = window.localStorage.getItem(LocalStorageThemeKey);
@@ -27,9 +34,11 @@ export default function Nav() {
     switch (theme) {
       case Theme.dark:
         setTheme(Theme.light);
+        changeMetaThemeColor('#eeeeee');
         break;
       default:
         setTheme(Theme.dark);
+        changeMetaThemeColor('#222831');
         break;
     }
   };

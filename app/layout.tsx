@@ -13,6 +13,7 @@ const roboto = Roboto_Mono({
 export const metadata: Metadata = {
   title: `${process.env.TITLE}`,
   description: `${process.env.DESCRIPTION}`,
+  themeColor: '#222831', // default dark
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
