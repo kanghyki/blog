@@ -28,17 +28,17 @@ export default function Nav() {
   useEffect(() => {
     localStorage.setItem(LocalStorageThemeKey, theme);
     document.body.setAttribute(CssTheme, theme);
+    if (theme === Theme.dark) changeMetaThemeColor('#222831');
+    else changeMetaThemeColor('#eeeeee');
   }, [theme]);
 
   const toggleTheme = () => {
     switch (theme) {
       case Theme.dark:
         setTheme(Theme.light);
-        changeMetaThemeColor('#eeeeee');
         break;
       default:
         setTheme(Theme.dark);
-        changeMetaThemeColor('#222831');
         break;
     }
   };
