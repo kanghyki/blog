@@ -1,17 +1,31 @@
-import { NotionAPI, getBlocks } from '@/src/notion.service';
-import MarkdownIt from 'markdown-it';
+import { BlogPost } from '@/src/BlogPost';
+import { getReadableBlogPosts, getTags } from '@/src/notion.service';
+import { Suspense } from 'react';
+import PostList from './post/PostList';
+
+function Fallback() {
+  return <>Loading...</>;
+}
 
 export default async function Home() {
-  const taskLists = require('markdown-it-task-lists');
-  const md = new MarkdownIt({
-    html: true,
-    breaks: true,
-  }).use(taskLists);
-  const content = await getBlocks(NotionAPI.getInstance().getClient(), process.env.NOTION_INTRODUCTION_PAGE_ID);
+  const posts: BlogPost[] = await getReadableBlogPosts();
+  const tags: string[] = await getTags();
 
   return (
     <main>
-      <article dangerouslySetInnerHTML={{ __html: md.render(content) }} />
+      <Suspense fallback={<Fallback />}>
+        <PostList
+          posts={posts.map((e: BlogPost) => ({
+            id: e.id,
+            title: e.title,
+            createdAt: e.createdAt,
+            content: e.content,
+            authors: e.authors,
+            tags: e.tags,
+          }))}
+          tags={tags}
+        />
+      </Suspense>
     </main>
   );
 }

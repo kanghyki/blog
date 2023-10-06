@@ -30,10 +30,6 @@ export default function PostList(props: Props) {
     window.history.pushState({ path: newurl }, '', newurl);
   };
 
-  const getTag = () => {
-    return tag ? tag : '전체';
-  };
-
   const getPostIncludedTag = () => {
     return tag ? props.posts.filter((post: PostProp) => post.tags.includes(tag)) : props.posts;
   };
@@ -51,10 +47,19 @@ export default function PostList(props: Props) {
         ))}
       </div>
       <p>
-        <strong className={styles.strong}>#{getTag()}</strong>
-        {` >  총 `}
-        <strong className={styles.strong}>{getPostIncludedTag().length}</strong>
-        {`개의 포스트`}
+        {tag && (
+          <>
+            <strong className={styles.strong}>#{tag}</strong>
+            {` >  `}
+          </>
+        )}
+        {
+          <>
+            {`총 `}
+            <strong className={styles.strong}>{getPostIncludedTag().length}</strong>
+            {`개의 포스트`}
+          </>
+        }
       </p>
       <ul>
         {getPostIncludedTag().map((e: PostProp) => (
