@@ -10,7 +10,7 @@ type Props = {
 export default function TagButton(props: Props) {
   const onClick = () => {
     if (props.onClick) props.onClick();
-    if (props.link) window.location.href = `/post?tag=${props.tag}`;
+    if (props.link) window.location.href = `/?tag=${props.tag}`;
   };
 
   return (
