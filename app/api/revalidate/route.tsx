@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
 
   switch (what) {
     case 'post':
-      revalidatePath('/[id]', 'page');
+      revalidatePath('/post/[id]', 'page');
       revalidatePath('/', 'page');
       break;
     case 'introduction':
