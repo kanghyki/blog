@@ -259,7 +259,7 @@ class ImageBlock extends NotionBlock {
     if (this.block.image.type !== 'file') return;
 
     const imageResponse = await fetch(this.block.image.file.url, {
-      cache: 'no-store',
+      cache: 'force-cache',
     });
     if (imageResponse.status < 200 && imageResponse.status >= 300) return;
 
