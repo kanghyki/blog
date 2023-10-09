@@ -14,6 +14,7 @@ import {
   RichTextItemResponse,
   ToDoBlockObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints';
+import { uploadS3 } from '../AWS-S3';
 
 export class NotionBlockFactory {
   constructor() {}
@@ -257,19 +258,16 @@ class ImageBlock extends NotionBlock {
   public override async storeExternalStorage(): Promise<void> {
     if (this.block.image.type !== 'file') return;
 
-    const imageResponse = await fetch(this.block.image.file.url);
-    if (imageResponse.status < 200 && imageResponse.status >= 300) return;
-
-    const uploadResponse = await fetch(`${process.env.PROD_URL}/api/s3`, {
-      method: 'POST',
-      body: await imageResponse.blob(),
+    const imageResponse = await fetch(this.block.image.file.url, {
       cache: 'no-store',
     });
-    if (uploadResponse.status >= 200 && uploadResponse.status < 300) {
-      const json = await uploadResponse.json();
-      const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_DOMAIN}/${json.key}`;
+    if (imageResponse.status < 200 && imageResponse.status >= 300) return;
+
+    try {
+      const key = await uploadS3(await imageResponse.blob());
+      const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_DOMAIN}/${key}`;
       this.url = s3Url;
-    } else return;
+    } catch (error) {}
   }
 
   public override toMarkdown(): string {
