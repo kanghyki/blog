@@ -1,22 +1,25 @@
-import { getReadableBlogPosts, getSingleBlogPost } from '@/src/notion.service';
-import { DateStringType, dateToString } from '@/src/util';
-import { BlogPost } from '@/src/BlogPost';
 import MarkdownIt from 'markdown-it';
 import TagButton from '@/app/component/TagButton';
+import { DateStringType, dateToString } from '@/src/util';
+import { getDbPage, getPageContent, getPost } from '@/src/BlogPost';
+import { NotionAPI } from '@/src/notion/NotionAPI';
+import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 
 type PostParamsProps = {
   id: string;
 };
 
 export default async function Post({ params }: { params: PostParamsProps }) {
+  const { id } = params;
   const taskLists = require('markdown-it-task-lists');
   const md = new MarkdownIt({
     html: true,
     breaks: true,
   }).use(taskLists);
-  const { id } = params;
-  const post: BlogPost = await getSingleBlogPost(id);
-  await post.readPostBlocks();
+
+  const notionAPI = new NotionAPI();
+  const post = await getPost(notionAPI, id);
+  post.content = await getPageContent(notionAPI, id);
 
   return (
     <>
@@ -41,9 +44,10 @@ export default async function Post({ params }: { params: PostParamsProps }) {
 }
 
 export async function generateStaticParams(): Promise<PostParamsProps[]> {
-  const posts: BlogPost[] = await getReadableBlogPosts();
+  const notionAPI = new NotionAPI();
+  const res: PageObjectResponse[] = await getDbPage(notionAPI);
 
-  return posts.map((post: BlogPost) => ({
-    id: post.id,
+  return res.map((res: PageObjectResponse) => ({
+    id: res.id,
   }));
 }

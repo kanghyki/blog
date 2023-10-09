@@ -14,7 +14,7 @@ export default async function Nav() {
             <ThemeButton />
           </li>
           <li>
-            <a href="/about">About</a>
+            <Link href="/about">About</Link>
           </li>
         </ul>
       </div>

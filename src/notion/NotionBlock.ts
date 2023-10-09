@@ -18,7 +18,7 @@ import {
 export class NotionBlockFactory {
   constructor() {}
 
-  public getConverter(block: BlockObjectResponse): NotionBlockConverter {
+  public getBlock(block: BlockObjectResponse): NotionBlock {
     switch (block.type) {
       case 'heading_1':
         return new Heading1Block(block);
@@ -50,14 +50,18 @@ export class NotionBlockFactory {
   }
 }
 
-export abstract class NotionBlockConverter {
+export abstract class NotionBlock {
   constructor() {}
 
-  public toString(): string {
-    return `${this.concatRichText()}\n`;
-  }
+  public abstract toMarkdown(): string;
+  public async storeExternalStorage(): Promise<void> {}
 
-  protected abstract concatRichText(): string;
+  protected concatRichText(items: Array<RichTextItemResponse>): string {
+    let ret: string = '';
+    for (const item of items) ret += this.richTextToMarkdown(item);
+
+    return ret;
+  }
 
   protected richTextToMarkdown(richText: RichTextItemResponse): string {
     let annotationText = richText.plain_text;
@@ -67,14 +71,13 @@ export abstract class NotionBlockConverter {
     if (richText.annotations.underline) annotationText = `<u>${annotationText}</u>`;
     if (richText.annotations.bold) annotationText = `**${annotationText}**`;
     if (richText.annotations.italic) annotationText = `*${annotationText}*`;
-
     if (richText.href) annotationText = `[${annotationText}](${richText.href})`;
 
     return annotationText;
   }
 }
 
-class Heading1Block extends NotionBlockConverter {
+class Heading1Block extends NotionBlock {
   private block: Heading1BlockObjectResponse;
 
   constructor(block: Heading1BlockObjectResponse) {
@@ -82,15 +85,14 @@ class Heading1Block extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.heading_1.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.heading_1.rich_text);
 
-    return `# ${ret}`;
+    return `# ${concat}\n`;
   }
 }
 
-class Heading2Block extends NotionBlockConverter {
+class Heading2Block extends NotionBlock {
   private block: Heading2BlockObjectResponse;
 
   constructor(block: Heading2BlockObjectResponse) {
@@ -98,15 +100,14 @@ class Heading2Block extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.heading_2.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.heading_2.rich_text);
 
-    return `## ${ret}`;
+    return `## ${concat}\n`;
   }
 }
 
-class Heading3Block extends NotionBlockConverter {
+class Heading3Block extends NotionBlock {
   private block: Heading3BlockObjectResponse;
 
   constructor(block: Heading3BlockObjectResponse) {
@@ -114,15 +115,14 @@ class Heading3Block extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.heading_3.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.heading_3.rich_text);
 
-    return `### ${ret}`;
+    return `### ${concat}\n`;
   }
 }
 
-class ParagraphBlock extends NotionBlockConverter {
+class ParagraphBlock extends NotionBlock {
   private block: ParagraphBlockObjectResponse;
 
   constructor(block: ParagraphBlockObjectResponse) {
@@ -130,15 +130,14 @@ class ParagraphBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.paragraph.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.paragraph.rich_text);
 
-    return ret;
+    return `${concat}\n`;
   }
 }
 
-class NumberedListItemBlock extends NotionBlockConverter {
+class NumberedListItemBlock extends NotionBlock {
   private block: NumberedListItemBlockObjectResponse;
 
   constructor(block: NumberedListItemBlockObjectResponse) {
@@ -146,15 +145,14 @@ class NumberedListItemBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.numbered_list_item.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.numbered_list_item.rich_text);
 
-    return `1. ${ret}`;
+    return `1. ${concat}\n`;
   }
 }
 
-class BulletedListItemBlock extends NotionBlockConverter {
+class BulletedListItemBlock extends NotionBlock {
   private block: BulletedListItemBlockObjectResponse;
 
   constructor(block: BulletedListItemBlockObjectResponse) {
@@ -162,15 +160,14 @@ class BulletedListItemBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.bulleted_list_item.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.bulleted_list_item.rich_text);
 
-    return `- ${ret}`;
+    return `- ${concat}\n`;
   }
 }
 
-class ToDoBlock extends NotionBlockConverter {
+class ToDoBlock extends NotionBlock {
   private block: ToDoBlockObjectResponse;
 
   constructor(block: ToDoBlockObjectResponse) {
@@ -178,16 +175,15 @@ class ToDoBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.to_do.rich_text);
     const prefix = this.block.to_do.checked ? '- [x]' : '- [ ]';
-    for (const rich_text of this.block.to_do.rich_text) ret += this.richTextToMarkdown(rich_text);
 
-    return `${prefix} ${ret}\n`;
+    return `${prefix} ${concat}\n`;
   }
 }
 
-class QuoteBlock extends NotionBlockConverter {
+class QuoteBlock extends NotionBlock {
   private block: QuoteBlockObjectResponse;
 
   constructor(block: QuoteBlockObjectResponse) {
@@ -195,15 +191,14 @@ class QuoteBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
-    for (const rich_text of this.block.quote.rich_text) ret += this.richTextToMarkdown(rich_text);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.quote.rich_text);
 
-    return `> ${ret}`;
+    return `> ${concat}\n`;
   }
 }
 
-class CodeBlock extends NotionBlockConverter {
+class CodeBlock extends NotionBlock {
   private block: CodeBlockObjectResponse;
 
   constructor(block: CodeBlockObjectResponse) {
@@ -211,16 +206,15 @@ class CodeBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let ret = '';
+  public override toMarkdown(): string {
     const language = this.block.code.language ? this.block.code.language : '';
-    for (const rich_text of this.block.code.rich_text) ret += this.richTextToMarkdown(rich_text);
+    const concat = this.concatRichText(this.block.code.rich_text);
 
-    return `\`\`\`${language}\n${ret}\n\`\`\``;
+    return `\`\`\`${language}\n${concat}\n\`\`\`\n`;
   }
 }
 
-class EmbedBlock extends NotionBlockConverter {
+class EmbedBlock extends NotionBlock {
   private block: EmbedBlockObjectResponse;
 
   constructor(block: EmbedBlockObjectResponse) {
@@ -228,15 +222,14 @@ class EmbedBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let embedStr = '';
-    for (const caption of this.block.embed.caption) embedStr += this.richTextToMarkdown(caption);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.embed.caption);
 
-    return `[${embedStr ? embedStr : 'Link'}](${this.block.embed.url})`;
+    return `[${concat ? concat : 'Link'}](${this.block.embed.url})\n`;
   }
 }
 
-class BookmarkBlock extends NotionBlockConverter {
+class BookmarkBlock extends NotionBlock {
   private block: BookmarkBlockObjectResponse;
 
   constructor(block: BookmarkBlockObjectResponse) {
@@ -244,35 +237,60 @@ class BookmarkBlock extends NotionBlockConverter {
     this.block = block;
   }
 
-  protected override concatRichText(): string {
-    let bookmarkStr = '';
-    for (const caption of this.block.bookmark.caption) bookmarkStr += this.richTextToMarkdown(caption);
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.bookmark.caption);
 
-    return `[${bookmarkStr ? bookmarkStr : 'Link'}](${this.block.bookmark.url})`;
+    return `[${concat ? concat : 'Link'}](${this.block.bookmark.url})\n`;
   }
 }
 
-class ImageBlock extends NotionBlockConverter {
+class ImageBlock extends NotionBlock {
   private block: ImageBlockObjectResponse;
+  private url: string;
 
   constructor(block: ImageBlockObjectResponse) {
     super();
     this.block = block;
+    this.url = '';
   }
 
-  protected override concatRichText(): string {
-    if (this.block.image.type === 'file') return `![block.image.caption](${this.block.image.file.url})`;
+  public override async storeExternalStorage(): Promise<void> {
+    if (this.block.image.type !== 'file') return;
 
-    return '';
+    const imageResponse = await fetch(this.block.image.file.url);
+    if (imageResponse.status < 200 && imageResponse.status >= 300) return;
+
+    const uploadResponse = await fetch(`${process.env.PROD_URL}/api/s3`, {
+      method: 'POST',
+      body: await imageResponse.blob(),
+      cache: 'no-store',
+    });
+    if (uploadResponse.status >= 200 && uploadResponse.status < 300) {
+      const json = await uploadResponse.json();
+      const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_DOMAIN}/${json.key}`;
+      this.url = s3Url;
+    } else return;
+  }
+
+  public override toMarkdown(): string {
+    const concat = this.concatRichText(this.block.image.caption);
+
+    switch (this.block.image.type) {
+      case 'file':
+        if (!this.url) this.url = this.block.image.file.url;
+        return `![${concat ? concat : 'image'}](${this.url})\n`;
+      default:
+        return '\n';
+    }
   }
 }
 
-class NullBlock extends NotionBlockConverter {
+class NullBlock extends NotionBlock {
   constructor() {
     super();
   }
 
-  protected override concatRichText(): string {
-    return '';
+  public override toMarkdown(): string {
+    return '\n';
   }
 }

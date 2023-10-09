@@ -1,5 +1,6 @@
-import { NotionAPI, getBlocks } from '@/src/notion.service';
 import MarkdownIt from 'markdown-it';
+import { NotionAPI } from '@/src/notion/NotionAPI';
+import { getPageContent } from '@/src/BlogPost';
 
 export default async function About() {
   const taskLists = require('markdown-it-task-lists');
@@ -7,7 +8,9 @@ export default async function About() {
     html: true,
     breaks: true,
   }).use(taskLists);
-  const content = await getBlocks(NotionAPI.getInstance().getClient(), process.env.NOTION_INTRODUCTION_PAGE_ID);
+
+  const notionAPI = new NotionAPI();
+  const content = await getPageContent(notionAPI, `${process.env.NOTION_INTRODUCTION_PAGE_ID}`);
 
   return <article dangerouslySetInnerHTML={{ __html: md.render(content) }} />;
 }
