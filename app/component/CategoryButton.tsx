@@ -10,6 +10,7 @@ type Props = {
 export default function CategoryButton(props: Props) {
   const onClick = () => {
     if (props.onClick) props.onClick();
+    /* FIXME: posts path */
     if (props.link) window.location.href = `/?category=${props.category}`;
   };
 

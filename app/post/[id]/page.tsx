@@ -33,7 +33,10 @@ export default async function Post({ params }: { params: PostParamsProps }) {
         <div className={styles.info}>
           {post.category && (
             <>
-              <span className={styles.category}>{post.category}</span>
+              {/* FIXME: posts path */}
+              <Link href={`/?category=${post.category}`} className={styles.category}>
+                {post.category}
+              </Link>
               <span className={styles.divider}>{' | '}</span>
             </>
           )}
