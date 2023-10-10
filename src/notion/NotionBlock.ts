@@ -229,7 +229,7 @@ class EmbedBlock extends NotionBlock {
   public override toMarkdown(): string {
     const concat = this.concatRichText(this.block.embed.caption);
 
-    return `[${concat ? concat : 'Link'}](${this.block.embed.url})\n`;
+    return `\n[${concat ? '🔗 ' + concat : '🔗 Link'}](${this.block.embed.url})\n`;
   }
 }
 
@@ -244,7 +244,7 @@ class BookmarkBlock extends NotionBlock {
   public override toMarkdown(): string {
     const concat = this.concatRichText(this.block.bookmark.caption);
 
-    return `[${concat ? concat : 'Link'}](${this.block.bookmark.url})\n`;
+    return `\n[${concat ? '🔗 ' + concat : '🔗 Link'}](${this.block.bookmark.url})\n`;
   }
 }
 
