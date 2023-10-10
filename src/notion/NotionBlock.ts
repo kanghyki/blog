@@ -9,6 +9,7 @@ import {
   Heading2BlockObjectResponse,
   Heading3BlockObjectResponse,
   ImageBlockObjectResponse,
+  LinkToPageBlockObjectResponse,
   NumberedListItemBlockObjectResponse,
   ParagraphBlockObjectResponse,
   QuoteBlockObjectResponse,
@@ -48,6 +49,8 @@ export class NotionBlockFactory {
         return new ImageBlock(block);
       case 'divider':
         return new DividerBlock(block);
+      case 'link_to_page':
+        return new LinkToPageBlock(block);
       default:
         return new NullBlock();
     }
@@ -296,6 +299,25 @@ class DividerBlock extends NotionBlock {
 
   public override toMarkdown(): string {
     return '\n---\n';
+  }
+}
+
+class LinkToPageBlock extends NotionBlock {
+  private block: LinkToPageBlockObjectResponse;
+
+  constructor(block: LinkToPageBlockObjectResponse) {
+    super();
+    this.block = block;
+  }
+
+  public override toMarkdown(): string {
+    const ltp = this.block.link_to_page;
+
+    switch (ltp.type) {
+      case 'page_id':
+        return `[📕 Link to page](${process.env.NEXT_PUBLIC_POST_PATH}/${ltp.page_id})`;
+    }
+    return '\n';
   }
 }
 
