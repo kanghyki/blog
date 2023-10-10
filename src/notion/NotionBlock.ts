@@ -3,6 +3,7 @@ import {
   BookmarkBlockObjectResponse,
   BulletedListItemBlockObjectResponse,
   CodeBlockObjectResponse,
+  DividerBlockObjectResponse,
   EmbedBlockObjectResponse,
   Heading1BlockObjectResponse,
   Heading2BlockObjectResponse,
@@ -45,6 +46,8 @@ export class NotionBlockFactory {
         return new BookmarkBlock(block);
       case 'image':
         return new ImageBlock(block);
+      case 'divider':
+        return new DividerBlock(block);
       default:
         return new NullBlock();
     }
@@ -134,7 +137,7 @@ class ParagraphBlock extends NotionBlock {
   public override toMarkdown(): string {
     const concat = this.concatRichText(this.block.paragraph.rich_text);
 
-    return `\n${concat}\n`;
+    return concat ? `\n${concat}\n` : '\n<br/>\n\n';
   }
 }
 
@@ -280,6 +283,19 @@ class ImageBlock extends NotionBlock {
       default:
         return '\n';
     }
+  }
+}
+
+class DividerBlock extends NotionBlock {
+  private block: DividerBlockObjectResponse;
+
+  constructor(block: DividerBlockObjectResponse) {
+    super();
+    this.block = block;
+  }
+
+  public override toMarkdown(): string {
+    return '\n---\n';
   }
 }
 
