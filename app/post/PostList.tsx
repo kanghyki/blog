@@ -22,7 +22,7 @@ export default function PostList(props: Props) {
     window.history.pushState({ path: newurl }, '', newurl);
   };
 
-  const getPostIncludedTag = () => {
+  const findPostsByCategory = () => {
     return category ? props.posts.filter((post: IBlogPost) => post.category === category) : props.posts;
   };
 
@@ -48,13 +48,13 @@ export default function PostList(props: Props) {
         {
           <>
             {`총 `}
-            <strong className={styles.strong}>{getPostIncludedTag().length}</strong>
+            <strong className={styles.strong}>{findPostsByCategory().length}</strong>
             {`개의 포스트`}
           </>
         }
       </p>
       <ul>
-        {getPostIncludedTag().map((e: IBlogPost) => (
+        {findPostsByCategory().map((e: IBlogPost) => (
           <PostListItem post={e} key={e.id} />
         ))}
       </ul>
