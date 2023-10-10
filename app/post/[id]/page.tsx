@@ -25,7 +25,10 @@ export default async function Post({ params }: { params: PostParamsProps }) {
     <>
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <header>
-        <h1>{post.title}</h1>
+        <h1>
+          {post.icon && `${post.icon} `}
+          {post.title}
+        </h1>
         <p>
           <time>{`${dateToString(post.createdAt, {
             type: DateStringType.YEAR_MONTH_DATE,

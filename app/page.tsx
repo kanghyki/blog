@@ -14,17 +14,7 @@ export default async function Home() {
   return (
     <main>
       <Suspense fallback={<Fallback />}>
-        <PostList
-          posts={posts.map((e: BlogPost) => ({
-            id: e.id,
-            title: e.title,
-            createdAt: e.createdAt,
-            content: e.content,
-            authors: e.authors,
-            tags: e.tags,
-          }))}
-          tags={tags}
-        />
+        <PostList posts={posts.map((e: BlogPost) => e.toInterface())} tags={tags} />
       </Suspense>
     </main>
   );

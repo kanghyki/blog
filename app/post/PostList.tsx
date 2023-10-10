@@ -4,18 +4,10 @@ import { useSearchParams } from 'next/navigation';
 import styles from './PostList.module.css';
 import PostListItem from './PostListItem';
 import TagButton from '../component/TagButton';
-
-export type PostProp = {
-  id: string;
-  title: string;
-  createdAt: Date;
-  content: string;
-  authors: string[];
-  tags: string[];
-};
+import { IBlogPost } from '@/src/BlogPost';
 
 type Props = {
-  posts: PostProp[];
+  posts: IBlogPost[];
   tags: string[];
 };
 
@@ -31,7 +23,7 @@ export default function PostList(props: Props) {
   };
 
   const getPostIncludedTag = () => {
-    return tag ? props.posts.filter((post: PostProp) => post.tags.includes(tag)) : props.posts;
+    return tag ? props.posts.filter((post: IBlogPost) => post.tags.includes(tag)) : props.posts;
   };
 
   useEffect(() => {
@@ -62,7 +54,7 @@ export default function PostList(props: Props) {
         }
       </p>
       <ul>
-        {getPostIncludedTag().map((e: PostProp) => (
+        {getPostIncludedTag().map((e: IBlogPost) => (
           <PostListItem post={e} key={e.id} />
         ))}
       </ul>

@@ -14,13 +14,24 @@ export enum BlogPostStatus {
   Published = 'Published',
 }
 
-export class BlogPost {
+export interface IBlogPost {
+  id: string;
+  title: string;
+  createdAt: Date;
+  content: string;
+  authors: string[];
+  tags: string[];
+  icon: string;
+}
+
+export class BlogPost implements IBlogPost {
   public id: string;
   public title: string;
   public createdAt: Date;
   public content: string;
   public authors: string[];
   public tags: string[];
+  public icon: string;
 
   constructor(id: string) {
     this.id = id;
@@ -29,6 +40,7 @@ export class BlogPost {
     this.content = '';
     this.authors = [];
     this.tags = [];
+    this.icon = '';
   }
 
   public addAuthor(author: string): void {
@@ -37,6 +49,18 @@ export class BlogPost {
 
   public addTag(tag: string): void {
     this.tags.push(tag);
+  }
+
+  public toInterface(): IBlogPost {
+    return {
+      id: this.id,
+      title: this.title,
+      createdAt: this.createdAt,
+      content: this.content,
+      authors: this.authors,
+      tags: this.tags,
+      icon: this.icon,
+    };
   }
 }
 
@@ -95,6 +119,7 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
     const authorIds = adapter.readPeopleId('author');
     const tags = adapter.readMultiSelect('tag');
 
+    if (page.icon && page.icon.type === 'emoji') blogPost.icon = page.icon.emoji;
     blogPost.title = title;
     blogPost.createdAt = date;
     for (const authorId of authorIds) {
@@ -131,27 +156,29 @@ export async function getPageContent(api: NotionAPI, id: string): Promise<string
 }
 
 export async function getPost(api: NotionAPI, id: string): Promise<BlogPost> {
-  const post = new BlogPost(id);
+  const blogPost = new BlogPost(id);
 
   const command = new GetPageCommand({ page_id: id });
   const res = await api.send(command);
   if (!res.ok) return new NullBlogPost();
-  const page = new NotionAPIPageAdapter(res.res);
+  const page = res.res;
+  const adapter = new NotionAPIPageAdapter(page);
 
-  const title = page.readTitle('title');
-  const date = page.readDate('Date');
-  const authorIds = page.readPeopleId('author');
-  const tags = page.readMultiSelect('tag');
+  const title = adapter.readTitle('title');
+  const date = adapter.readDate('Date');
+  const authorIds = adapter.readPeopleId('author');
+  const tags = adapter.readMultiSelect('tag');
 
-  post.title = title;
-  post.createdAt = date;
+  if (page.icon && page.icon.type === 'emoji') blogPost.icon = page.icon.emoji;
+  blogPost.title = title;
+  blogPost.createdAt = date;
   for (const id of authorIds) {
     const getUserCommand = new GetUserCommand({ user_id: id });
     const res = await api.send(getUserCommand);
     if (!res.ok) continue;
-    if (res.res.name) post.addAuthor(res.res.name);
+    if (res.res.name) blogPost.addAuthor(res.res.name);
   }
-  for (const tag of tags) post.addTag(tag);
+  for (const tag of tags) blogPost.addTag(tag);
 
-  return post;
+  return blogPost;
 }
