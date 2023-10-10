@@ -139,8 +139,10 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
     blogPost.createdAt = date;
     for (const authorId of authorIds) {
       const cmd = new GetUserCommand({ user_id: authorId });
-      const res: UserObjectResponse = (await api.send(cmd)).res;
-      if (res.name) blogPost.addAuthor(res.name);
+      const res = await api.send(cmd);
+      if (!res.ok) continue;
+      const user: UserObjectResponse = res.res;
+      if (user.name) blogPost.addAuthor(user.name);
     }
     for (const tag of tags) blogPost.addTag(tag);
     posts.push(blogPost);
