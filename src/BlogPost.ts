@@ -11,8 +11,6 @@ import {
 import { NotionBlockFactory } from './notion/NotionBlock';
 
 export enum BlogPostStatus {
-  Idea = 'Idea',
-  Draft = 'Draft',
   Published = 'Published',
 }
 

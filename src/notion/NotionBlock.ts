@@ -134,7 +134,7 @@ class ParagraphBlock extends NotionBlock {
   public override toMarkdown(): string {
     const concat = this.concatRichText(this.block.paragraph.rich_text);
 
-    return `${concat}\n`;
+    return `\n${concat}\n`;
   }
 }
 
@@ -195,7 +195,7 @@ class QuoteBlock extends NotionBlock {
   public override toMarkdown(): string {
     const concat = this.concatRichText(this.block.quote.rich_text);
 
-    return `> ${concat}\n`;
+    return concat.replace(/^(.*)$/gm, '> $1') + '\n';
   }
 }
 
@@ -289,6 +289,6 @@ class NullBlock extends NotionBlock {
   }
 
   public override toMarkdown(): string {
-    return '\n';
+    return '\n< ❌ Unsupported Block />\n';
   }
 }
