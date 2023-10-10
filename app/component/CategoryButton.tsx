@@ -1,21 +1,21 @@
 'use client';
-import styles from './TagButton.module.css';
+import styles from './CategoryButton.module.css';
 
 type Props = {
-  tag: string;
+  category: string;
   onClick?: () => void;
   link?: boolean;
 };
 
-export default function TagButton(props: Props) {
+export default function CategoryButton(props: Props) {
   const onClick = () => {
     if (props.onClick) props.onClick();
-    if (props.link) window.location.href = `/?tag=${props.tag}`;
+    if (props.link) window.location.href = `/?category=${props.category}`;
   };
 
   return (
     <button className={styles.tag_button} onClick={onClick}>
-      {props.tag}
+      {props.category}
     </button>
   );
 }
