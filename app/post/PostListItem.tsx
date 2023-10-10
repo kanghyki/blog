@@ -29,7 +29,9 @@ export default function PostListItem(props: Props) {
           time: false,
         })}\t`}</time>
         <span className={styles.divider}>{' | '}</span>
-        {props.post.authors.length > 0 ? `${props.post.authors.join(', ')}` : 'Not set'}
+        <span className={styles.author_name}>
+          {props.post.authors.length > 0 ? `${props.post.authors.join(', ')}` : 'Not set'}
+        </span>
       </div>
     </li>
   );
