@@ -32,15 +32,16 @@ export async function uploadS3(blob: Blob): Promise<string> {
 
   let randomKey = generateRamdomId();
   while (await s3IsExistObject(s3, { bucketName: bucketName, key: randomKey })) randomKey = generateRamdomId();
+  const key = process.env.AWS_S3_KEY_PREFIX + randomKey;
 
   const buffer = new Uint8Array(await blob.arrayBuffer());
   const putObjectCommand = new AWS.PutObjectCommand({
     Bucket: bucketName,
-    Key: randomKey,
+    Key: key,
     Body: buffer,
     ContentType: blob.type,
   });
   await s3.send(putObjectCommand);
 
-  return randomKey;
+  return key;
 }
