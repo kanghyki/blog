@@ -282,7 +282,7 @@ class ImageBlock extends NotionBlock {
     switch (this.block.image.type) {
       case 'file':
         if (!this.url) this.url = this.block.image.file.url;
-        return `![${concat ? concat : 'image'}](${this.url})\n`;
+        return `\n![${concat ? concat : 'image'}](${this.url})\n`;
       default:
         return '\n';
     }
