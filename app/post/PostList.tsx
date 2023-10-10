@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import styles from './PostList.module.css';
 import PostListItem from './PostListItem';
-import TagButton from '../component/TagButton';
+import CategoryButton from '../component/CategoryButton';
 import { IBlogPost } from '@/src/BlogPost';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 
 export default function PostList(props: Props) {
   const searchParams = useSearchParams();
-  const [tag, setTag] = useState<string | undefined>(searchParams.get('tag') || undefined);
+  const [category, setCategory] = useState<string | undefined>(searchParams.get('category') || undefined);
 
   const changeQueryShallow = (key: string, value?: string | null) => {
     if (!window.history.pushState) return;
@@ -23,25 +23,25 @@ export default function PostList(props: Props) {
   };
 
   const getPostIncludedTag = () => {
-    return tag ? props.posts.filter((post: IBlogPost) => post.tags.includes(tag)) : props.posts;
+    return category ? props.posts.filter((post: IBlogPost) => post.category === category) : props.posts;
   };
 
   useEffect(() => {
-    changeQueryShallow('tag', tag);
-  }, [tag]);
+    changeQueryShallow('category', category);
+  }, [category]);
 
   return (
     <>
       <div className={styles.tag_button_container}>
-        <TagButton tag={'전체'} onClick={() => setTag(undefined)} />
+        <CategoryButton category={'전체'} onClick={() => setCategory(undefined)} />
         {props.tags.map((e: string) => (
-          <TagButton tag={e} key={e} onClick={() => setTag(e)} />
+          <CategoryButton category={e} key={e} onClick={() => setCategory(e)} />
         ))}
       </div>
       <p>
-        {tag && (
+        {category && (
           <>
-            <strong className={styles.strong}>#{tag}</strong>
+            <strong className={styles.strong}>#{category}</strong>
             {` >  `}
           </>
         )}

@@ -1,0 +1,16 @@
+.info {
+  margin-top: 1em;
+  font-size: 0.9em;
+}
+
+.time {
+  opacity: 0.7;
+}
+
+.author_name {
+  opacity: 0.7;
+}
+
+.divider {
+  color: var(--accent-low);
+}

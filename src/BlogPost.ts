@@ -20,8 +20,9 @@ export interface IBlogPost {
   createdAt: Date;
   content: string;
   authors: string[];
-  tags: string[];
+  category: string;
   icon: string;
+  summary: string;
 }
 
 export class BlogPost implements IBlogPost {
@@ -30,8 +31,9 @@ export class BlogPost implements IBlogPost {
   public createdAt: Date;
   public content: string;
   public authors: string[];
-  public tags: string[];
+  public category: string;
   public icon: string;
+  public summary: string;
 
   constructor(id: string) {
     this.id = id;
@@ -39,16 +41,13 @@ export class BlogPost implements IBlogPost {
     this.createdAt = new Date(0);
     this.content = '';
     this.authors = [];
-    this.tags = [];
+    this.category = '';
     this.icon = '';
+    this.summary = '';
   }
 
   public addAuthor(author: string): void {
     this.authors.push(author);
-  }
-
-  public addTag(tag: string): void {
-    this.tags.push(tag);
   }
 
   public toInterface(): IBlogPost {
@@ -58,8 +57,9 @@ export class BlogPost implements IBlogPost {
       createdAt: this.createdAt,
       content: this.content,
       authors: this.authors,
-      tags: this.tags,
+      category: this.category,
       icon: this.icon,
+      summary: this.summary,
     };
   }
 }
@@ -77,7 +77,7 @@ export async function getTags(api: NotionAPI): Promise<string[]> {
   const res = await api.send(command);
   if (res.ok) {
     const adapter = new NotionAPIDatabaseAdapter(res.res);
-    return adapter.readMultiSelect('tag');
+    return adapter.readSelect('category');
   }
   return [];
 }
@@ -117,7 +117,8 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
     const title = adapter.readTitle('title');
     const date = adapter.readDate('Date');
     const authorIds = adapter.readPeopleId('author');
-    const tags = adapter.readMultiSelect('tag');
+    const category = adapter.readSelect('category');
+    const summary = adapter.readText('summary');
 
     if (page.icon && page.icon.type === 'emoji') blogPost.icon = page.icon.emoji;
     blogPost.title = title;
@@ -129,7 +130,8 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
       const user: UserObjectResponse = res.res;
       if (user.name) blogPost.addAuthor(user.name);
     }
-    for (const tag of tags) blogPost.addTag(tag);
+    blogPost.category = category;
+    blogPost.summary = summary;
     posts.push(blogPost);
   }
 
@@ -167,7 +169,8 @@ export async function getPost(api: NotionAPI, id: string): Promise<BlogPost> {
   const title = adapter.readTitle('title');
   const date = adapter.readDate('Date');
   const authorIds = adapter.readPeopleId('author');
-  const tags = adapter.readMultiSelect('tag');
+  const category = adapter.readSelect('category');
+  const summary = adapter.readText('summary');
 
   if (page.icon && page.icon.type === 'emoji') blogPost.icon = page.icon.emoji;
   blogPost.title = title;
@@ -178,7 +181,8 @@ export async function getPost(api: NotionAPI, id: string): Promise<BlogPost> {
     if (!res.ok) continue;
     if (res.res.name) blogPost.addAuthor(res.res.name);
   }
-  for (const tag of tags) blogPost.addTag(tag);
+  blogPost.category = category;
+  blogPost.summary = summary;
 
   return blogPost;
 }

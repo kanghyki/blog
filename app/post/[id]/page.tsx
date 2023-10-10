@@ -1,9 +1,10 @@
+import styles from './page.module.css';
 import MarkdownIt from 'markdown-it';
-import TagButton from '@/app/component/TagButton';
 import { DateStringType, dateToString } from '@/src/util';
 import { getDbPage, getPageContent, getPost } from '@/src/BlogPost';
 import { NotionAPI } from '@/src/notion/NotionAPI';
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import Link from 'next/link';
 
 type PostParamsProps = {
   id: string;
@@ -29,16 +30,22 @@ export default async function Post({ params }: { params: PostParamsProps }) {
           {post.icon && `${post.icon} `}
           {post.title}
         </h1>
-        <p>
-          <time>{`${dateToString(post.createdAt, {
+        <div className={styles.info}>
+          {post.category && (
+            <>
+              <span className={styles.category}>{post.category}</span>
+              <span className={styles.divider}>{' | '}</span>
+            </>
+          )}
+          <time className={styles.time}>{`${dateToString(post.createdAt, {
             type: DateStringType.YEAR_MONTH_DATE,
             time: false,
-          })}`}</time>
-          {` / ${post.authors.join(', ')}`}
-        </p>
-        {post.tags.map((e: string) => (
-          <TagButton tag={e} key={e} link={true} />
-        ))}
+          })}\t`}</time>
+          <span className={styles.divider}>{' | '}</span>
+          <span className={styles.author_name}>
+            {post.authors.length > 0 ? `${post.authors.join(', ')}` : 'Not set'}
+          </span>
+        </div>
         <hr />
       </header>
       <article dangerouslySetInnerHTML={{ __html: md.render(post.content) }} />
