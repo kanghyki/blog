@@ -11,11 +11,11 @@ export async function POST(request: NextRequest) {
 
   switch (what) {
     case 'post':
-      revalidatePath('/post/[id]', 'page');
-      revalidatePath('/', 'page');
+      revalidatePath(`${process.env.NEXT_PUBLIC_POST_PATH}/[id]`, 'page');
+      revalidatePath(`${process.env.NEXT_PUBLIC_POSTS_PATH}`, 'page');
       break;
     case 'introduction':
-      revalidatePath('/about', 'page');
+      revalidatePath(`${process.env.NEXT_PUBLIC_ABOUT_PATH}`, 'page');
       break;
     default:
       return Response.json({ message: 'Missing what param' }, { status: 400 });

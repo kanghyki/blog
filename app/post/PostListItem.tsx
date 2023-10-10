@@ -14,7 +14,7 @@ export default function PostListItem(props: Props) {
         type: DateStringType.YEAR_MONTH_DATE,
         time: false,
       })}\t`}</time>
-      <Link href={`/post/${props.post.id}`}>{`${props.post.title}`}</Link>
+      <Link href={`${process.env.NEXT_PUBLIC_POST_PATH}/${props.post.id}`}>{`${props.post.title}`}</Link>
       <br />
       {props.post.tags.map((e: string) => (
         <span key={e} className={styles.small_tag}>

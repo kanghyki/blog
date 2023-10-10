@@ -6,7 +6,7 @@ export default async function Nav() {
   return (
     <nav>
       <div className={styles.nav_container}>
-        <Link href="/">
+        <Link href={`${process.env.NEXT_PUBLIC_POSTS_PATH}`}>
           <h2>{process.env.NEXT_PUBLIC_LOGO}</h2>
         </Link>
         <ul className={styles.nav}>
@@ -14,7 +14,7 @@ export default async function Nav() {
             <ThemeButton />
           </li>
           <li>
-            <Link href="/about">About</Link>
+            <Link href={`${process.env.NEXT_PUBLIC_ABOUT_PATH}`}>About</Link>
           </li>
         </ul>
       </div>
