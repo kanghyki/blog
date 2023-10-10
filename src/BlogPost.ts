@@ -15,68 +15,28 @@ export enum BlogPostStatus {
 }
 
 export class BlogPost {
-  private _id: string;
-  private _title: string;
-  private _createdAt: Date;
-  private _content: string;
-  private _authors: string[];
-  private _tags: string[];
+  public id: string;
+  public title: string;
+  public createdAt: Date;
+  public content: string;
+  public authors: string[];
+  public tags: string[];
 
-  constructor(_id: string) {
-    this._id = _id;
-    this._title = '';
-    this._createdAt = new Date(0);
-    this._content = '';
-    this._authors = [];
-    this._tags = [];
-  }
-
-  get id(): string {
-    return this._id;
-  }
-
-  set id(_id: string) {
-    this._id = _id;
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  set title(_title: string) {
-    this._title = _title;
-  }
-
-  get authors(): string[] {
-    return this._authors;
+  constructor(id: string) {
+    this.id = id;
+    this.title = '';
+    this.createdAt = new Date(0);
+    this.content = '';
+    this.authors = [];
+    this.tags = [];
   }
 
   public addAuthor(author: string): void {
-    this._authors.push(author);
-  }
-
-  get tags(): string[] {
-    return this._tags;
+    this.authors.push(author);
   }
 
   public addTag(tag: string): void {
-    this._tags.push(tag);
-  }
-
-  get createdAt(): Date {
-    return this._createdAt;
-  }
-
-  set createdAt(_createdAt: Date) {
-    this._createdAt = _createdAt;
-  }
-
-  get content(): string {
-    return this._content;
-  }
-
-  set content(_content: string) {
-    this._content = _content;
+    this.tags.push(tag);
   }
 }
 
