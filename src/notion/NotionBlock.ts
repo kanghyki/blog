@@ -52,7 +52,7 @@ export class NotionBlockFactory {
       case 'link_to_page':
         return new LinkToPageBlock(block);
       default:
-        return new NullBlock();
+        return new UnsupportedBlock();
     }
   }
 }
@@ -261,6 +261,10 @@ class ImageBlock extends NotionBlock {
     this.url = '';
   }
 
+  private ramdomInt(range: number): number {
+    return Math.floor(Math.random() * range);
+  }
+
   public override async storeExternalStorage(): Promise<void> {
     if (this.block.image.type !== 'file') return;
 
@@ -268,9 +272,13 @@ class ImageBlock extends NotionBlock {
       cache: 'force-cache',
     });
     if (imageResponse.status < 200 && imageResponse.status >= 300) return;
-
     try {
-      const key = await uploadS3(await imageResponse.blob());
+      /* image.file.url -> https://<AWS S3>/<UUID>/<UUID>/<FILE_NAME>?<query> */
+      const regex = this.block.image.file.url.match(/https:\/\/[^\/]*\/[^\/]*\/[^\/]*\/([^?]+).*/);
+      let fileName = '';
+      if (!regex) fileName = this.ramdomInt(100000000).toString() + '_random_generated';
+      else fileName = regex[1];
+      const key = await uploadS3(await imageResponse.blob(), fileName);
       const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_DOMAIN}/${key}`;
       this.url = s3Url;
     } catch (error) {}
@@ -321,7 +329,7 @@ class LinkToPageBlock extends NotionBlock {
   }
 }
 
-class NullBlock extends NotionBlock {
+class UnsupportedBlock extends NotionBlock {
   constructor() {
     super();
   }
