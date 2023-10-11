@@ -35,6 +35,14 @@ body {
   overflow-wrap: break-word;
 }
 
+article {
+  font-weight: 300;
+}
+
+summary {
+  font-weight: 300;
+}
+
 h1,
 h2,
 h3,

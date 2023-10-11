@@ -3,11 +3,14 @@ import Nav from './component/nav';
 import Footer from './component/footer';
 
 import type { Metadata } from 'next';
-import { Roboto_Mono } from 'next/font/google';
+import { Noto_Sans_KR } from 'next/font/google';
 
-const roboto = Roboto_Mono({
+export const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
-  display: 'swap',
+  style: 'normal',
+  variable: '--noto-sans-kr',
+  display: 'fallback',
+  fallback: ['system-ui'],
 });
 
 export const metadata: Metadata = {
@@ -38,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className={roboto.className}>
+      <body className={notoSansKr.className}>
         <Nav />
         {children}
         <Footer />
