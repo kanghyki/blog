@@ -33,14 +33,14 @@ export default async function Post({ params }: { params: PostParamsProps }) {
           {post.category && (
             <>
               <span className={styles.category}>{post.category}</span>
-              <span className={styles.divider}>{' | '}</span>
+              <span className={styles.divider}>{'|'}</span>
             </>
           )}
           <time className={styles.time}>{`${dateToString(post.createdAt, {
             type: DateStringType.YEAR_MONTH_DATE,
             time: false,
           })}\t`}</time>
-          <span className={styles.divider}>{' | '}</span>
+          <span className={styles.divider}>{'|'}</span>
           <span className={styles.author_name}>
             {post.authors.length > 0 ? `${post.authors.join(', ')}` : 'Not set'}
           </span>

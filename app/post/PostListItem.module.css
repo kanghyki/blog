@@ -2,11 +2,6 @@
   font-size: 1.3em;
 }
 
-.summary {
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
 .post_list_item {
   list-style: none;
   padding: 1.1em 0;
@@ -22,8 +17,14 @@
   border-bottom: none;
 }
 
+.summary {
+  margin-top: 0.1em;
+  margin-bottom: 1em;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
 .info {
-  margin-top: 1em;
   font-size: 0.8em;
 }
 
@@ -41,4 +42,5 @@
 
 .divider {
   color: var(--accent-low);
+  margin: 0px 0.5em;
 }

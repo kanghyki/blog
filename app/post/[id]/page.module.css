@@ -1,3 +1,7 @@
+.category {
+  color: var(--highlight);
+}
+
 .info {
   margin-top: 1em;
   font-size: 0.9em;
@@ -13,4 +17,5 @@
 
 .divider {
   color: var(--accent-low);
+  margin: 0px 0.5em;
 }

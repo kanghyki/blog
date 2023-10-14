@@ -17,22 +17,32 @@ export default function PostListItem(props: Props) {
         </Link>
       </strong>
       <summary className={styles.summary}>{props.post.summary}</summary>
-      <div className={styles.info}>
-        {props.post.category && (
-          <>
-            <span className={styles.category}>{props.post.category}</span>
-            <span className={styles.divider}>{' | '}</span>
-          </>
-        )}
-        <time className={styles.time}>{`${dateToString(props.post.createdAt, {
-          type: DateStringType.YEAR_MONTH_DATE,
-          time: false,
-        })}\t`}</time>
-        <span className={styles.divider}>{' | '}</span>
-        <span className={styles.author_name}>
-          {props.post.authors.length > 0 ? `${props.post.authors.join(', ')}` : 'Not set'}
-        </span>
-      </div>
+      <PostInfo post={props.post} />
     </li>
+  );
+}
+
+type PropsPostInfo = {
+  post: IBlogPost;
+};
+
+export function PostInfo(props: PropsPostInfo) {
+  return (
+    <div className={styles.info}>
+      {props.post.category && (
+        <>
+          <span className={styles.category}>{props.post.category}</span>
+          <span className={styles.divider}>{'|'}</span>
+        </>
+      )}
+      <time className={styles.time}>{`${dateToString(props.post.createdAt, {
+        type: DateStringType.YEAR_MONTH_DATE,
+        time: false,
+      })}\t`}</time>
+      <span className={styles.divider}>{'|'}</span>
+      <span className={styles.author_name}>
+        {props.post.authors.length > 0 ? `${props.post.authors.join(', ')}` : 'Not set'}
+      </span>
+    </div>
   );
 }
