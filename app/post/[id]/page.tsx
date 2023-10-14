@@ -4,7 +4,6 @@ import { DateStringType, dateToString } from '@/src/util';
 import { getDbPage, getPageContent, getPost } from '@/src/BlogPost';
 import { NotionAPI } from '@/src/notion/NotionAPI';
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import Link from 'next/link';
 
 type PostParamsProps = {
   id: string;
@@ -33,10 +32,7 @@ export default async function Post({ params }: { params: PostParamsProps }) {
         <div className={styles.info}>
           {post.category && (
             <>
-              {/* FIXME: posts path */}
-              <Link href={`/?category=${post.category}`} className={styles.category}>
-                {post.category}
-              </Link>
+              <span className={styles.category}>{post.category}</span>
               <span className={styles.divider}>{' | '}</span>
             </>
           )}

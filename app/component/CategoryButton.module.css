@@ -12,6 +12,20 @@
   font-size: 0.8em;
 }
 
+.tag_button_select {
+  padding: 0.5em 0.7em;
+  margin-right: 0.7em;
+  margin-bottom: 0.8em;
+  margin-top: 0.8em;
+  border: none;
+  border-radius: 8px;
+
+  background-color: var(--highlight);
+  color: var(--font-color);
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
 .tag_button:last-child {
   margin-right: 0;
 }

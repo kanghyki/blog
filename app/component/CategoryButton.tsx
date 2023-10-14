@@ -4,6 +4,7 @@ import styles from './CategoryButton.module.css';
 type Props = {
   category: string;
   onClick?: () => void;
+  select?: boolean;
   link?: boolean;
 };
 
@@ -15,7 +16,7 @@ export default function CategoryButton(props: Props) {
   };
 
   return (
-    <button className={styles.tag_button} onClick={onClick}>
+    <button className={props.select ? styles.tag_button_select : styles.tag_button} onClick={onClick}>
       {props.category}
     </button>
   );

@@ -70,7 +70,7 @@ export class NullBlogPost extends BlogPost {
   }
 }
 
-export async function getTags(api: NotionAPI): Promise<string[]> {
+export async function getCategories(api: NotionAPI): Promise<string[]> {
   const command = new GetDatabaseCommand({
     database_id: `${process.env.NOTION_DB_ID}`,
   });

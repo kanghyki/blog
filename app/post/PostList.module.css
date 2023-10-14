@@ -12,3 +12,49 @@
 .strong {
   color: var(--highlight);
 }
+
+.status_bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.66em 0;
+}
+
+.input_box {
+  width: 25%;
+  background-color: inherit;
+  color: var(--font-color);
+  outline: none;
+  border: none;
+  padding: 0.33em;
+  border-radius: 0;
+  border-bottom: 1px solid var(--accent-low);
+  transition: 0.15s ease-in;
+}
+
+/* mobile */
+@media screen and (max-width: 768px) {
+  .input_box {
+    width: 50%;
+  }
+}
+
+.input_box input:focus {
+  border-bottom: 1px solid var(--highlight);
+}
+
+.auto_complete {
+  font-size: 0.8em;
+}
+
+.auto_complete button {
+  background-color: inherit;
+  color: var(--highlight);
+  border: none;
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+
+.auto_complete button:hover {
+  opacity: 0.8;
+}
