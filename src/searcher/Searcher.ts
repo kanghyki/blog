@@ -9,10 +9,12 @@ export interface SearcherOption {
 export class Searcher {
   private option: SearcherOption;
   private indexer: Indexer;
+  private autoCompleter: AutoCompleter;
 
   constructor(option: SearcherOption) {
     this.option = option;
     this.indexer = new Indexer({ caseInsensitive: this.option.caseInsensitive });
+    this.autoCompleter = new AutoCompleter(this.indexer.getTrie());
   }
 
   public getIndexer(): Indexer {
@@ -83,14 +85,18 @@ export class Searcher {
   }
 
   private searchWord(word: string, scores: Map<string, number>): void {
-    const wordInfos = this.indexer.find(this.option.caseInsensitive ? word.toLowerCase() : word);
+    const autoCompleteWords = this.autoCompleter.autoComplete(word, { max: 5 });
+    const words = [word, ...autoCompleteWords];
+    for (const w of words) {
+      const wordInfos = this.indexer.find(this.option.caseInsensitive ? w.toLowerCase() : w);
 
-    for (const info of wordInfos)
-      this.updateScore({
-        scores: scores,
-        id: info.id,
-        score: this.calcScore(info),
-      });
+      for (const info of wordInfos)
+        this.updateScore({
+          scores: scores,
+          id: info.id,
+          score: this.calcScore(info),
+        });
+    }
   }
 
   private isBetween(target: WordInfo, point: { start: WordInfo; end: WordInfo }): boolean {
