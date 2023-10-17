@@ -1,4 +1,4 @@
-import { PageObjectResponse, UserObjectResponse } from '@notionhq/client/build/src/api-endpoints';
+import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
 import { NotionAPI } from './notion/NotionAPI';
 import { NotionAPIDatabaseAdapter, NotionAPIPageAdapter } from './notion/NotionAPIAdapter';
 import {
@@ -75,15 +75,14 @@ export async function getCategories(api: NotionAPI): Promise<string[]> {
     database_id: `${process.env.NOTION_DB_ID}`,
   });
   const res = await api.send(command);
-  if (res.ok) {
-    const adapter = new NotionAPIDatabaseAdapter(res.res);
-    return adapter.readSelect('category');
-  }
-  return [];
+  if (!res) return [];
+
+  const adapter = new NotionAPIDatabaseAdapter(res);
+  return adapter.readSelect('category');
 }
 
 export async function getDbPage(api: NotionAPI): Promise<PageObjectResponse[]> {
-  const dbQueryCommand = new GetDatabaseQueryCommand({
+  const command = new GetDatabaseQueryCommand({
     params: {
       database_id: `${process.env.NOTION_DB_ID}`,
       filter: {
@@ -100,10 +99,10 @@ export async function getDbPage(api: NotionAPI): Promise<PageObjectResponse[]> {
       ],
     },
   });
-  const dbQueryRes = await api.send(dbQueryCommand);
-  if (!dbQueryRes.ok) return [];
+  const res = await api.send(command);
 
-  return dbQueryRes.res;
+  if (!res) return [];
+  return res;
 }
 
 export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
@@ -125,9 +124,8 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
     blogPost.createdAt = date;
     for (const authorId of authorIds) {
       const cmd = new GetUserCommand({ user_id: authorId });
-      const res = await api.send(cmd);
-      if (!res.ok) continue;
-      const user: UserObjectResponse = res.res;
+      const user = await api.send(cmd);
+      if (!user) continue;
       if (user.name) blogPost.addAuthor(user.name);
     }
     blogPost.category = category;
@@ -141,14 +139,12 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
 export async function getPageContent(api: NotionAPI, id: string): Promise<string> {
   let content = '';
 
-  const command = new GetBlockCommand({
-    page_id: id,
-  });
+  const command = new GetBlockCommand({ page_id: id });
   const res = await api.send(command);
-  if (!res.ok) return '';
+  if (!res) return '';
 
   const factory = new NotionBlockFactory();
-  for (const node of res.res) {
+  for (const node of res) {
     const block = factory.getBlock(node.block);
     await block.storeExternalStorage();
     content += block.toMarkdown();
@@ -162,9 +158,8 @@ export async function getPost(api: NotionAPI, id: string): Promise<BlogPost> {
 
   const command = new GetPageCommand({ page_id: id });
   const res = await api.send(command);
-  if (!res.ok) return new NullBlogPost();
-  const page = res.res;
-  const adapter = new NotionAPIPageAdapter(page);
+  if (!res) return new NullBlogPost();
+  const adapter = new NotionAPIPageAdapter(res);
 
   const title = adapter.readTitle('title');
   const date = adapter.readDate('Date');
@@ -172,14 +167,14 @@ export async function getPost(api: NotionAPI, id: string): Promise<BlogPost> {
   const category = adapter.readSelect('category');
   const summary = adapter.readText('summary');
 
-  if (page.icon && page.icon.type === 'emoji') blogPost.icon = page.icon.emoji;
+  if (res.icon && res.icon.type === 'emoji') blogPost.icon = res.icon.emoji;
   blogPost.title = title;
   blogPost.createdAt = date;
   for (const id of authorIds) {
     const getUserCommand = new GetUserCommand({ user_id: id });
-    const res = await api.send(getUserCommand);
-    if (!res.ok) continue;
-    if (res.res.name) blogPost.addAuthor(res.res.name);
+    const user = await api.send(getUserCommand);
+    if (!user) continue;
+    if (user.name) blogPost.addAuthor(user.name);
   }
   blogPost.category = category;
   blogPost.summary = summary;

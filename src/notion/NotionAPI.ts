@@ -1,6 +1,31 @@
 import 'server-only';
 import { Client, LogLevel } from '@notionhq/client';
-import { NotionAPICommand } from './NotionAPICommand';
+import {
+  GetBlockCommand,
+  GetBlockResponseNode,
+  GetDatabaseCommand,
+  GetDatabaseQueryCommand,
+  GetPageCommand,
+  GetUserCommand,
+  NotionAPICommand,
+} from './NotionAPICommand';
+import {
+  DatabaseObjectResponse,
+  PageObjectResponse,
+  UserObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints';
+
+type CommandResponseType<T> = T extends GetDatabaseCommand
+  ? DatabaseObjectResponse
+  : T extends GetDatabaseQueryCommand
+  ? PageObjectResponse[]
+  : T extends GetPageCommand
+  ? PageObjectResponse
+  : T extends GetBlockCommand
+  ? GetBlockResponseNode[]
+  : T extends GetUserCommand
+  ? UserObjectResponse
+  : never;
 
 export class NotionAPI {
   private notionClient: Client;
@@ -12,19 +37,11 @@ export class NotionAPI {
     });
   }
 
-  public async send(command: NotionAPICommand): Promise<{ ok: boolean; res: any }> {
+  public async send<T extends NotionAPICommand>(command: T): Promise<CommandResponseType<T> | undefined> {
     try {
-      const res = await command.execute(this.notionClient);
-      if (res)
-        return {
-          ok: true,
-          res: res,
-        };
+      return await command.execute(this.notionClient);
     } catch (error) {}
 
-    return {
-      ok: false,
-      res: undefined,
-    };
+    return undefined;
   }
 }
