@@ -37,7 +37,7 @@ export default function PostList(props: PropsPostList) {
   }, [searchText, category, props, searcher]);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    const timeout: NodeJS.Timeout = setTimeout(() => {
       update();
     }, 250);
     return () => {
