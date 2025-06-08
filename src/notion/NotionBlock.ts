@@ -281,7 +281,9 @@ class ImageBlock extends NotionBlock {
       const key = await uploadS3(await imageResponse.blob(), fileName);
       const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_DOMAIN}/${key}`;
       this.url = s3Url;
-    } catch (error) {}
+    } catch (error) {
+      console.debug(`Error uploading image to S3: ${error}`);
+    }
   }
 
   public override toMarkdown(): string {
