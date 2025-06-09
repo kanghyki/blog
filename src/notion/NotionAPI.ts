@@ -28,7 +28,7 @@ type CommandResponseType<T> = T extends GetDatabaseCommand
   : never;
 
 export class NotionAPI {
-  private notionClient: Client;
+  public notionClient: Client;
 
   constructor() {
     this.notionClient = new Client({

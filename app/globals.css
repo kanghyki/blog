@@ -134,3 +134,17 @@ img {
 .task-list-item {
   list-style: none;
 }
+
+table {
+  border: 1px solid var(--background2);
+  border-collapse: collapse;
+  th,
+  td {
+    border: 1px solid var(--accent-low);
+    padding: 0.5em 0.5em;
+  }
+  th {
+    background-color: var(--background2);
+    color: var(--cloudy-text-color);
+  }
+}

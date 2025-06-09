@@ -1,10 +1,15 @@
 import styles from './page.module.css';
 import { DateStringType, dateToString } from '@/src/util';
-import { getDbPage, getPageContent, getPost } from '@/src/BlogPost';
+import { getDbPage, getPost } from '@/src/BlogPost';
 import { NotionAPI } from '@/src/notion/NotionAPI';
 import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints';
-import { remark } from 'remark';
-import html from 'remark-html';
+import { NotionToMarkdown } from 'notion-to-md';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remark2rehype from 'remark-rehype';
+import remarkToc from 'remark-toc';
+import remarkGfm from 'remark-gfm';
+import rehypeStringify from 'rehype-stringify';
 
 type PostParamsProps = {
   params: Promise<{
@@ -17,10 +22,19 @@ export default async function Post(props: PostParamsProps) {
 
   const notionAPI = new NotionAPI();
   const post = await getPost(notionAPI, params.id);
-  post.content = await getPageContent(notionAPI, params.id);
 
-  const processedContent = await remark().use(html).process(post.content);
-  const contentHtml = processedContent.toString();
+  const n2m = new NotionToMarkdown({ notionClient: notionAPI.notionClient });
+  const mdblocks = await n2m.pageToMarkdown(params.id);
+  const mdText = n2m.toMarkdownString(mdblocks).parent;
+
+  const html_text = unified()
+    .use(remarkParse)
+    .use(remarkToc)
+    .use(remarkGfm)
+    .use(remark2rehype)
+    .use(rehypeStringify)
+    .processSync(mdText)
+    .toString();
 
   return (
     <>
@@ -43,17 +57,17 @@ export default async function Post(props: PostParamsProps) {
           })}\t`}</time>
           <span className={styles.divider}>{'|'}</span>
           <span className={styles.author_name}>
-            {post.authors.length > 0 ? `${post.authors.join(', ')}` : 'Not set'}
+            {post.authors.length > 0 ? `${post.authors.join(', ')}` : 'Anonymous'}
           </span>
         </div>
         <hr />
       </header>
-      <article dangerouslySetInnerHTML={{ __html: contentHtml }} />
+      <article dangerouslySetInnerHTML={{ __html: html_text }} />
     </>
   );
 }
 
-export async function generateStaticParams(): Promise<PostParamsProps[]> {
+export async function generateStaticParams(): Promise<{ id: string }[]> {
   const notionAPI = new NotionAPI();
   const res: PageObjectResponse[] = await getDbPage(notionAPI);
 

@@ -5,7 +5,7 @@ import Footer from './component/footer';
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 
-export const notoSansKr = Noto_Sans_KR({
+const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
   style: 'normal',
   variable: '--noto-sans-kr',
@@ -32,7 +32,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  themeColor: '#222831', // default dark
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -136,6 +136,9 @@ export async function getPosts(api: NotionAPI): Promise<BlogPost[]> {
   return posts;
 }
 
+/**
+ * @deprecated('Use n2m instead')
+ */
 export async function getPageContent(api: NotionAPI, id: string): Promise<string> {
   let content = '';
 

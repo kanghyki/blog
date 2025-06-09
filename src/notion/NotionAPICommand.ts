@@ -82,6 +82,9 @@ export class GetBlockResponseNode {
   }
 }
 
+/**
+ * @deprecated('Use n2m instead')
+ */
 export class GetBlockCommand implements NotionAPICommand {
   private page_id: string;
   private maxDepth: number;

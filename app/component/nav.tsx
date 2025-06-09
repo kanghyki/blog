@@ -7,7 +7,7 @@ export default async function Nav() {
     <nav>
       <div className={styles.nav_container}>
         <Link href={`${process.env.NEXT_PUBLIC_POSTS_PATH}`}>
-          <h2>{process.env.NEXT_PUBLIC_LOGO}</h2>
+          <h2>{process.env.NEXT_PUBLIC_TEXT_LOGO}</h2>
         </Link>
         <ul className={styles.nav}>
           <li>
