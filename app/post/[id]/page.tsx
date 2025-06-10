@@ -10,6 +10,7 @@ import remark2rehype from 'remark-rehype';
 import remarkGfm from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
 import { ensureImageDownloaded } from './download';
+import remarkToc from 'remark-toc';
 
 type PostParamsProps = {
   params: Promise<{
@@ -30,11 +31,15 @@ export default async function Post(props: PostParamsProps) {
     const ret = await ensureImageDownloaded(url, params.id);
     return `![${ret.fileName}](${ret.localPath})`;
   });
+  n2m.setCustomTransformer('table_of_contents', async block => {
+    return `### 목차`;
+  });
   const mdblocks = await n2m.pageToMarkdown(params.id);
   const mdText = n2m.toMarkdownString(mdblocks).parent;
 
   const html_text = unified()
     .use(remarkParse)
+    .use(remarkToc, { heading: '목차', ordered: true, maxDepth: 3 })
     .use(remarkGfm)
     .use(remark2rehype)
     .use(rehypeStringify)
@@ -43,6 +48,9 @@ export default async function Post(props: PostParamsProps) {
 
   return (
     <>
+      <head>
+        <title>{post.title}</title>
+      </head>
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <header>
         <h2>
