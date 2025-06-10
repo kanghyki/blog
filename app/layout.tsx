@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <meta name="google-site-verification" content="bJUDxXvyRsxVR_I_NwWEtJWB5juHYrV51olmBwqLZy8" />
+        <meta name="google-site-verification" content="ifIm20wXN4mCuEPDYXfgfyeK9Ko1mpXG8Jhw9YhfZPQ" />
       </head>
       <body className={notoSansKr.className}>
         <Nav />
