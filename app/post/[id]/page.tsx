@@ -48,9 +48,6 @@ export default async function Post(props: PostParamsProps) {
 
   return (
     <>
-      <head>
-        <title>{post.title}</title>
-      </head>
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <header>
         <h2>
