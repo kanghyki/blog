@@ -32,14 +32,14 @@ export default async function Post(props: PostParamsProps) {
     return `![${ret.fileName}](${ret.localPath})`;
   });
   n2m.setCustomTransformer('table_of_contents', async block => {
-    return `### 목차`;
+    return `### 목차\n# // -----`;
   });
   const mdblocks = await n2m.pageToMarkdown(params.id);
   const mdText = n2m.toMarkdownString(mdblocks).parent;
 
   const html_text = unified()
     .use(remarkParse)
-    .use(remarkToc, { heading: '목차', ordered: true, maxDepth: 3 })
+    .use(remarkToc, { heading: '목차', ordered: false, maxDepth: 3, tight: true })
     .use(remarkGfm)
     .use(remark2rehype)
     .use(rehypeStringify)
