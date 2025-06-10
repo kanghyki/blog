@@ -17,3 +17,13 @@
 .nav li:first-child {
   margin-left: 0;
 }
+
+.nav li a {
+  color: var(--default-text-color);
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.nav li a:hover {
+  color: var(--point-color-light-yellow);
+}

@@ -1,20 +1,22 @@
 import Link from 'next/link';
 import styles from './nav.module.css';
-import ThemeButton from './ThemeButton';
+
+const navItems = [
+  { href: '/', label: '소개' },
+  { href: '/post', label: '글' },
+];
 
 export default async function Nav() {
   return (
     <nav>
       <div className={styles.nav_container}>
         <ul className={styles.nav}>
-          <li>
-            <Link href={`${process.env.NEXT_PUBLIC_ROOT_PATH}`}>소개</Link>
-          </li>
-          <li>
-            <Link href={`${process.env.NEXT_PUBLIC_POST_PATH}`}>글</Link>
-          </li>
+          {navItems.map((V, K) => (
+            <li key={K}>
+              <Link href={V.href}>{V.label}</Link>
+            </li>
+          ))}
         </ul>
-        <ThemeButton />
       </div>
     </nav>
   );

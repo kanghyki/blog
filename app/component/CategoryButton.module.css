@@ -6,8 +6,8 @@
   border: none;
   border-radius: 8px;
 
-  background-color: var(--background2);
-  color: var(--font-color);
+  background-color: var(--sub-color-deep-gray);
+  color: var(--default-text-color);
   cursor: pointer;
   font-size: 0.8em;
 }
@@ -20,8 +20,8 @@
   border: none;
   border-radius: 8px;
 
-  background-color: var(--highlight);
-  color: var(--font-color);
+  background-color: var(--point-color-light-yellow);
+  color: var(--sub-color-deep-gray);
   cursor: pointer;
   font-size: 0.8em;
 }

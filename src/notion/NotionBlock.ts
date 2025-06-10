@@ -16,7 +16,6 @@ import {
   RichTextItemResponse,
   ToDoBlockObjectResponse,
 } from '@notionhq/client/build/src/api-endpoints';
-import { uploadS3 } from '../AWS-S3';
 
 export class NotionBlockFactory {
   constructor() {}
@@ -61,7 +60,6 @@ export abstract class NotionBlock {
   constructor() {}
 
   public abstract toMarkdown(): string;
-  public async storeExternalStorage(): Promise<void> {}
 
   protected concatRichText(items: Array<RichTextItemResponse>): string {
     let ret: string = '';
@@ -263,27 +261,6 @@ class ImageBlock extends NotionBlock {
 
   private ramdomInt(range: number): number {
     return Math.floor(Math.random() * range);
-  }
-
-  public override async storeExternalStorage(): Promise<void> {
-    if (this.block.image.type !== 'file') return;
-
-    const imageResponse = await fetch(this.block.image.file.url, {
-      cache: 'force-cache',
-    });
-    if (imageResponse.status < 200 && imageResponse.status >= 300) return;
-    try {
-      /* image.file.url -> https://<AWS S3>/<UUID>/<UUID>/<FILE_NAME>?<query> */
-      const regex = this.block.image.file.url.match(/https:\/\/[^\/]*\/[^\/]*\/[^\/]*\/([^?]+).*/);
-      let fileName = '';
-      if (!regex) fileName = this.ramdomInt(100000000).toString() + '_random_generated';
-      else fileName = regex[1];
-      const key = await uploadS3(await imageResponse.blob(), fileName);
-      const s3Url = `https://${process.env.AWS_S3_BUCKET_NAME}.s3.${process.env.AWS_DOMAIN}/${key}`;
-      this.url = s3Url;
-    } catch (error) {
-      console.debug(`Error uploading image to S3: ${error}`);
-    }
   }
 
   public override toMarkdown(): string {

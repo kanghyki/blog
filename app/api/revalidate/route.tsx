@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 
 enum What {
   POST = 'post',
-  INTRO = 'intro',
+  INTRO = 'introduction',
 }
 // `host/api/revalidate?what=<what>&secret=<token>`
 export async function POST(request: NextRequest) {
@@ -16,9 +16,9 @@ export async function POST(request: NextRequest) {
 
   if (what == What.POST) {
     revalidatePath(`${process.env.NEXT_PUBLIC_POST_PATH}/[id]`, 'page');
-    revalidatePath(`${process.env.NEXT_PUBLIC_POSTS_PATH}`, 'page');
+    revalidatePath(`${process.env.NEXT_PUBLIC_POST_PATH}`, 'page');
   } else if (what == What.INTRO) {
-    revalidatePath(`${process.env.NEXT_PUBLIC_ABOUT_PATH}`, 'page');
+    revalidatePath(`${process.env.NEXT_PUBLIC_INTRODUCTION_PATH}`, 'page');
   } else {
     return Response.json({ message: 'Invalid what param' }, { status: 400 });
   }

@@ -149,7 +149,6 @@ export async function getPageContent(api: NotionAPI, id: string): Promise<string
   const factory = new NotionBlockFactory();
   for (const node of res) {
     const block = factory.getBlock(node.block);
-    await block.storeExternalStorage();
     content += block.toMarkdown();
   }
 

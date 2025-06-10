@@ -70,17 +70,10 @@ type PropsPostListInfo = {
 function PostListInfo(props: PropsPostListInfo) {
   return (
     <span>
-      {props.category && <strong className={styles.strong}>{`[${props.category}]`}</strong>}
-      {props.category && props.searchString && ' '}
-      {props.searchString && <strong className={styles.strong}>{`${props.searchString}`}</strong>}
+      {props.category && props.category}
+      {props.searchString && ` ${props.searchString}`}
       {(props.category || props.searchString) && ' > '}
-      {
-        <>
-          {`총 `}
-          <strong className={styles.strong}>{props.count}</strong>
-          {`개의 포스트`}
-        </>
-      }
+      {`총 ${props.count}개의 글`}
     </span>
   );
 }

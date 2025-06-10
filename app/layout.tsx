@@ -1,8 +1,7 @@
 import './globals.css';
 import Nav from './component/nav';
-import Footer from './component/footer';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 
 const notoSansKr = Noto_Sans_KR({
@@ -28,10 +27,14 @@ export const metadata: Metadata = {
         url: `${process.env.OG_IMAGE_URL}`,
         width: 420,
         height: 420,
-        alt: 'alt',
+        alt: 'image',
       },
     ],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#181818',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -43,7 +46,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={notoSansKr.className}>
         <Nav />
         {children}
-        <Footer />
       </body>
     </html>
   );

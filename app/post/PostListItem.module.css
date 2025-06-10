@@ -1,11 +1,18 @@
-.link {
-  font-size: 1.3em;
+.post_icon {
+  font-size: 1em;
+  margin-right: 0.2em;
+}
+.post_title {
+  font-size: 1em;
+  font-weight: 400;
+  color: var(--default-text-color);
+  margin: 0.2em 0;
 }
 
 .post_list_item {
   list-style: none;
-  padding: 1.1em 0;
-  border-bottom: 0.5px solid var(--accent-low);
+  padding: 0.66em 0;
+  border-bottom: 0.5px solid var(--sub-color-deep-gray);
 }
 
 .post_list_item:first-child {
@@ -18,29 +25,23 @@
 }
 
 .summary {
+  font-size: 0.8em;
   margin-top: 0.1em;
-  margin-bottom: 1em;
-  font-size: 0.9em;
-  opacity: 0.8;
+  margin-bottom: 0.1em;
+  color: var(--sub-color-middle-gray);
 }
 
 .info {
   font-size: 0.8em;
 }
 
-.category {
-  color: var(--highlight);
+.info span {
+  color: var(--sub-color-middle-gray);
+  padding: 0 0.5em;
+  border-left: 1px solid var(--sub-color-deep-gray);
 }
 
-.time {
-  opacity: 0.7;
-}
-
-.author_name {
-  opacity: 0.7;
-}
-
-.divider {
-  color: var(--accent-low);
-  margin: 0px 0.5em;
+.info span:first-child {
+  padding-left: 0;
+  border: none;
 }

@@ -10,13 +10,11 @@ type Props = {
 export default function PostListItem(props: Props) {
   return (
     <li className={styles.post_list_item}>
-      <strong className={styles.link}>
-        <Link href={`${process.env.NEXT_PUBLIC_POST_PATH}/${props.post.id}`}>
-          {props.post.icon && `${props.post.icon} `}
-          {props.post.title}
-        </Link>
-      </strong>
-      <summary className={styles.summary}>{props.post.summary}</summary>
+      <Link href={`${process.env.NEXT_PUBLIC_POST_PATH}/${props.post.id}`}>
+        <span className={styles.post_icon}>{props.post.icon && `${props.post.icon} `}</span>
+        <span className={styles.post_title}>{props.post.title}</span>
+        <summary className={styles.summary}>{props.post.summary}</summary>
+      </Link>
       <PostInfo post={props.post} />
     </li>
   );
@@ -29,20 +27,18 @@ type PropsPostInfo = {
 export function PostInfo(props: PropsPostInfo) {
   return (
     <div className={styles.info}>
-      {props.post.category && (
-        <>
-          <span className={styles.category}>{props.post.category}</span>
-          <span className={styles.divider}>{'|'}</span>
-        </>
-      )}
-      <time className={styles.time}>{`${dateToString(props.post.createdAt, {
-        type: DateStringType.YEAR_MONTH_DATE,
-        time: false,
-      })}\t`}</time>
-      <span className={styles.divider}>{'|'}</span>
-      <span className={styles.author_name}>
-        {props.post.authors.length > 0 ? `${props.post.authors.join(', ')}` : 'Not set'}
+      <span>{props.post.category ? `${props.post.category}` : '<No Category>'}</span>
+      <span>
+        <time>
+          {props.post.createdAt.getTime() === 0
+            ? '<No date>'
+            : `${dateToString(props.post.createdAt, {
+                type: DateStringType.YEAR_MONTH_DATE,
+                time: false,
+              })}\t`}
+        </time>
       </span>
+      <span>{props.post.authors.length > 0 ? `${props.post.authors.join(', ')}` : '<No author>'}</span>
     </div>
   );
 }

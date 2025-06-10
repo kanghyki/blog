@@ -45,25 +45,23 @@ export default async function Post(props: PostParamsProps) {
     <>
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <header>
-        <h1>
+        <h2>
           {post.icon && `${post.icon} `}
           {post.title}
-        </h1>
+        </h2>
         <div className={styles.info}>
-          {post.category && (
-            <>
-              <span className={styles.category}>{post.category}</span>
-              <span className={styles.divider}>{'|'}</span>
-            </>
-          )}
-          <time className={styles.time}>{`${dateToString(post.createdAt, {
-            type: DateStringType.YEAR_MONTH_DATE,
-            time: false,
-          })}\t`}</time>
-          <span className={styles.divider}>{'|'}</span>
-          <span className={styles.author_name}>
-            {post.authors.length > 0 ? `${post.authors.join(', ')}` : 'Anonymous'}
+          <span>{post.category ? `${post.category}` : '<No Category>'}</span>
+          <span>
+            <time>
+              {post.createdAt.getTime() === 0
+                ? '<No date>'
+                : `${dateToString(post.createdAt, {
+                    type: DateStringType.YEAR_MONTH_DATE,
+                    time: false,
+                  })}\t`}
+            </time>
           </span>
+          <span>{post.authors.length > 0 ? `${post.authors.join(', ')}` : '<No author>'}</span>
         </div>
         <hr />
       </header>
