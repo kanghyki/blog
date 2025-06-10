@@ -40,3 +40,7 @@ tags
 
 # posts images
 public/posts/*/images
+
+# public files
+public/robots.txt
+public/sitemap*.xml
