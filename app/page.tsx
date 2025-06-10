@@ -1,28 +1,33 @@
-import PostList from './post/PostList';
-import { BlogPost, getPosts, getCategories } from '@/src/BlogPost';
 import { NotionAPI } from '@/src/notion/NotionAPI';
-import { Indexer } from '@/src/searcher/Indexer';
-import { BlogPostConverter } from '@/src/searcher/Searcher';
-import { Suspense } from 'react';
+import { NotionToMarkdown } from 'notion-to-md';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remark2rehype from 'remark-rehype';
+import remarkGfm from 'remark-gfm';
+import rehypeStringify from 'rehype-stringify';
+import { ensureImageDownloaded } from './post/[id]/download';
 
-function Fallback() {
-  return <>Loading...</>;
-}
-export default async function Home() {
+export default async function About() {
+  const pageId = process.env.NOTION_INTRODUCTION_PAGE_ID || '';
+
   const notionAPI = new NotionAPI();
-  const categories: string[] = await getCategories(notionAPI);
-  const posts: BlogPost[] = await getPosts(notionAPI);
+  const n2m = new NotionToMarkdown({ notionClient: notionAPI.notionClient });
+  n2m.setCustomTransformer('image', async block => {
+    const { image } = block as any;
+    const url = image.file.url;
+    const ret = await ensureImageDownloaded(url, pageId);
+    return `![${ret.fileName}](${ret.localPath})`;
+  });
+  const mdblocks = await n2m.pageToMarkdown(pageId);
+  const mdText = n2m.toMarkdownString(mdblocks).parent;
 
-  const indexer = new Indexer({ caseInsensitive: true });
-  const conv = new BlogPostConverter();
-  for (const post of posts) indexer.index(post.id, conv.convert(post));
-  const json = indexer.toJson();
+  const html_text = unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remark2rehype)
+    .use(rehypeStringify)
+    .processSync(mdText)
+    .toString();
 
-  return (
-    <main>
-      <Suspense fallback={<Fallback />}>
-        <PostList posts={posts.map((e: BlogPost) => e.toInterface())} categories={categories} indexJson={json} />
-      </Suspense>
-    </main>
-  );
+  return <article dangerouslySetInnerHTML={{ __html: html_text }} />;
 }

@@ -37,3 +37,6 @@ next-env.d.ts
 
 tags
 .DS_Store
+
+# posts images
+public/posts/*/images

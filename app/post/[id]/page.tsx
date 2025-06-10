@@ -7,9 +7,9 @@ import { NotionToMarkdown } from 'notion-to-md';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remark2rehype from 'remark-rehype';
-import remarkToc from 'remark-toc';
 import remarkGfm from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
+import { ensureImageDownloaded } from './download';
 
 type PostParamsProps = {
   params: Promise<{
@@ -24,12 +24,17 @@ export default async function Post(props: PostParamsProps) {
   const post = await getPost(notionAPI, params.id);
 
   const n2m = new NotionToMarkdown({ notionClient: notionAPI.notionClient });
+  n2m.setCustomTransformer('image', async block => {
+    const { image } = block as any;
+    const url = image.file.url;
+    const ret = await ensureImageDownloaded(url, params.id);
+    return `![${ret.fileName}](${ret.localPath})`;
+  });
   const mdblocks = await n2m.pageToMarkdown(params.id);
   const mdText = n2m.toMarkdownString(mdblocks).parent;
 
   const html_text = unified()
     .use(remarkParse)
-    .use(remarkToc)
     .use(remarkGfm)
     .use(remark2rehype)
     .use(rehypeStringify)

@@ -6,17 +6,15 @@ export default async function Nav() {
   return (
     <nav>
       <div className={styles.nav_container}>
-        <Link href={`${process.env.NEXT_PUBLIC_POSTS_PATH}`}>
-          <h2>{process.env.NEXT_PUBLIC_TEXT_LOGO}</h2>
-        </Link>
         <ul className={styles.nav}>
           <li>
-            <ThemeButton />
+            <Link href={`${process.env.NEXT_PUBLIC_ROOT_PATH}`}>소개</Link>
           </li>
           <li>
-            <Link href={`${process.env.NEXT_PUBLIC_ABOUT_PATH}`}>About</Link>
+            <Link href={`${process.env.NEXT_PUBLIC_POST_PATH}`}>글</Link>
           </li>
         </ul>
+        <ThemeButton />
       </div>
     </nav>
   );
