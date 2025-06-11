@@ -1,6 +1,6 @@
 import './globals.css';
 import Nav from './component/nav';
-
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 
@@ -47,6 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={notoSansKr.className}>
         <Nav />
         {children}
+        <Analytics />
       </body>
     </html>
   );
