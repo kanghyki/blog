@@ -143,6 +143,7 @@ code {
   background-color: var(--sub-color-deep-gray);
   border-radius: 2px;
   padding: 4px 4px;
+  color: var(--point-color-light-yellow);
 }
 
 pre {
@@ -157,6 +158,7 @@ pre code {
   background-color: inherit;
   padding: 0;
   border-radius: 0;
+  color: var(--default-text-color);
 }
 
 blockquote {
