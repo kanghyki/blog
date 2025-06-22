@@ -1,22 +1,44 @@
-.nav_container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1em 0;
-  border-bottom: 1px solid var(--sub-color-deep-gray);
-  margin-bottom: 1.5em;
+/* 헤더 */
+.header {
+  margin-bottom: 2em;
+  position: relative;
 }
 
+.nav_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.8em 0;
+  border-bottom: 1px solid var(--sub-color-deep-gray);
+  position: relative;
+}
+
+.nav_container::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 1px;
+  background: var(--point-color-cyan);
+  opacity: 0.6;
+}
+
+/* 네비게이션 */
 .nav {
   list-style: none;
   display: flex;
   align-items: center;
   margin: 0;
-  gap: 1.5em;
+  gap: 3em;
+  padding: 0;
+  position: relative;
 }
 
 .nav li {
   margin: 0;
+  position: relative;
 }
 
 .nav li a {
@@ -24,20 +46,64 @@
   text-decoration: none;
   font-size: 1em;
   font-weight: 500;
-  padding: 0.5em 1em;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  padding: 0.6em 0;
+  position: relative;
+  letter-spacing: 0.5px;
 }
 
 .nav li a:hover {
-  color: var(--default-text-color);
-  background-color: var(--sub-color-deep-gray);
-  border-color: var(--sub-color-middle-gray);
+  color: var(--point-color-light-orange);
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 
-.nav li a.active {
-  color: var(--default-text-color);
-  background-color: var(--sub-color-deep-gray);
-  border-color: var(--point-color-light-yellow);
+.nav li a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: var(--point-color-light-orange);
+  transition: width 0.3s ease;
+  border-radius: 1px;
+}
+
+.nav li a:hover::after {
+  width: 100%;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+  .nav_container {
+    padding: 1.4em 0;
+  }
+
+  .nav_container::after {
+    width: 60px;
+  }
+  .nav {
+    gap: 2.5em;
+  }
+
+  .nav li a {
+    font-size: 0.95em;
+    letter-spacing: 0.3px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav {
+    gap: 2em;
+  }
+
+  .nav_container::after {
+    width: 40px;
+  }
+
+  .nav li a {
+    font-size: 0.9em;
+  }
 }

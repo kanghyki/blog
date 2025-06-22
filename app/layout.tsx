@@ -3,6 +3,7 @@ import Nav from './component/nav';
 import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
+import Footer from './component/Footer';
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
@@ -46,7 +47,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={notoSansKr.className}>
         <Nav />
-        {children}
+        <main>{children}</main>
+        <Footer />
         <Analytics />
       </body>
     </html>

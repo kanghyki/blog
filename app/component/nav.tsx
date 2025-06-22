@@ -6,18 +6,18 @@ const navItems = [
   { href: '/post', label: '글' },
 ];
 
-export default async function Nav() {
+export default function Nav() {
   return (
-    <nav>
-      <div className={styles.nav_container}>
+    <header className={styles.header}>
+      <nav className={styles.nav_container}>
         <ul className={styles.nav}>
-          {navItems.map((V, K) => (
-            <li key={K}>
-              <Link href={V.href}>{V.label}</Link>
+          {navItems.map((item, index) => (
+            <li key={index}>
+              <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 }
