@@ -2,29 +2,42 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1em 0;
+  border-bottom: 1px solid var(--sub-color-deep-gray);
+  margin-bottom: 1.5em;
 }
 
 .nav {
   list-style: none;
   display: flex;
   align-items: center;
-  margin: 0.66em 0;
+  margin: 0;
+  gap: 1.5em;
 }
 
 .nav li {
-  margin-left: 1em;
-}
-
-.nav li:first-child {
-  margin-left: 0;
+  margin: 0;
 }
 
 .nav li a {
-  color: var(--default-text-color);
+  color: var(--sub-color-middle-gray);
   text-decoration: none;
-  font-size: 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
 .nav li a:hover {
-  color: var(--point-color-light-yellow);
+  color: var(--default-text-color);
+  background-color: var(--sub-color-deep-gray);
+  border-color: var(--sub-color-middle-gray);
+}
+
+.nav li a.active {
+  color: var(--default-text-color);
+  background-color: var(--sub-color-deep-gray);
+  border-color: var(--point-color-light-yellow);
 }

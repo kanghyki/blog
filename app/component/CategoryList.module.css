@@ -1,7 +1,8 @@
 .categoryContainer {
-  background-color: var(--sub-color-deep-gray);
-  border-left: 4px solid var(--point-color-light-yellow);
-  padding: 1em;
+  background-color: transparent;
+  border: 1px solid var(--sub-color-deep-gray);
+  border-radius: 8px;
+  padding: 1.2em;
   margin-bottom: 1.5em;
   font-family: var(--font-family);
 }
@@ -10,12 +11,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.67em;
-  padding-bottom: 0.33em;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.5em;
 }
 
 .categoryHeader.hasContent {
-  border-bottom: 0.5px solid var(--sub-color-middle-gray);
+  border-bottom: 1px solid var(--sub-color-deep-gray);
 }
 
 .categoryHeader:not(.hasContent) {
@@ -25,33 +26,36 @@
 
 .categoryTitle {
   font-size: 1em;
-  font-weight: 400;
-  color: var(--point-color-light-yellow);
+  font-weight: 500;
+  color: var(--default-text-color);
   margin: 0;
 }
 
 .toggleButton {
   background: none;
-  border: none;
+  border: 1px solid var(--sub-color-deep-gray);
   color: var(--sub-color-middle-gray);
   font-family: var(--font-family);
   font-size: 0.8em;
   cursor: pointer;
-  padding: 0.2em 0.4em;
+  padding: 0.4em 0.8em;
+  border-radius: 4px;
   line-height: 1;
   user-select: none;
+  transition: all 0.2s ease;
 }
 
 .toggleButton:hover {
-  color: var(--point-color-light-yellow);
-  background-color: rgba(255, 211, 105, 0.1);
+  color: var(--default-text-color);
+  border-color: var(--sub-color-middle-gray);
+  background-color: var(--sub-color-deep-gray);
 }
 
 .tag_button_container {
   margin-bottom: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5em;
+  gap: 0.6em;
 }
 
 @media screen and (max-width: 768px) {

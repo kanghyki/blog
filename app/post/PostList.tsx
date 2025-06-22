@@ -48,9 +48,13 @@ export default function PostList(props: PropsPostList) {
   return (
     <>
       <CategoryList categories={props.categories} setCategory={setCategory} select={category} />
-      <div className={styles.status_bar}>
-        <PostListInfo count={posts.length} category={category} searchString={searchText} />
-        <SearchInput setSearchText={setSearchText} />
+      <div className={styles.statusSection}>
+        <div className={styles.statusInfo}>
+          <PostListInfo count={posts.length} category={category} searchString={searchText} />
+        </div>
+        <div className={styles.searchContainer}>
+          <SearchInput setSearchText={setSearchText} />
+        </div>
       </div>
       <ul>
         {posts.map((e: IBlogPost) => (
@@ -68,13 +72,31 @@ type PropsPostListInfo = {
 };
 
 function PostListInfo(props: PropsPostListInfo) {
+  const hasFilters = props.category || props.searchString;
+
   return (
-    <span>
-      {props.category && props.category}
-      {props.searchString && ` ${props.searchString}`}
-      {(props.category || props.searchString) && ' > '}
-      {`총 ${props.count}개의 글`}
-    </span>
+    <div className={styles.infoContainer}>
+      {hasFilters && (
+        <div className={styles.filterInfo}>
+          {props.category && (
+            <span className={styles.filterTag}>
+              <span className={styles.filterLabel}>Category:</span>
+              <span className={styles.filterValue}>{props.category}</span>
+            </span>
+          )}
+          {props.searchString && (
+            <span className={styles.filterTag}>
+              <span className={styles.filterLabel}>Search:</span>
+              <span className={styles.filterValue}>&ldquo;{props.searchString}&rdquo;</span>
+            </span>
+          )}
+        </div>
+      )}
+      <div className={styles.countInfo}>
+        <span className={styles.countNumber}>{props.count}</span>
+        <span className={styles.countText}>개의 포스트</span>
+      </div>
+    </div>
   );
 }
 
@@ -93,16 +115,17 @@ function SearchInput(props: SearchInputProps) {
   }, []);
 
   return (
-    <>
+    <div className={styles.searchInputWrapper}>
+      <div className={styles.searchIcon}>🔍</div>
       <input
-        className={styles.input_box}
+        className={styles.searchInput}
         type="text"
         ref={searchBar}
-        placeholder="검색어를 입력해 주세요."
+        placeholder="검색어를 입력하세요... (⌘K)"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           props.setSearchText(e.target.value);
         }}
       />
-    </>
+    </div>
   );
 }

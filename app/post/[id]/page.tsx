@@ -51,26 +51,43 @@ export default async function Post(props: PostParamsProps) {
     <>
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <CodeCopyButton />
-      <header>
-        <h1 className={styles.postTitle}>
-          {post.icon && `${post.icon} `}
-          {post.title}
-        </h1>
-        <div className={styles.info}>
-          <span>{post.category ? `${post.category}` : '<No Category>'}</span>
-          <span>
-            <time>
-              {post.createdAt.getTime() === 0
-                ? '<No date>'
-                : `${dateToString(post.createdAt, {
-                    type: DateStringType.YEAR_MONTH_DATE,
-                    time: false,
-                  })}\t`}
-            </time>
-          </span>
-          <span>{post.authors.length > 0 ? `${post.authors.join(', ')}` : '<No author>'}</span>
+      <header className={styles.postHeader}>
+        <div className={styles.titleSection}>
+          <h1 className={styles.postTitle}>
+            {post.icon && <span className={styles.postIcon}>{post.icon}</span>}
+            {post.title}
+          </h1>
         </div>
-        <hr />
+
+        <div className={styles.metaSection}>
+          <div className={styles.metaGrid}>
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Category</span>
+              <span className={styles.metaValue}>{post.category || 'Uncategorized'}</span>
+            </div>
+
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Published</span>
+              <span className={styles.metaValue}>
+                <time>
+                  {post.createdAt.getTime() === 0
+                    ? 'No date'
+                    : dateToString(post.createdAt, {
+                        type: DateStringType.YEAR_MONTH_DATE,
+                        time: false,
+                      })}
+                </time>
+              </span>
+            </div>
+
+            <div className={styles.metaItem}>
+              <span className={styles.metaLabel}>Author</span>
+              <span className={styles.metaValue}>
+                {post.authors.length > 0 ? post.authors.join(', ') : 'Anonymous'}
+              </span>
+            </div>
+          </div>
+        </div>
       </header>
       <div className={styles.contentContainer}>
         <TOC content={html_text} />

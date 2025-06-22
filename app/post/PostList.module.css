@@ -1,25 +1,160 @@
-.status_bar {
+/* 상태 섹션 */
+.statusSection {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.5em;
+  margin: 1.5em 0;
+  padding: 1.2em;
+  background-color: transparent;
+  border: 1px solid var(--sub-color-deep-gray);
+  border-radius: 8px;
+}
+
+/* 정보 컨테이너 */
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  flex: 1;
+}
+
+.filterInfo {
+  display: flex;
+  gap: 0.8em;
+  flex-wrap: wrap;
+}
+
+.filterTag {
+  display: flex;
   align-items: center;
-  margin: 0.66em 0;
+  gap: 0.4em;
+  padding: 0.4em 0.8em;
+  background-color: var(--sub-color-deep-gray);
+  border-radius: 4px;
+  font-size: 0.85em;
 }
 
-.input_box {
-  width: 25%;
-  background-color: inherit;
-  outline: none;
-  border: none;
-  padding: 0.33em;
-  border-radius: 0;
+.filterLabel {
   color: var(--sub-color-middle-gray);
-  border-bottom: 1px solid var(--sub-color-deep-gray);
-  transition: 0.15s ease-in;
+  font-weight: 500;
 }
 
-/* mobile */
+.filterValue {
+  color: var(--default-text-color);
+  font-weight: 600;
+}
+
+.countInfo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+}
+
+.countNumber {
+  font-size: 1.5em;
+  font-weight: 700;
+  color: var(--point-color-light-yellow);
+}
+
+.countText {
+  font-size: 0.9em;
+  color: var(--sub-color-middle-gray);
+  font-weight: 500;
+}
+
+/* 검색 컨테이너 */
+.searchContainer {
+  flex-shrink: 0;
+}
+
+.searchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: 1px solid var(--sub-color-deep-gray);
+  border-radius: 6px;
+  padding: 0.6em 1em;
+  transition: all 0.2s ease;
+  min-width: 280px;
+}
+
+.searchInputWrapper:focus-within {
+  border-color: var(--point-color-light-yellow);
+  background-color: var(--sub-color-deep-gray);
+}
+
+.searchIcon {
+  color: var(--sub-color-middle-gray);
+  margin-right: 0.6em;
+  font-size: 0.9em;
+}
+
+.searchInput {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--default-text-color);
+  font-family: var(--font-family);
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: var(--sub-color-middle-gray);
+}
+
+/* 반응형 디자인 */
 @media screen and (max-width: 768px) {
-  .input_box {
-    width: 50%;
+  .statusSection {
+    flex-direction: column;
+    gap: 1em;
+    padding: 1em;
+  }
+
+  .searchInputWrapper {
+    min-width: 100%;
+  }
+
+  .filterInfo {
+    gap: 0.6em;
+  }
+
+  .filterTag {
+    font-size: 0.8em;
+    padding: 0.3em 0.6em;
+  }
+
+  .countNumber {
+    font-size: 1.3em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .statusSection {
+    margin: 1em 0;
+    padding: 0.8em;
+  }
+
+  .infoContainer {
+    gap: 0.6em;
+  }
+
+  .filterInfo {
+    flex-direction: column;
+    gap: 0.4em;
+  }
+
+  .filterTag {
+    align-self: flex-start;
+  }
+
+  .searchInputWrapper {
+    padding: 0.5em 0.8em;
+  }
+
+  .searchInput {
+    font-size: 0.85em;
   }
 }
