@@ -1,7 +1,8 @@
 .tocContainer {
-  background-color: var(--sub-color-deep-gray);
-  border-left: 4px solid var(--point-color-light-yellow);
-  padding: 1em;
+  background-color: transparent;
+  border: 1px solid var(--sub-color-deep-gray);
+  border-radius: 8px;
+  padding: 1.2em;
   margin-bottom: 1.5em;
   font-family: var(--font-family);
 }
@@ -10,12 +11,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.67em;
-  padding-bottom: 0.33em;
+  margin-bottom: 0.8em;
+  padding-bottom: 0.5em;
 }
 
 .tocHeader.hasContent {
-  border-bottom: 0.5px solid var(--sub-color-middle-gray);
+  border-bottom: 1px solid var(--sub-color-deep-gray);
 }
 
 .tocHeader:not(.hasContent) {
@@ -24,20 +25,20 @@
 }
 
 .tocTitle {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 500;
-  color: var(--point-color-light-yellow);
+  color: var(--default-text-color);
   margin: 0;
 }
 
 .toggleButton {
   background: none;
-  border: none;
+  border: 1px solid var(--sub-color-deep-gray);
   color: var(--sub-color-middle-gray);
   font-family: var(--font-family);
-  font-size: 0.9em;
+  font-size: 0.8em;
   cursor: pointer;
-  padding: 0.3em 0.5em;
+  padding: 0.4em 0.8em;
   border-radius: 4px;
   line-height: 1;
   user-select: none;
@@ -45,12 +46,13 @@
 }
 
 .toggleButton:hover {
-  color: var(--point-color-light-yellow);
-  background-color: rgba(255, 211, 105, 0.1);
+  color: var(--default-text-color);
+  border-color: var(--sub-color-middle-gray);
+  background-color: var(--sub-color-deep-gray);
 }
 
 .tocNav {
-  font-size: 0.95em;
+  font-size: 0.9em;
 }
 
 .tocList {
@@ -60,82 +62,78 @@
 }
 
 .tocItem {
-  margin: 0.3em 0;
+  margin: 0.2em 0;
 }
 
 .tocLink {
   display: block;
-  padding: 0.3em 0.5em;
+  padding: 0.4em 0.6em;
   color: var(--sub-color-middle-gray);
   text-decoration: none;
-  line-height: 1.5;
+  line-height: 1.4;
   border-radius: 4px;
   transition: all 0.2s ease;
+  border-left: 2px solid transparent;
 }
 
 .tocLink:hover {
   color: var(--default-text-color);
   text-decoration: none;
-  background-color: rgba(176, 176, 176, 0.1);
+  background-color: var(--sub-color-deep-gray);
+  border-left-color: var(--sub-color-middle-gray);
 }
 
-/* 활성 상태 - 헤딩 레벨별 스타일로 대체됨 */
+/* 활성 상태 */
 .tocItem.active .tocLink,
 .tocLink.activeToc {
-  font-weight: 600;
-  transform: translateX(2px);
+  font-weight: 500;
+  background-color: var(--sub-color-deep-gray);
+  border-left-color: var(--point-color-light-yellow);
+  color: var(--default-text-color);
 }
 
-/* 헤딩 레벨별 들여쓰기 및 색상 */
+/* 헤딩 레벨별 들여쓰기 및 미묘한 색상 차이 */
 .level1 {
   padding-left: 0;
 }
 
 .level1 .tocLink {
-  color: var(--point-color-light-orange);
   font-weight: 500;
 }
 
-.level1 .tocLink:hover,
-.level1.active .tocLink {
-  background-color: rgba(255, 111, 0, 0.1);
-  color: var(--point-color-light-orange);
+.level1.active .tocLink,
+.level1 .tocLink:hover {
+  border-left-color: var(--point-color-light-orange);
 }
 
 .level2 {
   padding-left: 1em;
 }
 
-.level2 .tocLink {
-  color: var(--point-color-cyan);
-}
-
-.level2 .tocLink:hover,
-.level2.active .tocLink {
-  background-color: rgba(0, 173, 181, 0.1);
-  color: var(--point-color-cyan);
+.level2.active .tocLink,
+.level2 .tocLink:hover {
+  border-left-color: var(--point-color-cyan);
 }
 
 .level3 {
   padding-left: 2em;
 }
 
-.level3 .tocLink {
-  color: var(--point-color-light-yellow);
-}
-
-.level3 .tocLink:hover,
-.level3.active .tocLink {
-  background-color: rgba(255, 211, 105, 0.1);
-  color: var(--point-color-light-yellow);
+.level3.active .tocLink,
+.level3 .tocLink:hover {
+  border-left-color: var(--point-color-light-yellow);
 }
 
 .level4 {
   padding-left: 3em;
 }
 
-.level4 .tocLink {
-  color: var(--sub-color-middle-gray);
+.level5 {
+  padding-left: 4em;
+}
+
+.level6 {
+  padding-left: 5em;
 }
 
 .level4 .tocLink:hover,
@@ -150,56 +148,40 @@
 
 .level5 .tocLink {
   color: var(--sub-color-middle-gray);
-  opacity: 0.8;
-}
+  /* 모바일에서 작게 조정 */
+  @media screen and (max-width: 768px) {
+    .tocContainer {
+      padding: 1em;
+      margin-bottom: 1.2em;
+    }
 
-.level5 .tocLink:hover,
-.level5.active .tocLink {
-  background-color: rgba(176, 176, 176, 0.08);
-  color: var(--sub-color-middle-gray);
-}
+    .tocHeader {
+      margin-bottom: 0.6em;
+      padding-bottom: 0.4em;
+    }
 
-.level6 {
-  padding-left: 5em;
-}
+    .tocHeader.hasContent {
+      margin-bottom: 0.6em;
+      padding-bottom: 0.4em;
+    }
 
-.level6 .tocLink {
-  color: var(--sub-color-middle-gray);
-  opacity: 0.6;
-}
+    .tocHeader:not(.hasContent) {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
 
-/* 모바일에서 작게 조정 */
-@media screen and (max-width: 768px) {
-  .tocContainer {
-    padding: 0.8em;
-    margin-bottom: 1em;
-  }
+    .tocTitle {
+      font-size: 0.95em;
+    }
 
-  .tocHeader {
-    margin-bottom: 0.5em;
-    padding-bottom: 0.25em;
-  }
+    .toggleButton {
+      font-size: 0.75em;
+      padding: 0.3em 0.6em;
+    }
 
-  .tocHeader.hasContent {
-    margin-bottom: 0.5em;
-    padding-bottom: 0.25em;
-  }
-
-  .tocHeader:not(.hasContent) {
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
-  .tocTitle {
-    font-size: 1em;
-  }
-
-  .toggleButton {
-    font-size: 0.85em;
-    padding: 0.25em 0.4em;
-  }
-
-  .tocNav {
+    .tocNav {
+      font-size: 0.85em;
+    }
     font-size: 0.9em;
   }
 
