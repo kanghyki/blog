@@ -92,7 +92,7 @@
   color: var(--default-text-color);
 }
 
-/* 헤딩 레벨별 들여쓰기 및 미묘한 색상 차이 */
+/* 헤딩 레벨별 들여쓰기 및 색상 */
 .level1 {
   padding-left: 0;
 }
@@ -136,61 +136,47 @@
   padding-left: 5em;
 }
 
-.level4 .tocLink:hover,
-.level4.active .tocLink {
-  background-color: rgba(176, 176, 176, 0.1);
-  color: var(--sub-color-middle-gray);
-}
+/* 모바일 반응형 */
+@media screen and (max-width: 768px) {
+  .tocContainer {
+    padding: 1em;
+    margin-bottom: 1.2em;
+  }
 
-.level5 {
-  padding-left: 4em;
-}
+  .tocHeader {
+    margin-bottom: 0.6em;
+    padding-bottom: 0.4em;
+  }
 
-.level5 .tocLink {
-  color: var(--sub-color-middle-gray);
-  /* 모바일에서 작게 조정 */
-  @media screen and (max-width: 768px) {
-    .tocContainer {
-      padding: 1em;
-      margin-bottom: 1.2em;
-    }
+  .tocHeader.hasContent {
+    margin-bottom: 0.6em;
+    padding-bottom: 0.4em;
+  }
 
-    .tocHeader {
-      margin-bottom: 0.6em;
-      padding-bottom: 0.4em;
-    }
+  .tocHeader:not(.hasContent) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
 
-    .tocHeader.hasContent {
-      margin-bottom: 0.6em;
-      padding-bottom: 0.4em;
-    }
+  .tocTitle {
+    font-size: 0.95em;
+  }
 
-    .tocHeader:not(.hasContent) {
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
+  .toggleButton {
+    font-size: 0.75em;
+    padding: 0.3em 0.6em;
+  }
 
-    .tocTitle {
-      font-size: 0.95em;
-    }
-
-    .toggleButton {
-      font-size: 0.75em;
-      padding: 0.3em 0.6em;
-    }
-
-    .tocNav {
-      font-size: 0.85em;
-    }
-    font-size: 0.9em;
+  .tocNav {
+    font-size: 0.85em;
   }
 
   .tocItem {
-    margin: 0.25em 0;
+    margin: 0.15em 0;
   }
 
   .tocLink {
-    padding: 0.2em 0.35em;
+    padding: 0.3em 0.5em;
     line-height: 1.4;
   }
 
@@ -217,18 +203,18 @@
 
 @media screen and (max-width: 480px) {
   .tocContainer {
-    padding: 0.66em;
-    margin-bottom: 0.8em;
+    padding: 0.8em;
+    margin-bottom: 1em;
   }
 
   .tocHeader {
-    margin-bottom: 0.4em;
-    padding-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
   }
 
   .tocHeader.hasContent {
-    margin-bottom: 0.4em;
-    padding-bottom: 0.2em;
+    margin-bottom: 0.5em;
+    padding-bottom: 0.3em;
   }
 
   .tocHeader:not(.hasContent) {
@@ -237,25 +223,25 @@
   }
 
   .tocTitle {
-    font-size: 0.95em;
+    font-size: 0.9em;
   }
 
   .toggleButton {
-    font-size: 0.8em;
-    padding: 0.2em 0.3em;
+    font-size: 0.7em;
+    padding: 0.25em 0.5em;
   }
 
   .tocNav {
-    font-size: 0.85em;
+    font-size: 0.8em;
   }
 
   .tocItem {
-    margin: 0.2em 0;
+    margin: 0.1em 0;
   }
 
   .tocLink {
-    padding: 0.2em 0.3em;
-    line-height: 1.4;
+    padding: 0.25em 0.4em;
+    line-height: 1.3;
   }
 
   .level2 {

@@ -159,13 +159,14 @@ blockquote {
 
 blockquote::before {
   content: '"';
-  font-size: 2.5em;
+  font-size: 2.2em;
   color: var(--sub-color-deep-gray);
   position: absolute;
-  top: -0.2em;
-  left: 0.3em;
+  top: -0.15em;
+  left: 0.25em;
   line-height: 1;
   font-family: Georgia, serif;
+  opacity: 0.7;
 }
 
 blockquote p {
@@ -356,20 +357,32 @@ img[loading='lazy'].loaded {
 table {
   border: 1px solid var(--sub-color-deep-gray);
   border-collapse: collapse;
+  border-radius: 4px;
   width: 100%;
-  margin: 0.67em 0; /* p태그와 일관된 여백 */
+  margin: 1em 0;
+  overflow: hidden;
 }
 
 table th,
 table td {
-  border: 1px solid var(--sub-color-middle-gray);
-  padding: 0.5em;
+  border: 1px solid var(--sub-color-deep-gray);
+  padding: 0.8em;
   text-align: left;
 }
 
 table th {
   background-color: var(--sub-color-deep-gray);
-  color: var(--point-color-light-yellow);
+  color: var(--default-text-color);
+  font-weight: 500;
+  border-bottom: 2px solid var(--sub-color-middle-gray);
+}
+
+table tr:nth-child(even) {
+  background-color: rgba(57, 62, 70, 0.3);
+}
+
+table tr:hover {
+  background-color: rgba(57, 62, 70, 0.5);
 }
 
 /* 선택 스타일 */
