@@ -10,6 +10,11 @@ export default function Nav() {
   return (
     <header className={styles.header}>
       <nav className={styles.nav_container}>
+        <div className={styles.logo}>
+          <Link href="/" className={styles.logo_link}>
+            kanghyki<span className={styles.logo_method}>.note()</span>
+          </Link>
+        </div>
         <ul className={styles.nav}>
           {navItems.map((item, index) => (
             <li key={index}>

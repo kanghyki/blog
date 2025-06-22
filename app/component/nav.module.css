@@ -6,11 +6,13 @@
 
 .nav_container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  padding: 1.8em 0;
+  padding: 1.8em 1.2em;
   border-bottom: 1px solid var(--sub-color-deep-gray);
   position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .nav_container::after {
@@ -25,13 +27,37 @@
   opacity: 0.6;
 }
 
+/* 로고 */
+.logo {
+  flex-shrink: 0;
+}
+
+.logo_link {
+  color: var(--text-color-primary);
+  text-decoration: none;
+  font-size: 1.25em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  transition: all 0.3s ease;
+}
+
+.logo_link:hover {
+  color: var(--point-color-light-orange);
+  text-decoration: none;
+}
+
+.logo_method {
+  color: var(--point-color-cyan);
+  font-weight: 500;
+}
+
 /* 네비게이션 */
 .nav {
   list-style: none;
   display: flex;
   align-items: center;
   margin: 0;
-  gap: 3em;
+  gap: 2.5em;
   padding: 0;
   position: relative;
 }
@@ -44,7 +70,7 @@
 .nav li a {
   color: var(--sub-color-middle-gray);
   text-decoration: none;
-  font-size: 1em;
+  font-size: 0.95em;
   font-weight: 500;
   transition: all 0.3s ease;
   padding: 0.6em 0;
@@ -78,32 +104,45 @@
 /* 반응형 */
 @media screen and (max-width: 768px) {
   .nav_container {
-    padding: 1.4em 0;
+    padding: 1.4em 1em;
   }
 
   .nav_container::after {
     width: 60px;
   }
+
+  .logo_link {
+    font-size: 1.1em;
+  }
+
   .nav {
-    gap: 2.5em;
+    gap: 1.8em;
   }
 
   .nav li a {
-    font-size: 0.95em;
+    font-size: 0.9em;
     letter-spacing: 0.3px;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .nav {
-    gap: 2em;
+  .nav_container {
+    padding: 1.2em 0.8em;
   }
 
   .nav_container::after {
     width: 40px;
   }
 
+  .logo_link {
+    font-size: 1em;
+  }
+
+  .nav {
+    gap: 1.5em;
+  }
+
   .nav li a {
-    font-size: 0.9em;
+    font-size: 0.85em;
   }
 }

@@ -16,11 +16,11 @@ const notoSansKr = Noto_Sans_KR({
 export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.OG_URL}`),
   title: `${process.env.TITLE}`,
-  description: `${process.env.DESCRIPTION}`,
+  description: `${process.env.OG_DESCRIPTION}`,
   openGraph: {
     type: 'website',
     url: `${process.env.OG_URL}`,
-    description: `${process.env.DESCRIPTION}`,
+    description: `${process.env.OG_DESCRIPTION}`,
     siteName: `${process.env.OG_SITE_NAME}`,
     locale: `${process.env.OG_LOCALE}`,
     images: [
