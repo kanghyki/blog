@@ -4,7 +4,7 @@ import { IBlogPost } from '@/src/BlogPost';
 import { Searcher } from '@/src/searcher/Searcher';
 import styles from './PostList.module.css';
 import PostListItem from './PostListItem';
-import CategoryButton from '../component/CategoryButton';
+import CategoryList from '../component/CategoryList';
 
 type PropsPostList = {
   posts: IBlogPost[];
@@ -75,27 +75,6 @@ function PostListInfo(props: PropsPostListInfo) {
       {(props.category || props.searchString) && ' > '}
       {`총 ${props.count}개의 글`}
     </span>
-  );
-}
-
-type PropsCategoryList = {
-  categories: string[];
-  setCategory: (e: string | undefined) => void;
-  select: string | undefined;
-};
-
-function CategoryList(props: PropsCategoryList) {
-  return (
-    <div className={styles.tag_button_container}>
-      <CategoryButton
-        select={props.select === undefined}
-        category={'전체'}
-        onClick={() => props.setCategory(undefined)}
-      />
-      {props.categories.map((e: string) => (
-        <CategoryButton select={props.select === e} category={e} key={e} onClick={() => props.setCategory(e)} />
-      ))}
-    </div>
   );
 }
 

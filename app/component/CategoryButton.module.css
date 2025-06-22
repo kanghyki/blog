@@ -1,8 +1,5 @@
 .tag_button {
   padding: 0.5em 0.7em;
-  margin-right: 0.7em;
-  margin-bottom: 0.8em;
-  margin-top: 0.8em;
   border: none;
   background-color: var(--sub-color-deep-gray);
   color: var(--default-text-color);
@@ -15,9 +12,6 @@
 
 .tag_button_select {
   padding: 0.5em 0.7em;
-  margin-right: 0.7em;
-  margin-bottom: 0.8em;
-  margin-top: 0.8em;
   border: none;
   background-color: var(--point-color-light-yellow);
   color: var(--sub-color-deep-gray);
@@ -26,10 +20,6 @@
   min-width: 4em;
   text-align: center;
   display: inline-block;
-}
-
-.tag_button:last-child {
-  margin-right: 0;
 }
 
 .tag_button:hover {

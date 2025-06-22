@@ -1,0 +1,127 @@
+.categoryContainer {
+  background-color: var(--sub-color-deep-gray);
+  border-left: 4px solid var(--point-color-light-yellow);
+  padding: 1em;
+  margin-bottom: 1.5em;
+  font-family: var(--font-family);
+}
+
+.categoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.67em;
+  padding-bottom: 0.33em;
+}
+
+.categoryHeader.hasContent {
+  border-bottom: 0.5px solid var(--sub-color-middle-gray);
+}
+
+.categoryHeader:not(.hasContent) {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.categoryTitle {
+  font-size: 1em;
+  font-weight: 400;
+  color: var(--point-color-light-yellow);
+  margin: 0;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  color: var(--sub-color-middle-gray);
+  font-family: var(--font-family);
+  font-size: 0.8em;
+  cursor: pointer;
+  padding: 0.2em 0.4em;
+  line-height: 1;
+  user-select: none;
+}
+
+.toggleButton:hover {
+  color: var(--point-color-light-yellow);
+  background-color: rgba(255, 211, 105, 0.1);
+}
+
+.tag_button_container {
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+}
+
+@media screen and (max-width: 768px) {
+  .categoryContainer {
+    padding: 0.8em;
+    margin-bottom: 1em;
+  }
+
+  .categoryHeader {
+    margin-bottom: 0.5em;
+    padding-bottom: 0.25em;
+  }
+
+  .categoryHeader.hasContent {
+    margin-bottom: 0.5em;
+    padding-bottom: 0.25em;
+  }
+
+  .categoryHeader:not(.hasContent) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .categoryTitle {
+    font-size: 0.9em;
+  }
+
+  .toggleButton {
+    font-size: 0.75em;
+    padding: 0.15em 0.3em;
+  }
+
+  .tag_button_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .categoryContainer {
+    padding: 0.66em;
+    margin-bottom: 0.8em;
+  }
+
+  .categoryHeader {
+    margin-bottom: 0.4em;
+    padding-bottom: 0.2em;
+  }
+
+  .categoryHeader.hasContent {
+    margin-bottom: 0.4em;
+    padding-bottom: 0.2em;
+  }
+
+  .categoryHeader:not(.hasContent) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .categoryTitle {
+    font-size: 0.8em;
+  }
+
+  .toggleButton {
+    font-size: 0.7em;
+    padding: 0.1em 0.2em;
+  }
+}
+
+.tag_button_container::-webkit-scrollbar {
+  display: none;
+}
