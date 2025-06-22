@@ -14,12 +14,25 @@ import rehypeHighlight from 'rehype-highlight';
 import { ensureImageDownloaded } from './download';
 import TOC from './TOC';
 import CodeCopyButton from '@/app/component/CodeCopyButton';
+import type { Metadata } from 'next';
 
 type PostParamsProps = {
   params: Promise<{
     id: string;
   }>;
 };
+
+export async function generateMetadata(props: PostParamsProps): Promise<Metadata> {
+  const params = await props.params;
+
+  const notionAPI = new NotionAPI();
+  const post = await getPost(notionAPI, params.id);
+
+  return {
+    title: `${post.title} - ${process.env.TITLE}`,
+    description: `${post.summary}`,
+  };
+}
 
 export default async function Post(props: PostParamsProps) {
   const params = await props.params;
@@ -49,7 +62,6 @@ export default async function Post(props: PostParamsProps) {
 
   return (
     <>
-      <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <CodeCopyButton />
       <header className={styles.postHeader}>
         <div className={styles.titleSection}>
