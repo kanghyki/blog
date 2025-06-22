@@ -27,7 +27,7 @@ export class Indexer {
   }
 
   public index(id: string, data: string): void {
-    const words = data.match(/[<]?\/?([a-zA-Z가-힣]+|".+")[>]?/g);
+    const words = data.match(/[<]?\/?([a-zA-Z0-9가-힣._-]+|".+")[>]?/g);
     if (!words) return;
     if (this.option.caseInsensitive) {
       for (let i = 0; i < words.length; i++) {

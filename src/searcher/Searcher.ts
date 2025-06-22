@@ -22,12 +22,12 @@ export class Searcher {
   }
 
   public search(query: string): string[] {
-    if (query.match(/[^a-zA-z가-힣\s"]/g)) return [];
+    if (query.match(/[^a-zA-z0-9가-힣\s"._-]/g)) return [];
 
     const ret: string[] = [];
     const scores = new Map<string, number>();
     /* "asd asd <- ignore double quotes */
-    const splitedWords = query.match(/([a-zA-Z가-힣]+|"[a-zA-Z가-힣\s]+")/g);
+    const splitedWords = query.match(/([a-zA-Z0-9가-힣._-]+|"[a-zA-Z0-9가-힣\s._-]+")/g);
 
     if (!splitedWords) return [];
     for (const sw of splitedWords) {
