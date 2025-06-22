@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer
       style={{
-        marginTop: '4em',
+        marginTop: '2em',
         padding: '2em 0 1em 0',
         borderTop: '1px solid var(--sub-color-deep-gray)',
         textAlign: 'center' as const,
