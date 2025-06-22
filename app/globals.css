@@ -51,32 +51,46 @@ h5,
 h6 {
   line-height: 1.8;
   font-weight: 400;
-  color: var(--default-text-color);
   scroll-margin-top: 2em;
+  margin: 1.5em 0 0.8em 0;
+  position: relative;
 }
 
-h1 {
+/* 아티클 내부의 헤딩들만 색상 스타일 적용 */
+article h1 {
   font-size: 2em;
+  color: var(--point-color-light-orange);
+  border-bottom: 2px solid var(--sub-color-deep-gray);
+  padding-bottom: 0.3em;
+  margin-bottom: 1em;
 }
 
-h2 {
+article h2 {
   font-size: 1.7em;
+  color: var(--point-color-cyan);
+  border-bottom: 1px solid var(--sub-color-deep-gray);
+  padding-bottom: 0.2em;
 }
 
-h3 {
+article h3 {
   font-size: 1.5em;
+  color: var(--point-color-light-yellow);
 }
 
-h4 {
+article h4 {
   font-size: 1.3em;
+  color: var(--sub-color-middle-gray);
 }
 
-h5 {
+article h5 {
   font-size: 1.1em;
+  color: var(--default-text-color);
 }
 
-h6 {
+article h6 {
   font-size: 0.9em;
+  color: var(--sub-color-middle-gray);
+  opacity: 0.8;
 }
 
 hr {
@@ -343,6 +357,70 @@ button {
 button:focus {
   outline: 2px solid var(--point-color-light-yellow);
   outline-offset: 2px;
+}
+
+/* 아티클 내부 헤딩 호버 효과 및 앵커 링크 스타일 */
+article h1:hover,
+article h2:hover,
+article h3:hover,
+article h4:hover,
+article h5:hover,
+article h6:hover {
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+/* 헤딩 앵커 링크 타겟 스타일 */
+article h1:target,
+article h2:target,
+article h3:target,
+article h4:target,
+article h5:target,
+article h6:target {
+  animation: highlight-heading 2s ease-in-out;
+}
+
+@keyframes highlight-heading {
+  0% {
+    background-color: rgba(255, 211, 105, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* 아티클 내부 헤딩과 다음 요소 간의 간격 조정 */
+article h1 + p,
+article h2 + p,
+article h3 + p,
+article h4 + p,
+article h5 + p,
+article h6 + p {
+  margin-top: 0.5em;
+}
+
+article h1 + ul,
+article h2 + ul,
+article h3 + ul,
+article h4 + ul,
+article h5 + ul,
+article h6 + ul,
+article h1 + ol,
+article h2 + ol,
+article h3 + ol,
+article h4 + ol,
+article h5 + ol,
+article h6 + ol {
+  margin-top: 0.5em;
+}
+
+/* 아티클 내부 연속된 헤딩 간의 간격 조정 */
+article h1 + h2,
+article h2 + h3,
+article h3 + h4,
+article h4 + h5,
+article h5 + h6 {
+  margin-top: 1em;
 }
 
 /* 반응형 */

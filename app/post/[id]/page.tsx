@@ -52,10 +52,10 @@ export default async function Post(props: PostParamsProps) {
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
       <CodeCopyButton />
       <header>
-        <h2>
+        <h1 className={styles.postTitle}>
           {post.icon && `${post.icon} `}
           {post.title}
-        </h2>
+        </h1>
         <div className={styles.info}>
           <span>{post.category ? `${post.category}` : '<No Category>'}</span>
           <span>
