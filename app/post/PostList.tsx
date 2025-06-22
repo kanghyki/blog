@@ -22,11 +22,6 @@ export default function PostList(props: PropsPostList) {
     return s;
   }, [props]);
 
-  const handleTagClick = useCallback((tag: string) => {
-    setSearchText(tag);
-    setCategory(undefined); // 태그 검색 시 카테고리 필터 해제
-  }, []);
-
   const update = useCallback((): void => {
     let categoryPosts: IBlogPost[] = [];
 
@@ -63,7 +58,7 @@ export default function PostList(props: PropsPostList) {
       </div>
       <ul>
         {posts.map((e: IBlogPost) => (
-          <PostListItem post={e} key={e.id} onTagClick={handleTagClick} />
+          <PostListItem post={e} key={e.id} />
         ))}
       </ul>
     </>

@@ -6,7 +6,6 @@ import TagList from '../component/TagList';
 
 type Props = {
   post: IBlogPost;
-  onTagClick?: (tag: string) => void;
 };
 
 export default function PostListItem(props: Props) {
@@ -18,7 +17,7 @@ export default function PostListItem(props: Props) {
         <summary className={styles.summary}>{props.post.summary}</summary>
       </Link>
       <div className={styles.tagSection}>
-        <TagList tags={props.post.tags} maxVisible={3} onTagClick={props.onTagClick} />
+        <TagList tags={props.post.tags} maxVisible={3} />
       </div>
       <PostInfo post={props.post} />
     </li>
