@@ -22,6 +22,11 @@ export default function PostList(props: PropsPostList) {
     return s;
   }, [props]);
 
+  const handleTagClick = useCallback((tag: string) => {
+    setSearchText(tag);
+    setCategory(undefined); // 태그 검색 시 카테고리 필터 해제
+  }, []);
+
   const update = useCallback((): void => {
     let categoryPosts: IBlogPost[] = [];
 
@@ -53,12 +58,12 @@ export default function PostList(props: PropsPostList) {
           <PostListInfo count={posts.length} category={category} searchString={searchText} />
         </div>
         <div className={styles.searchContainer}>
-          <SearchInput setSearchText={setSearchText} />
+          <SearchInput setSearchText={setSearchText} searchText={searchText} />
         </div>
       </div>
       <ul>
         {posts.map((e: IBlogPost) => (
-          <PostListItem post={e} key={e.id} />
+          <PostListItem post={e} key={e.id} onTagClick={handleTagClick} />
         ))}
       </ul>
     </>
@@ -102,10 +107,18 @@ function PostListInfo(props: PropsPostListInfo) {
 
 type SearchInputProps = {
   setSearchText: (e: string) => void;
+  searchText?: string;
 };
 
 function SearchInput(props: SearchInputProps) {
   const searchBar = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (searchBar.current && props.searchText !== undefined) {
+      searchBar.current.value = props.searchText;
+    }
+  }, [props.searchText]);
+
   useEffect(() => {
     document.addEventListener('keydown', e => {
       if ((e.metaKey || e.ctrlKey) && e.code === 'KeyK') {

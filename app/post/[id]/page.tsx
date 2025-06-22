@@ -14,6 +14,7 @@ import rehypeHighlight from 'rehype-highlight';
 import { ensureImageDownloaded } from './download';
 import TOC from './TOC';
 import CodeCopyButton from '@/app/component/CodeCopyButton';
+import TagList from '@/app/component/TagList';
 import type { Metadata } from 'next';
 
 type PostParamsProps = {
@@ -109,6 +110,7 @@ export default async function Post(props: PostParamsProps) {
             {post.icon && <span className={styles.postIcon}>{post.icon}</span>}
             {post.title}
           </h1>
+          <TagList tags={post.tags} maxVisible={3} />
         </div>
 
         <div className={styles.metaSection}>

@@ -38,9 +38,14 @@
   line-height: 1.5;
 }
 
+/* 태그 섹션 */
+.tagSection {
+  margin: 0.8em 0;
+}
+
 .info {
   font-size: 0.8em;
-  margin-top: 0.8em;
+  margin-top: 0;
   padding-top: 0.8em;
   border-top: 1px solid var(--sub-color-deep-gray);
 }
@@ -54,4 +59,53 @@
 .info span:first-child {
   padding-left: 0;
   border: none;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+  .post_list_item {
+    padding: 1em;
+    margin-bottom: 0.8em;
+  }
+
+  .post_title {
+    font-size: 1em;
+  }
+
+  .summary {
+    font-size: 0.85em;
+    margin: 0.5em 0;
+  }
+
+  .tagSection {
+    margin: 0.6em 0;
+  }
+
+  .info {
+    font-size: 0.75em;
+    margin-top: 0;
+    padding-top: 0.6em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .post_list_item {
+    padding: 0.8em;
+  }
+
+  .post_title {
+    font-size: 0.95em;
+  }
+
+  .summary {
+    font-size: 0.8em;
+  }
+
+  .tagSection {
+    margin: 0.5em 0;
+  }
+
+  .info {
+    font-size: 0.7em;
+  }
 }

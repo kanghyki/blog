@@ -2,9 +2,11 @@ import styles from './PostListItem.module.css';
 import { DateStringType, dateToString } from '@/src/util';
 import Link from 'next/link';
 import { IBlogPost } from '@/src/BlogPost';
+import TagList from '../component/TagList';
 
 type Props = {
   post: IBlogPost;
+  onTagClick?: (tag: string) => void;
 };
 
 export default function PostListItem(props: Props) {
@@ -15,6 +17,9 @@ export default function PostListItem(props: Props) {
         <span className={styles.post_title}>{props.post.title}</span>
         <summary className={styles.summary}>{props.post.summary}</summary>
       </Link>
+      <div className={styles.tagSection}>
+        <TagList tags={props.post.tags} maxVisible={3} onTagClick={props.onTagClick} />
+      </div>
       <PostInfo post={props.post} />
     </li>
   );

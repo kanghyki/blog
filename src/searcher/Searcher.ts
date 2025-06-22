@@ -119,6 +119,7 @@ export class Searcher {
     if (this.isInMetaWord(info, 'summary')) return 2;
     else if (this.isInMetaWord(info, 'title')) return 4;
     else if (this.isInMetaWord(info, 'category')) return 10;
+    else if (this.isInMetaWord(info, 'tags')) return 8;
     else if (this.isInMetaWord(info, 'authors')) return 20;
 
     return 1;
@@ -142,6 +143,7 @@ export class BlogPostConverter {
     ret.push(`<summary>${post.summary}</summary>`);
     ret.push(`<authors>${post.authors.join(',')}</authors>`);
     ret.push(`<category>${post.category}</category>`);
+    ret.push(`<tags>${post.tags.join(',')}</tags>`);
 
     return ret.join('');
   }

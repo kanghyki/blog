@@ -1,0 +1,89 @@
+.tagContainer {
+  margin: 1em 0;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  align-items: center;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.6em;
+  background: transparent;
+  color: var(--sub-color-middle-gray);
+  border: 1px solid var(--sub-color-middle-gray);
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.tag:hover {
+  color: var(--default-text-color);
+  border-color: var(--default-text-color);
+}
+
+.expandButton,
+.collapseButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.6em;
+  background: transparent;
+  color: var(--point-color-cyan);
+  border: 1px solid var(--point-color-cyan);
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  outline: none;
+}
+
+.expandButton:hover,
+.collapseButton:hover {
+  background: var(--point-color-cyan);
+  color: var(--background-color);
+}
+
+.expandButton:focus,
+.collapseButton:focus {
+  outline: none;
+  background: var(--point-color-cyan);
+  color: var(--background-color);
+}
+
+.expandButton:active,
+.collapseButton:active {
+  transform: none;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+  .tagList {
+    gap: 0.4em;
+  }
+
+  .tag,
+  .expandButton,
+  .collapseButton {
+    font-size: 0.75em;
+    padding: 0.25em 0.5em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tag,
+  .expandButton,
+  .collapseButton {
+    font-size: 0.7em;
+    padding: 0.2em 0.4em;
+  }
+}
