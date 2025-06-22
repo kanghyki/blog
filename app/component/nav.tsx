@@ -1,10 +1,7 @@
 import Link from 'next/link';
 import styles from './nav.module.css';
 
-const navItems = [
-  { href: '/', label: '소개' },
-  { href: '/post', label: '글' },
-];
+const navItems = [{ href: '/post', label: 'Posts' }];
 
 export default function Nav() {
   return (

@@ -121,8 +121,9 @@ a:hover {
 }
 
 a:focus {
-  outline: 2px solid var(--point-color-light-yellow);
-  outline-offset: 2px;
+  outline: none;
+  color: var(--point-color-light-orange);
+  text-decoration: underline;
 }
 
 li {
@@ -398,8 +399,9 @@ button {
 }
 
 button:focus {
-  outline: 2px solid var(--point-color-light-yellow);
-  outline-offset: 2px;
+  outline: none;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 111, 0, 0.3);
 }
 
 /* 아티클 내부 헤딩 호버 효과 및 앵커 링크 스타일 */
@@ -663,8 +665,12 @@ pre:hover {
 }
 
 .code-copy-btn:focus {
-  outline: 2px solid var(--point-color-light-yellow);
-  outline-offset: 2px;
+  outline: none;
+  background: var(--point-color-light-orange);
+  border-color: var(--point-color-light-orange);
+  color: var(--background-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.3);
 }
 
 pre:hover .code-copy-btn {

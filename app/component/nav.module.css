@@ -39,11 +39,17 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   transition: all 0.3s ease;
+  outline: none;
 }
 
 .logo_link:hover {
   color: var(--point-color-light-orange);
   text-decoration: none;
+}
+
+.logo_link:focus {
+  outline: none;
+  color: var(--point-color-light-orange);
 }
 
 .logo_method {
@@ -76,12 +82,22 @@
   padding: 0.6em 0;
   position: relative;
   letter-spacing: 0.5px;
+  outline: none;
 }
 
 .nav li a:hover {
   color: var(--point-color-light-orange);
   text-decoration: none;
   transform: translateY(-1px);
+}
+
+.nav li a:focus {
+  outline: none;
+  color: var(--point-color-light-orange);
+}
+
+.nav li a:focus::after {
+  width: 100%;
 }
 
 .nav li a::after {
