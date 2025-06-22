@@ -80,7 +80,7 @@ h6 {
 }
 
 hr {
-  margin: 1em 0;
+  margin: 0.67em 0; /* p태그와 일관된 여백 */
   border: 1px solid var(--sub-color-deep-gray);
 }
 
@@ -135,13 +135,175 @@ blockquote {
   background-color: var(--sub-color-deep-gray);
   border-left: 4px solid var(--point-color-light-yellow);
   padding: 1em;
-  margin: 1em 0;
+  margin: 0.67em 0; /* p태그와 동일한 여백 */
 }
 
 img {
   max-width: 100%;
-  margin: 1em auto;
+  margin: 1em auto; /* 이미지는 좀 더 여유있게 */
   display: block;
+  border-radius: 8px;
+  border: 1px solid var(--sub-color-deep-gray);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  background-color: var(--sub-color-deep-gray); /* 로딩 중 배경 */
+}
+
+img:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px);
+  border-color: var(--sub-color-middle-gray);
+}
+
+/* 이미지 로딩 효과 */
+img[src=''],
+img:not([src]) {
+  background: linear-gradient(
+    90deg,
+    var(--sub-color-deep-gray) 25%,
+    rgba(57, 62, 70, 0.8) 50%,
+    var(--sub-color-deep-gray) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+/* 깨진 이미지 스타일 */
+img {
+  position: relative;
+}
+
+img:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--sub-color-deep-gray);
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+img:after {
+  content: '🖼️ 이미지를 불러올 수 없습니다';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--sub-color-middle-gray);
+  font-size: 0.9em;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+img[src='']:before,
+img[src='']:after,
+img:not([src]):before,
+img:not([src]):after {
+  opacity: 1;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 이미지 캡션 스타일 (alt 텍스트가 표시될 때) */
+img[alt]:after {
+  content: attr(alt);
+  display: block;
+  text-align: center;
+  font-size: 0.85em;
+  color: var(--sub-color-middle-gray);
+  margin-top: 0.5em;
+  font-style: italic;
+}
+
+/* 특별한 이미지 스타일 클래스들 */
+.image-container {
+  margin: 1.5em 0;
+  text-align: center;
+}
+
+.image-with-caption {
+  margin-bottom: 0.5em;
+}
+
+.image-caption {
+  font-size: 0.85em;
+  color: var(--sub-color-middle-gray);
+  font-style: italic;
+  text-align: center;
+  margin-top: 0.5em;
+  padding: 0 1em;
+}
+
+/* 이미지 크기 변형 클래스 */
+.image-small {
+  max-width: 60%;
+}
+
+.image-medium {
+  max-width: 80%;
+}
+
+.image-large {
+  max-width: 100%;
+}
+
+/* 이미지 정렬 클래스 */
+.image-left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.image-right {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.image-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Lazy Loading 이미지 효과 */
+img[loading='lazy'] {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+img[loading='lazy'].loaded {
+  opacity: 1;
+}
+
+/* 고해상도 이미지 최적화 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* 다크모드에서 이미지 필터 */
+@media (prefers-color-scheme: dark) {
+  img {
+    filter: brightness(0.9) contrast(1.1);
+  }
+
+  img:hover {
+    filter: brightness(1) contrast(1);
+  }
 }
 
 .task-list-item {
@@ -152,7 +314,7 @@ table {
   border: 1px solid var(--sub-color-deep-gray);
   border-collapse: collapse;
   width: 100%;
-  margin: 1em 0;
+  margin: 0.67em 0; /* p태그와 일관된 여백 */
 }
 
 table th,
@@ -209,11 +371,24 @@ button:focus {
   pre,
   blockquote {
     padding: 0.8em;
-    margin: 0.8em 0;
-  } /* 모바일에서 코드 스타일 조정 */
+    margin: 0.67em 0; /* p태그와 동일한 여백 유지 */
+  }
+
+  /* 모바일에서 이미지 스타일 조정 */
+  img {
+    margin: 0.8em auto;
+    border-radius: 6px;
+  }
+
+  img:hover {
+    transform: none; /* 모바일에서는 호버 효과 제거 */
+  }
+
+  /* 모바일에서 코드 스타일 조정 */
   pre code {
     font-size: 0.8em;
-    padding: 1em;
+    padding: 1em 1.2em;
+    line-height: 1.4;
   }
 
   /* 모바일에서 복사 버튼 항상 표시 */
@@ -250,10 +425,21 @@ button:focus {
   pre,
   blockquote {
     padding: 0.6em;
-  } /* 모바일에서 코드 스타일 조정 */
+    margin: 0.67em 0; /* p태그와 동일한 여백 유지 */
+  }
+
+  /* 모바일에서 이미지 스타일 조정 */
+  img {
+    margin: 0.67em auto;
+    border-radius: 4px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+  }
+
+  /* 모바일에서 코드 스타일 조정 */
   pre code {
     font-size: 0.75em;
-    padding: 0.8em;
+    padding: 0.8em 1em;
+    line-height: 1.4;
   }
 
   :not(pre) > code {
@@ -284,7 +470,7 @@ pre {
   background-color: #1e1e1e; /* vs2015 테마와 일치 */
   border-radius: 8px;
   border: 1px solid var(--sub-color-deep-gray);
-  margin: 1.5em 0;
+  margin: 0.67em 0; /* p태그와 동일한 여백으로 수직 정렬 */
   position: relative;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: box-shadow 0.3s ease;
@@ -346,10 +532,10 @@ pre:hover .code-copy-btn {
 
 pre code {
   display: block;
-  padding: 1.5em;
+  padding: 1.2em 1.5em; /* 좌우 패딩을 약간 늘려 여유롭게 */
   background: transparent;
   font-size: 0.85em;
-  line-height: 1.6;
+  line-height: 1.5; /* 본문과 비슷하지만 약간 타이트하게 */
   font-family: var(--font-family);
   font-weight: 400;
   color: #dcdcdc; /* vs2015 기본 텍스트 색상 */
@@ -359,14 +545,15 @@ pre code {
 :not(pre) > code {
   background-color: var(--sub-color-deep-gray);
   color: var(--point-color-light-yellow);
-  border-radius: 4px;
-  padding: 3px 6px;
-  font-size: 0.9em;
+  border-radius: 3px;
+  padding: 2px 5px; /* 좀 더 컴팩트하게 */
+  font-size: 0.88em; /* 본문과의 크기 비율 조정 */
   font-family: var(--font-family);
   font-weight: 500;
   word-break: break-word;
-  border: 1px solid rgba(176, 176, 176, 0.2);
+  border: 1px solid rgba(176, 176, 176, 0.15);
   transition: all 0.2s ease;
+  vertical-align: baseline; /* 베이스라인 정렬로 자연스럽게 */
 }
 
 :not(pre) > code:hover {
