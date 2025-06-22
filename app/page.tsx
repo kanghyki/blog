@@ -6,6 +6,8 @@ import remark2rehype from 'remark-rehype';
 import remarkGfm from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
 import { ensureImageDownloaded } from './post/[id]/download';
+import Giscus from './component/Giscus';
+import styles from './page.module.css';
 
 export default async function About() {
   const pageId = process.env.NOTION_INTRODUCTION_PAGE_ID || '';
@@ -29,5 +31,9 @@ export default async function About() {
     .processSync(mdText)
     .toString();
 
-  return <article dangerouslySetInnerHTML={{ __html: html_text }} />;
+  return (
+    <>
+      <article dangerouslySetInnerHTML={{ __html: html_text }} />
+    </>
+  );
 }

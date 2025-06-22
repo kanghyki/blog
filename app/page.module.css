@@ -1,0 +1,21 @@
+/* 메인 페이지 스타일 */
+.commentsSection {
+  margin-top: 4em;
+  padding-top: 2.5em;
+  border-top: 2px solid var(--sub-color-deep-gray);
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+  .commentsSection {
+    margin-top: 2em;
+    padding-top: 1.5em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .commentsSection {
+    margin-top: 1.5em;
+    padding-top: 1em;
+  }
+}

@@ -15,6 +15,7 @@ import { ensureImageDownloaded } from './download';
 import TOC from './TOC';
 import CodeCopyButton from '@/app/component/CodeCopyButton';
 import TagList from '@/app/component/TagList';
+import Giscus from '@/app/component/Giscus';
 import type { Metadata } from 'next';
 
 type PostParamsProps = {
@@ -146,6 +147,24 @@ export default async function Post(props: PostParamsProps) {
       <div className={styles.contentContainer}>
         <TOC content={html_text} />
         <article dangerouslySetInnerHTML={{ __html: html_text }} />
+      </div>
+
+      {/* Giscus Comments */}
+      <div className={styles.commentsSection}>
+        <Giscus
+          repo={process.env.NEXT_PUBLIC_GISCUS_REPO!}
+          repoId={process.env.NEXT_PUBLIC_GISCUS_REPO_ID!}
+          category={process.env.NEXT_PUBLIC_GISCUS_CATEGORY!}
+          categoryId={process.env.NEXT_PUBLIC_GISCUS_CATEGORY_ID!}
+          mapping="pathname"
+          strict="0"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="bottom"
+          theme="transparent_dark"
+          lang="ko"
+          loading="lazy"
+        />
       </div>
     </>
   );
