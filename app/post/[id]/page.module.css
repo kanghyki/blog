@@ -30,3 +30,13 @@
   color: var(--accent-low);
   margin: 0px 0.5em;
 }
+
+.contentContainer {
+  display: block;
+  width: 100%;
+}
+
+.contentContainer article {
+  width: 100%;
+  max-width: 100%;
+}

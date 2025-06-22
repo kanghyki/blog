@@ -9,7 +9,9 @@ import remarkParse from 'remark-parse';
 import remark2rehype from 'remark-rehype';
 import remarkGfm from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
+import rehypeSlug from 'rehype-slug';
 import { ensureImageDownloaded } from './download';
+import TOC from './TOC';
 
 type PostParamsProps = {
   params: Promise<{
@@ -37,6 +39,7 @@ export default async function Post(props: PostParamsProps) {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remark2rehype)
+    .use(rehypeSlug) // 헤딩에 ID 추가
     .use(rehypeStringify)
     .processSync(mdText)
     .toString();
@@ -65,7 +68,10 @@ export default async function Post(props: PostParamsProps) {
         </div>
         <hr />
       </header>
-      <article dangerouslySetInnerHTML={{ __html: html_text }} />
+      <div className={styles.contentContainer}>
+        <TOC content={html_text} />
+        <article dangerouslySetInnerHTML={{ __html: html_text }} />
+      </div>
     </>
   );
 }

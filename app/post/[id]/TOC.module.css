@@ -1,0 +1,237 @@
+.tocContainer {
+  background-color: var(--sub-color-deep-gray);
+  border-left: 4px solid var(--point-color-light-yellow);
+  padding: 1em;
+  margin-bottom: 1.5em;
+  font-family: var(--font-family);
+}
+
+.tocHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.67em;
+  padding-bottom: 0.33em;
+}
+
+.tocHeader.hasContent {
+  border-bottom: 0.5px solid var(--sub-color-middle-gray);
+}
+
+.tocHeader:not(.hasContent) {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.tocTitle {
+  font-size: 1em;
+  font-weight: 400;
+  color: var(--point-color-light-yellow);
+  margin: 0;
+}
+
+.toggleButton {
+  background: none;
+  border: none;
+  color: var(--sub-color-middle-gray);
+  font-family: var(--font-family);
+  font-size: 0.8em;
+  cursor: pointer;
+  padding: 0.2em 0.4em;
+  border-radius: 2px;
+  line-height: 1;
+  user-select: none;
+}
+
+.toggleButton:hover {
+  color: var(--point-color-light-yellow);
+  background-color: rgba(255, 211, 105, 0.1);
+}
+
+.tocNav {
+  font-size: 0.8em;
+}
+
+.tocList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tocItem {
+  margin: 0.2em 0;
+}
+
+.tocLink {
+  display: block;
+  padding: 0.2em 0.4em;
+  color: var(--sub-color-middle-gray);
+  text-decoration: none;
+  line-height: 1.6;
+}
+
+.tocLink:hover {
+  color: var(--default-text-color);
+  text-decoration: none;
+}
+
+/* 활성 상태 */
+.tocItem.active .tocLink,
+.tocLink.activeToc {
+  color: var(--point-color-light-yellow);
+  font-weight: 400;
+}
+
+/* 헤딩 레벨별 들여쓰기 */
+.level1 {
+  padding-left: 0;
+}
+
+.level2 {
+  padding-left: 1em;
+}
+
+.level3 {
+  padding-left: 2em;
+}
+
+.level4 {
+  padding-left: 3em;
+}
+
+.level5 {
+  padding-left: 4em;
+}
+
+.level6 {
+  padding-left: 5em;
+}
+
+/* 모바일에서 작게 조정 */
+@media screen and (max-width: 768px) {
+  .tocContainer {
+    padding: 0.8em;
+    margin-bottom: 1em;
+  }
+
+  .tocHeader {
+    margin-bottom: 0.5em;
+    padding-bottom: 0.25em;
+  }
+
+  .tocHeader.hasContent {
+    margin-bottom: 0.5em;
+    padding-bottom: 0.25em;
+  }
+
+  .tocHeader:not(.hasContent) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .tocTitle {
+    font-size: 0.9em;
+  }
+
+  .toggleButton {
+    font-size: 0.75em;
+    padding: 0.15em 0.3em;
+  }
+
+  .tocNav {
+    font-size: 0.75em;
+  }
+
+  .tocItem {
+    margin: 0.15em 0;
+  }
+
+  .tocLink {
+    padding: 0.15em 0.3em;
+    line-height: 1.4;
+  }
+
+  .level2 {
+    padding-left: 0.8em;
+  }
+
+  .level3 {
+    padding-left: 1.6em;
+  }
+
+  .level4 {
+    padding-left: 2.4em;
+  }
+
+  .level5 {
+    padding-left: 3.2em;
+  }
+
+  .level6 {
+    padding-left: 4em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .tocContainer {
+    padding: 0.66em;
+    margin-bottom: 0.8em;
+  }
+
+  .tocHeader {
+    margin-bottom: 0.4em;
+    padding-bottom: 0.2em;
+  }
+
+  .tocHeader.hasContent {
+    margin-bottom: 0.4em;
+    padding-bottom: 0.2em;
+  }
+
+  .tocHeader:not(.hasContent) {
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .tocTitle {
+    font-size: 0.8em;
+  }
+
+  .toggleButton {
+    font-size: 0.7em;
+    padding: 0.1em 0.2em;
+  }
+
+  .tocNav {
+    font-size: 0.7em;
+  }
+
+  .tocItem {
+    margin: 0.1em 0;
+  }
+
+  .tocLink {
+    padding: 0.1em 0.2em;
+    line-height: 1.3;
+  }
+
+  .level2 {
+    padding-left: 0.6em;
+  }
+
+  .level3 {
+    padding-left: 1.2em;
+  }
+
+  .level4 {
+    padding-left: 1.8em;
+  }
+
+  .level5 {
+    padding-left: 2.4em;
+  }
+
+  .level6 {
+    padding-left: 3em;
+  }
+}
