@@ -24,8 +24,8 @@
 }
 
 .tocTitle {
-  font-size: 1em;
-  font-weight: 400;
+  font-size: 1.1em;
+  font-weight: 500;
   color: var(--point-color-light-yellow);
   margin: 0;
 }
@@ -35,12 +35,13 @@
   border: none;
   color: var(--sub-color-middle-gray);
   font-family: var(--font-family);
-  font-size: 0.8em;
+  font-size: 0.9em;
   cursor: pointer;
-  padding: 0.2em 0.4em;
-  border-radius: 2px;
+  padding: 0.3em 0.5em;
+  border-radius: 4px;
   line-height: 1;
   user-select: none;
+  transition: all 0.2s ease;
 }
 
 .toggleButton:hover {
@@ -49,7 +50,7 @@
 }
 
 .tocNav {
-  font-size: 0.8em;
+  font-size: 0.95em;
 }
 
 .tocList {
@@ -59,27 +60,31 @@
 }
 
 .tocItem {
-  margin: 0.2em 0;
+  margin: 0.3em 0;
 }
 
 .tocLink {
   display: block;
-  padding: 0.2em 0.4em;
+  padding: 0.3em 0.5em;
   color: var(--sub-color-middle-gray);
   text-decoration: none;
-  line-height: 1.6;
+  line-height: 1.5;
+  border-radius: 4px;
+  transition: all 0.2s ease;
 }
 
 .tocLink:hover {
   color: var(--default-text-color);
   text-decoration: none;
+  background-color: rgba(176, 176, 176, 0.1);
 }
 
 /* 활성 상태 */
 .tocItem.active .tocLink,
 .tocLink.activeToc {
   color: var(--point-color-light-yellow);
-  font-weight: 400;
+  font-weight: 500;
+  background-color: rgba(255, 211, 105, 0.15);
 }
 
 /* 헤딩 레벨별 들여쓰기 */
@@ -130,24 +135,24 @@
   }
 
   .tocTitle {
-    font-size: 0.9em;
+    font-size: 1em;
   }
 
   .toggleButton {
-    font-size: 0.75em;
-    padding: 0.15em 0.3em;
+    font-size: 0.85em;
+    padding: 0.25em 0.4em;
   }
 
   .tocNav {
-    font-size: 0.75em;
+    font-size: 0.9em;
   }
 
   .tocItem {
-    margin: 0.15em 0;
+    margin: 0.25em 0;
   }
 
   .tocLink {
-    padding: 0.15em 0.3em;
+    padding: 0.2em 0.35em;
     line-height: 1.4;
   }
 
@@ -194,25 +199,25 @@
   }
 
   .tocTitle {
-    font-size: 0.8em;
+    font-size: 0.95em;
   }
 
   .toggleButton {
-    font-size: 0.7em;
-    padding: 0.1em 0.2em;
+    font-size: 0.8em;
+    padding: 0.2em 0.3em;
   }
 
   .tocNav {
-    font-size: 0.7em;
+    font-size: 0.85em;
   }
 
   .tocItem {
-    margin: 0.1em 0;
+    margin: 0.2em 0;
   }
 
   .tocLink {
-    padding: 0.1em 0.2em;
-    line-height: 1.3;
+    padding: 0.2em 0.3em;
+    line-height: 1.4;
   }
 
   .level2 {
