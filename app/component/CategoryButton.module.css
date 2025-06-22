@@ -4,12 +4,13 @@
   margin-bottom: 0.8em;
   margin-top: 0.8em;
   border: none;
-  border-radius: 8px;
-
   background-color: var(--sub-color-deep-gray);
   color: var(--default-text-color);
   cursor: pointer;
   font-size: 0.8em;
+  min-width: 4em;
+  text-align: center;
+  display: inline-block;
 }
 
 .tag_button_select {
@@ -18,12 +19,13 @@
   margin-bottom: 0.8em;
   margin-top: 0.8em;
   border: none;
-  border-radius: 8px;
-
   background-color: var(--point-color-light-yellow);
   color: var(--sub-color-deep-gray);
   cursor: pointer;
   font-size: 0.8em;
+  min-width: 4em;
+  text-align: center;
+  display: inline-block;
 }
 
 .tag_button:last-child {
@@ -32,5 +34,4 @@
 
 .tag_button:hover {
   opacity: 0.7;
-  transition: 0.2s;
 }

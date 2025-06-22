@@ -35,15 +35,12 @@ body {
   padding: 1em;
   line-height: 1.6;
   overflow-wrap: break-word;
-  height: 100%;
+  scroll-behavior: smooth;
 }
 
 article {
   font-weight: 300;
-}
-
-summary {
-  font-weight: 300;
+  padding: 0;
 }
 
 h1,
@@ -55,6 +52,7 @@ h6 {
   line-height: 1.8;
   font-weight: 400;
   color: var(--default-text-color);
+  scroll-margin-top: 2em;
 }
 
 h1 {
@@ -107,64 +105,54 @@ a:hover {
   text-decoration: underline;
 }
 
+a:focus {
+  outline: 2px solid var(--point-color-light-yellow);
+  outline-offset: 2px;
+}
+
 li {
   list-style-position: inside;
 }
 
-article {
+article ul > li {
   padding: 0;
 }
 
-article ul > li {
-  padding: 0px;
-}
-
-article ul > li > ul > li {
-  padding-left: 1em;
-}
-
-article ul > li > ol > li {
-  padding-left: 1em;
-}
-
-article ol > li {
-  padding: 0px;
-}
-
-article ol > li > ol > li {
-  padding-left: 1em;
-}
-
+article ul > li > ul > li,
+article ul > li > ol > li,
+article ol > li > ol > li,
 article ol > li > ul > li {
   padding-left: 1em;
 }
 
+article ol > li {
+  padding: 0;
+}
+
 code {
   background-color: var(--sub-color-deep-gray);
-  border-radius: 2px;
-  padding: 4px 4px;
+  padding: 4px;
   color: var(--point-color-light-yellow);
+  word-break: break-word;
 }
 
 pre {
   overflow: auto;
   background-color: var(--sub-color-deep-gray);
   padding: 1em;
-  border-radius: 8px;
   margin: 1em 0;
 }
 
 pre code {
   background-color: inherit;
   padding: 0;
-  border-radius: 0;
   color: var(--sub-color-middle-gray);
 }
 
 blockquote {
   background-color: var(--sub-color-deep-gray);
   border-left: 4px solid var(--point-color-light-yellow);
-  padding: 1em 1em 1em 1em;
+  padding: 1em;
   margin: 1em 0;
 }
 
@@ -181,13 +169,95 @@ img {
 table {
   border: 1px solid var(--sub-color-deep-gray);
   border-collapse: collapse;
-  th,
-  td {
-    border: 1px solid var(--sub-color-middle-gray);
-    padding: 0.5em 0.5em;
+  width: 100%;
+  margin: 1em 0;
+}
+
+table th,
+table td {
+  border: 1px solid var(--sub-color-middle-gray);
+  padding: 0.5em;
+  text-align: left;
+}
+
+table th {
+  background-color: var(--sub-color-deep-gray);
+  color: var(--point-color-light-yellow);
+}
+
+/* 선택 스타일 */
+::selection {
+  background-color: var(--point-color-light-yellow);
+  color: var(--background-color);
+}
+
+button {
+  font-family: var(--font-family);
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 2px solid var(--point-color-light-yellow);
+  outline-offset: 2px;
+}
+
+/* 반응형 */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 0.8em;
   }
-  th {
-    background-color: var(--sub-color-deep-gray);
-    color: var(--point-color-light-yellow);
+
+  h1 {
+    font-size: 1.8em;
+  }
+  h2 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.3em;
+  }
+  h4 {
+    font-size: 1.2em;
+  }
+  h5,
+  h6 {
+    font-size: 1.1em;
+  }
+
+  pre,
+  blockquote {
+    padding: 0.8em;
+    margin: 0.8em 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 0.6em;
+  }
+
+  h1 {
+    font-size: 1.6em;
+  }
+  h2 {
+    font-size: 1.4em;
+  }
+  h3 {
+    font-size: 1.25em;
+  }
+  h4,
+  h5,
+  h6 {
+    font-size: 1.1em;
+  }
+
+  pre,
+  blockquote {
+    padding: 0.6em;
+  }
+
+  code {
+    padding: 2px 3px;
+    font-size: 0.9em;
   }
 }
