@@ -146,10 +146,39 @@ article ol > li {
 /* 코드 스타일은 하단의 highlight.js 섹션에서 통합 관리 */
 
 blockquote {
-  background-color: var(--sub-color-deep-gray);
-  border-left: 4px solid var(--point-color-light-yellow);
-  padding: 1em;
-  margin: 0.67em 0; /* p태그와 동일한 여백 */
+  background-color: transparent;
+  border: 1px solid var(--sub-color-deep-gray);
+  border-left: 3px solid var(--sub-color-middle-gray);
+  border-radius: 4px;
+  padding: 1.2em 1.5em;
+  margin: 1em 0;
+  font-style: italic;
+  color: var(--sub-color-middle-gray);
+  position: relative;
+}
+
+blockquote::before {
+  content: '"';
+  font-size: 2.5em;
+  color: var(--sub-color-deep-gray);
+  position: absolute;
+  top: -0.2em;
+  left: 0.3em;
+  line-height: 1;
+  font-family: Georgia, serif;
+}
+
+blockquote p {
+  margin: 0;
+  padding-left: 1em;
+}
+
+blockquote p:first-child {
+  margin-top: 0;
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
 }
 
 img {
@@ -448,8 +477,18 @@ article h5 + h6 {
 
   pre,
   blockquote {
-    padding: 0.8em;
-    margin: 0.67em 0; /* p태그와 동일한 여백 유지 */
+    padding: 1em 1.2em;
+    margin: 0.8em 0;
+  }
+
+  blockquote::before {
+    font-size: 2em;
+    top: -0.1em;
+    left: 0.2em;
+  }
+
+  blockquote p {
+    padding-left: 0.8em;
   }
 
   /* 모바일에서 이미지 스타일 조정 */
@@ -502,8 +541,18 @@ article h5 + h6 {
 
   pre,
   blockquote {
-    padding: 0.6em;
-    margin: 0.67em 0; /* p태그와 동일한 여백 유지 */
+    padding: 0.8em 1em;
+    margin: 0.8em 0;
+  }
+
+  blockquote::before {
+    font-size: 1.8em;
+    top: -0.05em;
+    left: 0.15em;
+  }
+
+  blockquote p {
+    padding-left: 0.6em;
   }
 
   /* 모바일에서 이미지 스타일 조정 */
