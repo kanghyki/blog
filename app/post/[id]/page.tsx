@@ -39,7 +39,7 @@ export default async function Post(props: PostParamsProps) {
     .use(remarkParse)
     .use(remarkGfm)
     .use(remark2rehype)
-    .use(rehypeSlug) // 헤딩에 ID 추가
+    .use(rehypeSlug)
     .use(rehypeStringify)
     .processSync(mdText)
     .toString();

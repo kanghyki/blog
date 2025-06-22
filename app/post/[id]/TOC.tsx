@@ -63,6 +63,18 @@ export default function TOC({ content }: TOCProps) {
       }
     });
 
+    // 페이지 로드 시 URL 해시가 있으면 해당 섹션으로 스크롤
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setActiveId(hash);
+        }
+      }, 100);
+    }
+
     // 스크롤 이벤트 리스너 (기존 코드와 유사한 방식)
     const handleScroll = () => {
       const sections = document.querySelectorAll(
@@ -82,17 +94,33 @@ export default function TOC({ content }: TOCProps) {
       setActiveId(currentSection);
     };
 
+    // 브라우저 뒤로/앞으로 가기 버튼 지원
+    const handlePopState = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          setActiveId(hash);
+        }
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('popstate', handlePopState);
     handleScroll(); // 초기 실행
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('popstate', handlePopState);
     };
   }, [tocItems]);
 
   const handleTOCClick = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
+      // URL 해시 업데이트
+      window.history.pushState(null, '', `#${id}`);
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
