@@ -28,9 +28,49 @@ export async function generateMetadata(props: PostParamsProps): Promise<Metadata
   const notionAPI = new NotionAPI();
   const post = await getPost(notionAPI, params.id);
 
+  // 포스트 내용에서 첫 번째 이미지 추출
+  const n2m = new NotionToMarkdown({ notionClient: notionAPI.notionClient });
+  n2m.setCustomTransformer('image', async block => {
+    const { image } = block as any;
+    const url = image.file.url;
+    const ret = await ensureImageDownloaded(url, params.id);
+    return `![${ret.fileName}](${ret.localPath})`;
+  });
+  const mdblocks = await n2m.pageToMarkdown(params.id);
+  const mdText = n2m.toMarkdownString(mdblocks).parent;
+
+  // 첫 번째 이미지 URL 추출
+  const imageRegex = /!\[.*?\]\((.*?)\)/;
+  const imageMatch = mdText.match(imageRegex);
+  const firstImageUrl = imageMatch ? `${process.env.OG_URL}${imageMatch[1]}` : `${process.env.OG_IMAGE_URL}`;
+
   return {
     title: `${post.title} - ${process.env.TITLE}`,
     description: `${post.summary}`,
+    openGraph: {
+      title: `${post.title} - ${process.env.TITLE}`,
+      description: `${post.summary}`,
+      url: `${process.env.OG_URL}/post/${params.id}`,
+      siteName: `${process.env.OG_SITE_NAME}`,
+      type: 'article',
+      locale: `${process.env.OG_LOCALE}`,
+      images: [
+        {
+          url: firstImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+      publishedTime: post.createdAt.toISOString(),
+      authors: post.authors.length > 0 ? post.authors : ['Anonymous'],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${post.title} - ${process.env.TITLE}`,
+      description: `${post.summary}`,
+      images: [firstImageUrl],
+    },
   };
 }
 
