@@ -129,25 +129,7 @@ article ol > li {
   padding: 0;
 }
 
-code {
-  background-color: var(--sub-color-deep-gray);
-  padding: 4px;
-  color: var(--point-color-light-yellow);
-  word-break: break-word;
-}
-
-pre {
-  overflow: auto;
-  background-color: var(--sub-color-deep-gray);
-  padding: 1em;
-  margin: 1em 0;
-}
-
-pre code {
-  background-color: inherit;
-  padding: 0;
-  color: var(--sub-color-middle-gray);
-}
+/* 코드 스타일은 하단의 highlight.js 섹션에서 통합 관리 */
 
 blockquote {
   background-color: var(--sub-color-deep-gray);
@@ -228,6 +210,20 @@ button:focus {
   blockquote {
     padding: 0.8em;
     margin: 0.8em 0;
+  } /* 모바일에서 코드 스타일 조정 */
+  pre code {
+    font-size: 0.8em;
+    padding: 1em;
+  }
+
+  /* 모바일에서 복사 버튼 항상 표시 */
+  .code-copy-btn {
+    opacity: 1;
+    top: 8px;
+    right: 8px;
+    font-size: 0.7em;
+    padding: 6px 10px;
+    backdrop-filter: blur(6px);
   }
 }
 
@@ -254,10 +250,159 @@ button:focus {
   pre,
   blockquote {
     padding: 0.6em;
+  } /* 모바일에서 코드 스타일 조정 */
+  pre code {
+    font-size: 0.75em;
+    padding: 0.8em;
   }
 
-  code {
-    padding: 2px 3px;
-    font-size: 0.9em;
+  :not(pre) > code {
+    padding: 2px 4px;
+    font-size: 0.85em;
   }
+
+  /* 초소형 화면에서 복사 버튼 조정 */
+  .code-copy-btn {
+    top: 6px;
+    right: 6px;
+    font-size: 0.65em;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+}
+
+/* ========================================
+   코드 하이라이팅 및 스타일링
+======================================== */
+
+/* Highlight.js 테마 - VS Code Dark 스타일 */
+@import 'highlight.js/styles/vs2015.css';
+
+/* 코드 블럭 기본 스타일 */
+pre {
+  overflow-x: auto;
+  background-color: #1e1e1e; /* vs2015 테마와 일치 */
+  border-radius: 8px;
+  border: 1px solid var(--sub-color-deep-gray);
+  margin: 1.5em 0;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.3s ease;
+}
+
+pre:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* 코드 복사 버튼 */
+.code-copy-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(57, 62, 70, 0.9);
+  color: var(--default-text-color);
+  border: 1px solid var(--sub-color-middle-gray);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.75em;
+  font-family: var(--font-family);
+  font-weight: 500;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.code-copy-btn:hover {
+  background: var(--point-color-light-orange);
+  border-color: var(--point-color-light-orange);
+  color: var(--background-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 111, 0, 0.3);
+}
+
+.code-copy-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.code-copy-btn.copied {
+  background: var(--point-color-cyan);
+  border-color: var(--point-color-cyan);
+  color: var(--background-color);
+  box-shadow: 0 4px 12px rgba(0, 173, 181, 0.3);
+}
+
+.code-copy-btn:focus {
+  outline: 2px solid var(--point-color-light-yellow);
+  outline-offset: 2px;
+}
+
+pre:hover .code-copy-btn {
+  opacity: 1;
+}
+
+pre code {
+  display: block;
+  padding: 1.5em;
+  background: transparent;
+  font-size: 0.85em;
+  line-height: 1.6;
+  font-family: var(--font-family);
+  font-weight: 400;
+  color: #dcdcdc; /* vs2015 기본 텍스트 색상 */
+}
+
+/* 인라인 코드 스타일 */
+:not(pre) > code {
+  background-color: var(--sub-color-deep-gray);
+  color: var(--point-color-light-yellow);
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 0.9em;
+  font-family: var(--font-family);
+  font-weight: 500;
+  word-break: break-word;
+  border: 1px solid rgba(176, 176, 176, 0.2);
+  transition: all 0.2s ease;
+}
+
+:not(pre) > code:hover {
+  background-color: rgba(57, 62, 70, 0.8);
+  border-color: var(--sub-color-middle-gray);
+}
+
+/* highlight.js 클래스 오버라이드 */
+.hljs {
+  background: #1e1e1e !important;
+  color: #dcdcdc !important;
+  border-radius: 8px;
+}
+
+/* 스크롤바 스타일링 (웹킷 기반 브라우저) */
+pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+pre::-webkit-scrollbar-track {
+  background: rgba(45, 45, 48, 0.5);
+  border-radius: 3px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  background: var(--sub-color-middle-gray);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  background: var(--point-color-light-orange);
+}
+
+/* Firefox 스크롤바 */
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sub-color-middle-gray) rgba(45, 45, 48, 0.5);
 }

@@ -10,8 +10,10 @@ import remark2rehype from 'remark-rehype';
 import remarkGfm from 'remark-gfm';
 import rehypeStringify from 'rehype-stringify';
 import rehypeSlug from 'rehype-slug';
+import rehypeHighlight from 'rehype-highlight';
 import { ensureImageDownloaded } from './download';
 import TOC from './TOC';
+import CodeCopyButton from '@/app/component/CodeCopyButton';
 
 type PostParamsProps = {
   params: Promise<{
@@ -40,6 +42,7 @@ export default async function Post(props: PostParamsProps) {
     .use(remarkGfm)
     .use(remark2rehype)
     .use(rehypeSlug)
+    .use(rehypeHighlight)
     .use(rehypeStringify)
     .processSync(mdText)
     .toString();
@@ -47,6 +50,7 @@ export default async function Post(props: PostParamsProps) {
   return (
     <>
       <title>{`${post.title} - ${process.env.TITLE}`}</title>
+      <CodeCopyButton />
       <header>
         <h2>
           {post.icon && `${post.icon} `}
