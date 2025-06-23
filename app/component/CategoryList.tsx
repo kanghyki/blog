@@ -27,13 +27,13 @@ export default function CategoryList(props: PropsCategoryList) {
       </div>
       {!isCollapsed && (
         <div className={styles.tag_button_container}>
-          <CategoryButton
-            select={props.select === undefined}
-            category={'전체'}
-            onClick={() => props.setCategory(undefined)}
-          />
           {props.categories.map((e: string) => (
-            <CategoryButton select={props.select === e} category={e} key={e} onClick={() => props.setCategory(e)} />
+            <CategoryButton
+              select={props.select === e}
+              category={e}
+              key={e}
+              onClick={() => props.setCategory(props.select === e ? undefined : e)}
+            />
           ))}
         </div>
       )}
